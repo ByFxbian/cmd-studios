@@ -47,10 +47,10 @@ export function AboutSection() {
             <span className="text-accent font-semibold uppercase tracking-wider">
               Das Team
             </span>
-            <h2 className="text-4xl md:text-5xl font-bold tracking-tighter text-zinc-900 mt-3 mb-6">
+            <h2 className="text-4xl md:text-5xl font-bold tracking-tighter text-[var(--color-heading)] mt-3 mb-6">
               Ein Entwickler. Ein Kreativer.
             </h2>
-            <div className="space-y-4 text-lg text-zinc-700">
+            <div className="space-y-4 text-lg text-[var(--color-text)]">
               <p>
                 Wir sind Fabian und Antonio. Was als 
                 gemeinsame Leidenschaft für digitale Medien begann, ist heute 

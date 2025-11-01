@@ -2,9 +2,20 @@
 
 import { motion, AnimatePresence } from 'framer-motion';
 import { usePathname } from 'next/navigation';
+import { useLayoutEffect } from 'react';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
 export function PageTransition({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
+
+  useLayoutEffect(() => {
+    return () => {
+        const triggers = ScrollTrigger.getAll();
+        triggers.forEach((trigger) => {
+            trigger.kill(); 
+        });
+    }
+  }, [pathname]);
 
   return (
     <AnimatePresence mode="wait">

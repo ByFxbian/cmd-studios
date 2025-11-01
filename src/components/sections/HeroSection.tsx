@@ -37,7 +37,7 @@ export function HeroSection() {
                 animate="visible"
             >
                 <motion.h1
-                    className="text-5xl md:text-8xl font-bold tracking-tighter mb-6 text-zinc-900"
+                    className="text-5xl md:text-8xl font-bold tracking-tighter mb-6 text-[var(--color-heading)]"
                     variants={itemVariants}
                 >
                     Digitale Exzellenz.
@@ -48,7 +48,7 @@ export function HeroSection() {
                 </motion.h1>
 
                 <motion.p
-                    className="max-w-2xl text-lg md:text-xl text-zinc-700 mb-8"
+                    className="max-w-2xl text-lg md:text-xl text-[var(--color-text)] mb-8"
                     variants={itemVariants}
                 >
                     CMD Studios: Wir entwickeln performante Websites und produzieren

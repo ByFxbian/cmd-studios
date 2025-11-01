@@ -28,10 +28,10 @@ export function ServiceSection() {
                     viewport={{ once: true, amount: 0.5 }}
                     transition={{ duration: 0.6, ease: "easeOut" }}
                 >
-                    <h2 className="text-4xl md:text-5xl font-bold tracking-tighter">
+                    <h2 className="text-4xl md:text-5xl font-bold tracking-tighter text-[var(--color-heading)]">
                         Was wir tun
                     </h2>
-                    <p className="mt-4 max-w-2xl mx-auto text-lg text-zinc-600">
+                    <p className="mt-4 max-w-2xl mx-auto text-lg text-lg text-[var(--color-text)]">
                         Wir kombinieren technische Präzision mit kreativer Vision, um 
                         digitale Erlebnisse zu schaffen, die im Gedächtnis bleiben.
                     </p>
@@ -47,8 +47,8 @@ export function ServiceSection() {
                         viewport={{ once: true, amount: 0.5 }}
                     >
                         <HiCode className="w-12 h-12 text-accent mb-4" />
-                        <h3 className="text-2xl font-bold mb-3">Web-Entwicklung</h3>
-                        <p className="text-zinc-600 mb-6 grow">
+                        <h3 className="text-2xl font-bold mb-3 text-[var(--color-heading)]">Web-Entwicklung</h3>
+                        <p className="text-[var(--color-text)] mb-6 grow">
                         Von ultraschnellen Landing Pages mit Next.js bis hin zu komplexen 
                         Web-Applikationen. Wir bauen performante, SEO-optimierte und 
                         responsive Websites für KMUs.
@@ -70,8 +70,8 @@ export function ServiceSection() {
                         viewport={{ once: true, amount: 0.5 }}
                     >
                         <HiCamera className="w-12 h-12 text-accent mb-4" />
-                        <h3 className="text-2xl font-bold mb-3">Content Creation</h3>
-                        <p className="text-zinc-600 mb-6 grow">
+                        <h3 className="text-2xl font-bold mb-3 text-[var(--color-heading)]">Content Creation</h3>
+                        <p className="text-[var(--color-text)] mb-6 grow">
                         Professionelle Videoproduktion, Social-Media-Content und 
                         Branding. Wir erzählen Ihre Geschichte visuell und sorgen dafür, 
                         dass Ihre Botschaft ankommt.

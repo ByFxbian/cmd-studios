@@ -20,7 +20,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="de">
-      <body className={`${inter.className} bg-zinc-50 text-zinc-900 antialiased`}>
+      <body className={`${inter.className} bg-[var(--color-page-bg)] text-[var(--color-heading)] antialiased`}>
         <Scene>
           <Navbar />
           <main className="flex flex-col min-h-screen">

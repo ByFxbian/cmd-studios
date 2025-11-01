@@ -26,10 +26,10 @@ export function ContactSection() {
         whileInView="visible"
         viewport={{ once: true, amount: 0.5 }}
       >
-        <h2 className="text-4xl md:text-5xl font-bold tracking-tighter text-zinc-900">
+        <h2 className="text-4xl md:text-5xl font-bold tracking-tighter text-[var(--color-heading)]">
           Lassen Sie uns Ihr Projekt starten.
         </h2>
-        <p className="mt-4 max-w-xl mx-auto text-lg text-zinc-700">
+        <p className="mt-4 max-w-xl mx-auto text-lg text-[var(--color-text)]">
           Egal ob Sie eine neue Website, ein beeindruckendes Video oder 
           ein komplettes Rebranding benötigen – wir sind bereit, 
           Ihre Vision Realität werden zu lassen.

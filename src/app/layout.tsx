@@ -4,6 +4,7 @@ import "./globals.css";
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
 import { Scene } from "@/components/ui/Scene";
+import { PageTransition } from "@/components/layout/PageTransition";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -19,12 +20,14 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="de">
-      <body className={`${inter.className} bg-zink-50 text-zinc-900 antialiased`}>
+      <body className={`${inter.className} bg-zinc-50 text-zinc-900 antialiased`}>
         <Scene>
           <Navbar />
           <main className="flex flex-col min-h-screen">
             <div className="flex-grow relative z-10 bg-transparent">
-              {children}
+              <PageTransition>
+                {children}
+              </PageTransition>
             </div>
           </main>
         </Scene>

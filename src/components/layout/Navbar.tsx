@@ -3,8 +3,8 @@ import Link from 'next/link';
 
 export function Navbar() {
     return (
-        <header className='fixed top-0 left-0 w-full z-50'>
-            <nav className='container mx-auto max-w-7xl flex justify-between items-center p-6 backdrop-blur-md'>
+        <header className='fixed top-0 left-0 w-full z-50 backdrop-blur-md border-b border-zinc-900/10'>
+            <nav className='container mx-auto max-w-7xl flex justify-between items-center p-6 '>
                 <Link href="/" className='text-xl font-bold tracking-tight text-zinc-900'>
                 CMD<span className='text-zinc-500'> Studios</span>
                 </Link>

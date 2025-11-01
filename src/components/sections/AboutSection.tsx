@@ -32,7 +32,7 @@ const imageVariants: Variants = {
 
 export function AboutSection() {
   return (
-    <section className="w-full py-20 md:py-32">
+    <section className="w-full py-20 md:py-32 bg-white">
       <div className="container mx-auto max-w-7xl px-6">
         
         <motion.div 

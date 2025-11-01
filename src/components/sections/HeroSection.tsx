@@ -27,11 +27,13 @@ const itemVariants: Variants = {
 
 export function HeroSection() {
     return (
-        <section className="relative flex h-screen min-h-[700px] w-full items-center justify-center">
+        <section className="relative flex h-screen min-h-[700px] w-full items-center justify-center ">
             <motion.div
                 className="relative z-10 flex flex-col items-center text-center p-6"
                 variants={containerVariants}
                 initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true, amount: 0.5 }}
                 animate="visible"
             >
                 <motion.h1

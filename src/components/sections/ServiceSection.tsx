@@ -19,7 +19,7 @@ const cardVariants: Variants = {
 
 export function ServiceSection() {
     return (
-        <section className="w-full -py-20 md:py-32">
+        <section className="w-full py-20 md:py-32 bg-zinc-50">
             <div className="container mx-auto max-w-7xl px-6">
                 <motion.div
                     className="text-center mb-12"

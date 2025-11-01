@@ -33,10 +33,8 @@ export function ContactHorizontalScroll() {
 
   useLayoutEffect(() => {
     const panelElements: HTMLElement[] = gsap.utils.toArray(".panel");
-    const lastPanel = panelElements[panelElements.length - 1];
-
     let ctx = gsap.context(() => {
-        const tween = gsap.to(panelElements, {
+        gsap.to(panelElements, {
             xPercent: -100 * (panelElements.length - 1),
             ease: "none",
             scrollTrigger: {
@@ -49,27 +47,20 @@ export function ContactHorizontalScroll() {
                     snapTo: 1 / (panelElements.length - 1),
                     duration: { min: 0.3, max: 0.6},
                     ease: "power2.inOut",
+                    directional: true,
                 },
                 
                 onUpdate: (self) => {
                     const newIndex = Math.round(self.progress * (panelElements.length - 1));
                     setActivePanel(newIndex);
+                    if (newIndex === 2) {
+                        document.body.classList.add('on-dark-panel');
+                    } else {
+                        document.body.classList.remove('on-dark-panel');
+                    }
                 },
             },
         });
-
-        if(lastPanel) {
-            ScrollTrigger.create({
-                trigger: lastPanel,
-                containerAnimation: tween,
-                start: "left center",
-                end: "right center",
-                toggleClass: {
-                    targets: "body",
-                    className: "on-dark-panel",
-                },
-            });
-        }
     }, sectionRef);
 
     return () => ctx.revert();

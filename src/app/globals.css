@@ -23,15 +23,15 @@
 
 body.on-dark-panel {
   --color-heading: white;
-  --color-text: theme('colors.zinc.300');
-  --color-text-muted: theme('colors.zinc.400');
-  --color-navbar-border: theme('colors.white/0.1');
+  --color-text: #d4d4d8; /* war: theme('colors.zinc.300') */
+  --color-text-muted: #a1a1aa; /* war: theme('colors.zinc.400') */
+  --color-navbar-border: rgba(255, 255, 255, 0.1); /* war: theme('colors.white/0.1') */
 
   --color-button-bg: white;
   --color-button-text: black;
-  --color-button-hover-bg: theme('colors.zinc.200');
+  --color-button-hover-bg: #e4e4e7; /* war: theme('colors.zinc.200') */
 
-  --color-scroll-button-bg: theme('colors.zinc.800');
+  --color-scroll-button-bg: #27272a; /* war: theme('colors.zinc.800') */
   --color-scroll-button-text: white;
-  --color-scroll-button-hover-bg: theme('colors.zinc.700');
+  --color-scroll-button-hover-bg: #3f3f46; /* war: theme('colors.zinc.700') */
 }

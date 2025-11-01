@@ -1,7 +1,12 @@
+/* eslint-disable prefer-const */
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
 import { motion, type Variants } from 'framer-motion';
 import { PortfolioCard } from '../ui/PortfolioCard';
+import { useLayoutEffect, useRef } from 'react';
+import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
 type Project = {
   id: number;
@@ -35,7 +40,7 @@ const featuredProjects: Project[] = [ // Typ 'Project[]' anwenden
   },
 ];
 
-const gridVariants: Variants = {
+/*const gridVariants: Variants = {
   hidden: { opacity: 0 },
   visible: {
     opacity: 1,
@@ -44,8 +49,64 @@ const gridVariants: Variants = {
     },
   },
 };
+*/
 
 export function PortfolioSection() {
+    const sectionRef = useRef<HTMLDivElement>(null);
+    const gridRef = useRef<HTMLDivElement>(null);
+    const triggerRef = useRef<HTMLDivElement>(null);
+
+    useLayoutEffect(() =>{
+        gsap.registerPlugin(ScrollTrigger);
+
+        const cards = gsap.utils.toArray(gridRef.current?.children || []);
+
+        let proxy = { skew: 0};
+        let skewSetter = gsap.quickSetter(cards, "skewY", "deg");
+        let clamp = gsap.utils.clamp(-15, 15);
+
+        let ctx = gsap.context(() => {
+            cards.forEach((card: any, i) => {
+                const yPercent = i === 1 ? 15 : -15;
+                gsap.fromTo(card,
+                    {
+                        yPercent: yPercent * 1.5
+                    },
+                    {
+                        yPercent: yPercent * -1,
+                        ease: "none",
+                        scrollTrigger: {
+                            trigger: sectionRef.current,
+                            scrub: 1,
+                            start: "top bottom",
+                            end: "bottom top"
+                        }
+                    }
+                );
+            });
+
+            ScrollTrigger.create({
+                trigger: sectionRef.current,
+                start: "top bottom",
+                end: "bottom top",
+                onUpdate: (self) => {
+                    const velocity = self.getVelocity();
+                    const skew = clamp(velocity / -200);
+
+                    gsap.to(proxy, {
+                        skew: skew,
+                        duration: 0.5,
+                        ease: "power3.out",
+                        overwrite: true,
+                        onUpdate: () => skewSetter(proxy.skew)
+                    });
+                }
+            });
+        }, sectionRef);
+
+        return () => ctx.revert();
+    }, []);
+
   return (
     <section className="w-full py-20 md:py-32 bg-white border-y border-zinc-200">
       <div className="container mx-auto max-w-7xl px-6">
@@ -68,12 +129,9 @@ export function PortfolioSection() {
         </motion.div>
 
         {/* Portfolio-Grid */}
-        <motion.div 
+        <div 
+          ref={gridRef}
           className="grid grid-cols-1 md:grid-cols-3 gap-8"
-          variants={gridVariants}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, amount: 0.2 }}
         >
           {featuredProjects.map((project) => (
             <PortfolioCard
@@ -84,12 +142,18 @@ export function PortfolioSection() {
               href={project.href}
             />
           ))}
-        </motion.div>
+        </div>
 
         <div className="text-center mt-16">
-          <button className="bg-accent text-white font-semibold px-6 py-3 rounded-md hover:bg-accent-dark transition-colors">
+          <motion.button 
+            className="bg-accent text-white font-semibold px-6 py-3 rounded-md hover:bg-accent-dark transition-colors"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.5 }}
+            transition={{ duration: 0.6, ease: "easeOut", delay: 0.3 }}
+          >
             Alle Projekte ansehen
-          </button>
+          </motion.button>
         </div>
 
       </div>

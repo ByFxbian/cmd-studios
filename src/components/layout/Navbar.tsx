@@ -3,10 +3,10 @@ import Link from 'next/link';
 
 export function Navbar() {
     return (
-        <header className="fixed top-0 left-0 w-full z-50 backdrop-blur-md border-b border-[var(--color-navbar-border)]">
+        <header className="fixed top-0 left-0 w-full z-50 backdrop-blur-md border-b border-[var(--color-navbar-border)] transition-colors duration-300 ease-in-out">
             <nav className="container mx-auto max-w-7xl flex justify-between items-center p-6">
-                <Link href="/" className="text-xl font-bold tracking-tight text-[var(--color-heading)]">
-                CMD<span className='text-[var(--color-text-muted)]'> Studios</span>
+                <Link href="/" className="text-xl font-bold tracking-tight text-[var(--color-heading)] transition-colors duration-300 ease-in-out">
+                CMD<span className='text-[var(--color-text-muted)] transition-colors duration-300 ease-in-out'> Studios</span>
                 </Link>
                 <div className='hidden md:flex gap-6 items-center'>
                     <Link href="/services" className="text-[var(--color-text)] hover:text-[var(--color-heading)] transition-colors">Services</Link>

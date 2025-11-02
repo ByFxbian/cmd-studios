@@ -47,7 +47,7 @@ export function Navbar() {
                 initial="closed" 
                 animate={isOpen ? "open" : "closed"}
             >
-                <MenuToggle toggle={toggleMenu} />
+                <MenuToggle toggle={toggleMenu} isOpen={isOpen}/>
             </motion.div>
             
             {/* 7. Das Menü selbst (außerhalb des headers) */}

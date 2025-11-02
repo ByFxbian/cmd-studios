@@ -6,19 +6,19 @@
   --color-accent: #14b8a6;
   --color-accent-dark: #0d9488;
 
-  --color-page-bg: theme('colors.zinc.50');
-  --color-heading: theme('colors.zinc.900');
-  --color-text: theme('colors.zinc.700');
-  --color-text-muted: theme('colors.zinc.500');
-  --color-navbar-border: theme('colors.zinc.900/0.1');
+  --color-page-bg: #fafafa;
+  --color-heading: #18181b;
+  --color-text: #3f3f46;
+  --color-text-muted: #71717b;
+  --color-navbar-border: rgba(24,24,27,0.1);
 
   --color-button-bg: var(--color-accent);
   --color-button-text: white;
   --color-button-hover-bg: var(--color-accent-dark);
 
   --color-scroll-button-bg: white;
-  --color-scroll-button-text: theme('colors.zinc.900');
-  --color-scroll-button-hover-bg: theme('colors.zinc.100');
+  --color-scroll-button-text: #18181b;
+  --color-scroll-button-hover-bg: #f4f4f5;
 }
 
 body.on-dark-panel {

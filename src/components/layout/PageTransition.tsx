@@ -11,6 +11,8 @@ export function PageTransition({ children }: { children: React.ReactNode }) {
   const { isLoaded } = useLoading();
 
   useLayoutEffect(() => {
+    window.scrollTo(0, 0);
+
     return () => {
         const triggers = ScrollTrigger.getAll();
         triggers.forEach((trigger) => {

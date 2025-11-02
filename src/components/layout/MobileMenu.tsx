@@ -63,12 +63,8 @@ export const MobileMenu: FC<{ isOpen: boolean, toggle: () => void }> = ({ isOpen
     useEffect(() => {
     if (isOpen) {
       document.body.style.overflow = 'hidden';
-      document.body.classList.add('on-dark-panel');
     } else {
       document.body.style.overflow = 'auto';
-      if (!document.body.querySelector('.panel.bg-zinc-900')) {
-        document.body.classList.remove('on-dark-panel');
-      }
     }
     return () => {
        document.body.style.overflow = 'auto';

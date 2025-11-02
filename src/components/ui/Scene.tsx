@@ -41,8 +41,14 @@ function MeshComponent() {
 }
 
 export function Scene({ children }: { children: ReactNode }) {
+  const { setIsLoaded } = useLoading();
+
   useEffect(() => {
     const isDesktop = window.innerWidth >= 1024;
+
+    if (!isDesktop) {
+      setIsLoaded(true);
+    }
 
     const lenis = new Lenis({
       lerp: 0.1,

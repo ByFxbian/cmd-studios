@@ -102,7 +102,7 @@ export function ServiceDetailSection({
       variants={containerVariants}
       initial="hidden"
       whileInView="visible"
-      viewport={{ once: true, amount: 0.2 }}
+      viewport={{ once: true, amount: 0.3 }}
     >
       <motion.div variants={itemVariants} className="flex items-center gap-3 mb-4">
         <TitleIcon className="w-8 h-8 text-accent" />

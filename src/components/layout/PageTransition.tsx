@@ -31,7 +31,7 @@ export function PageTransition({ children }: { children: React.ReactNode }) {
 
         {children}
         <motion.div
-          className="fixed top-0 left-0 w-full h-screen bg-accent z-50"
+          className="fixed top-0 left-0 w-full h-screen bg-accent z-50 scale-[1.01]"
           variants={curtainVariants}
           initial="initial"
           animate={isLoaded ? "animate" : "initial"}
@@ -40,7 +40,7 @@ export function PageTransition({ children }: { children: React.ReactNode }) {
         />
         
         <motion.div
-          className="fixed top-0 left-0 w-full h-screen bg-zinc-900 z-40"
+          className="fixed top-0 left-0 w-full h-screen bg-zinc-900 z-40 scale-[1.01]"
           variants={curtainVariants}
           initial="initial"
           animate={isLoaded ? "animate" : "initial"}

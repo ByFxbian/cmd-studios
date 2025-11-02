@@ -20,50 +20,71 @@ export function PortfolioSection() {
 
         const cards = gsap.utils.toArray(gridRef.current?.children || []);
 
-        let proxy = { skew: 0};
-        let skewSetter = gsap.quickSetter(cards, "skewY", "deg");
-        let clamp = gsap.utils.clamp(-15, 15);
+        let mm = gsap.matchMedia();
 
-        let ctx = gsap.context(() => {
-            cards.forEach((card: any, i) => {
-                const yPercent = i === 1 ? 15 : -15;
-                gsap.fromTo(card,
-                    {
-                        yPercent: yPercent * 1.5
-                    },
-                    {
-                        yPercent: yPercent * -1,
-                        ease: "none",
-                        scrollTrigger: {
-                            trigger: sectionRef.current,
-                            scrub: 1,
-                            start: "top bottom",
-                            end: "bottom top"
-                        }
-                    }
-                );
-            });
+        mm.add("(min-width: 768px)", () => {
+          let proxy = { skew: 0};
+          let skewSetter = gsap.quickSetter(cards, "skewY", "deg");
+          let clamp = gsap.utils.clamp(-8, 8);
 
-            ScrollTrigger.create({
-                trigger: sectionRef.current,
-                start: "top bottom",
-                end: "bottom top",
-                onUpdate: (self) => {
+          let ctx = gsap.context(() => {
+              cards.forEach((card: any, i) => {
+                  const yPercent = i === 1 ? 15 : -15;
+                  gsap.fromTo(card,
+                      {
+                          yPercent: yPercent * 1.5
+                      },
+                      {
+                          yPercent: yPercent * -1,
+                          ease: "none",
+                          scrollTrigger: {
+                              trigger: sectionRef.current,
+                              scrub: 1,
+                              start: "top bottom",
+                              end: "bottom top"
+                          }
+                      }
+                  );
+              });
+
+              ScrollTrigger.create({
+                  trigger: sectionRef.current,
+                  start: "top bottom",
+                  end: "bottom top",
+                  onUpdate: (self) => {
                     const velocity = self.getVelocity();
-                    const skew = clamp(velocity / -200);
+                    const skew = clamp(velocity / -500);
 
-                    gsap.to(proxy, {
-                        skew: skew,
-                        duration: 0.5,
+                    if(Math.abs(skew) > Math.abs(proxy.skew)) {
+                      proxy.skew = skew;
+                      gsap.to(proxy, {
+                        skew: 0,
+                        duration: 1.0,
                         ease: "power3.out",
                         overwrite: true,
-                        onUpdate: () => skewSetter(proxy.skew)
-                    });
-                }
-            });
-        }, sectionRef);
+                        onUpdate: () => skewSetter(proxy.skew),
+                      });
+                    } else if (self.getVelocity() === 0 && proxy.skew !== 0) {
+                      gsap.to(proxy, {
+                        skew: 0,
+                        duration: 1.0,
+                        ease: "power3.out",
+                        overwrite: true,
+                        onUpdate: () => skewSetter(proxy.skew),
+                      });
+                    }
+                  }
+              });
+          });
 
-        return () => ctx.revert();
+          return () => {
+            ctx.revert();
+          }
+        });
+
+        
+
+        return () => mm.revert();
     }, []);
 
   return (

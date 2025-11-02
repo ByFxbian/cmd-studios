@@ -43,7 +43,7 @@ export function Navbar() {
 
             {/* 6. Mobile Toggle Button */}
             <motion.div 
-                className="md:hidden z-[100]"
+                className="md:hidden fixed top-0 right-0 z-[100] m-4 mt-4"
                 initial="closed" 
                 animate={isOpen ? "open" : "closed"}
             >

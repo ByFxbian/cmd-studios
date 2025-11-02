@@ -41,14 +41,48 @@ function MeshComponent() {
 }
 
 export function Scene({ children }: { children: ReactNode }) {
-  const { setIsLoaded } = useLoading();
+  const { setIsLoaded: setGlobalIsLoaded } = useLoading();
+
+  const [isModelActuallyLoaded, setIsModelActuallyLoaded] = useState(false);
+  const [isMinTimePassed, setIsMinTimePassed] = useState(false);
+
+  function ModelLoaderHelper() {
+    useEffect(() => {
+      setIsModelActuallyLoaded(true);
+    }, []);
+    return null;
+  }
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setIsMinTimePassed(true);
+    }, 1500);
+    return () => clearTimeout(timer);
+  }, []);
 
   useEffect(() => {
     const isDesktop = window.innerWidth >= 1024;
 
-    if (!isDesktop) {
-      setIsLoaded(true);
+    if (isDesktop) {
+      if (isModelActuallyLoaded && isMinTimePassed) {
+        setGlobalIsLoaded(true);
+      }
+    } else {
+      if (isMinTimePassed) {
+        setGlobalIsLoaded(true);
+      }
     }
+  }, [isModelActuallyLoaded, isMinTimePassed, setGlobalIsLoaded]);
+
+  useEffect(() => {
+    const isDesktop = window.innerWidth >= 1024;
+
+    /*if (!isDesktop) {
+      const minLoadTimer = setTimeout(() => {
+        setIsLoaded(true);
+      }, 1500);
+      return () => clearTimeout(minLoadTimer);
+    }*/
 
     const lenis = new Lenis({
       lerp: 0.1,

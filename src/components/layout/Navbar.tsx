@@ -20,7 +20,7 @@ export function Navbar() {
         <>
             <header className="fixed top-0 left-0 w-full z-50 backdrop-blur-md border-b border-[var(--color-navbar-border)] transition-colors duration-300 ease-in-out">
                 <nav className="container mx-auto max-w-7xl flex justify-between items-center p-6">
-                    <Link href="/" className="text-xl font-bold tracking-tight text-[var(--color-heading)] transition-colors duration-300 ease-in-out z-[100]">
+                    <Link href="/" className="text-xl font-bold tracking-tight text-transparent bg-clip-text bg-linear-to-r from-accent to-blue-500 transition-colors duration-300 ease-in-out z-[100]">
                     CMD<span className='text-[var(--color-text-muted)] transition-colors duration-300 ease-in-out'> Studios</span>
                     </Link>
                     

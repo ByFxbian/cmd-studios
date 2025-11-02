@@ -41,13 +41,8 @@ function MeshComponent() {
 }
 
 export function Scene({ children }: { children: ReactNode }) {
-  const [isMobile, setIsMobile] = useState(false);
-
   useEffect(() => {
-    const checkMobile = () => {
-      setIsMobile(window.innerWidth < 1024);
-    };
-    checkMobile();
+    const isDesktop = window.innerWidth >= 1024;
 
     const lenis = new Lenis({
       lerp: 0.1,
@@ -61,21 +56,20 @@ export function Scene({ children }: { children: ReactNode }) {
 
     gsap.ticker.lagSmoothing(0);
 
-    if (!isMobile) {
+    if (isDesktop) {
       window.addEventListener('pointermove', onPointerMove);
     }
 
     return () => {
       lenis.destroy();
-      if (!isMobile) {
-        window.removeEventListener('pointermove', onPointerMove);
+      if (isDesktop) {
+        window.addEventListener('pointermove', onPointerMove);
       }
     };
-  }, [isMobile]);
+  }, []);
 
   return (
     <>
-      {!isMobile && (
       <Canvas
         style={{
           position: 'fixed',
@@ -86,7 +80,7 @@ export function Scene({ children }: { children: ReactNode }) {
         }}
         camera={{ position: [0, 0, 5], fov: 50 }}
         shadows
-        className='fade-in'
+        className='fade-in hidden lg:block'
       >
         <Suspense fallback={null}>
           <ambientLight intensity={1}/>
@@ -96,7 +90,6 @@ export function Scene({ children }: { children: ReactNode }) {
           <ModelLoader />
         </Suspense>
       </Canvas>
-      )}
       {children}
     </>
   );

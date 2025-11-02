@@ -38,17 +38,17 @@ export function Navbar() {
                             Kontakt
                         </Link>
                     </div>
-
-                    {/* 6. Mobile Toggle Button */}
-                    <motion.div 
-                      className="md:hidden z-[100]"
-                      initial="closed" 
-                      animate={isOpen ? "open" : "closed"}
-                    >
-                      <MenuToggle toggle={toggleMenu} />
-                    </motion.div>
                 </nav>
             </header>
+
+            {/* 6. Mobile Toggle Button */}
+            <motion.div 
+                className="md:hidden z-[100]"
+                initial="closed" 
+                animate={isOpen ? "open" : "closed"}
+            >
+                <MenuToggle toggle={toggleMenu} />
+            </motion.div>
             
             {/* 7. Das Menü selbst (außerhalb des headers) */}
             <MobileMenu isOpen={isOpen} toggle={toggleMenu} />

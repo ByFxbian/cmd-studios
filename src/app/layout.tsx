@@ -5,6 +5,7 @@ import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
 import { Scene } from "@/components/ui/Scene";
 import { PageTransition } from "@/components/layout/PageTransition";
+import { LoadingProvider } from "@/context/LoadingContext";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -21,17 +22,19 @@ export default function RootLayout({
   return (
     <html lang="de">
       <body className={`${inter.className} bg-[var(--color-page-bg)] text-[var(--color-heading)] antialiased`}>
-        <Scene>
-          <Navbar />
-          <main className="flex flex-col min-h-screen">
-            <div className="flex-grow relative z-10 bg-transparent">
-              <PageTransition>
-                {children}
-              </PageTransition>
-            </div>
-          </main>
-        </Scene>
-        <Footer />
+        <LoadingProvider>
+          <Scene>
+            <Navbar />
+            <main className="flex flex-col min-h-screen">
+              <div className="flex-grow relative z-10 bg-transparent">
+                <PageTransition>
+                  {children}
+                </PageTransition>
+              </div>
+            </main>
+          </Scene>
+          <Footer />
+        </LoadingProvider>
       </body>
     </html>
   );

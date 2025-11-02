@@ -1,6 +1,6 @@
 'use client';
 
-import { RefObject, Suspense, useEffect, useRef, type ReactNode } from 'react';
+import { RefObject, Suspense, useEffect, useRef, useState, type ReactNode } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
 import { Environment, OrbitControls, Preload, useGLTF } from '@react-three/drei';
 import * as THREE from 'three';
@@ -9,6 +9,7 @@ import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { Model } from './Model';
 import { pointerRef } from '@/lib/three-store';
+import { useLoading } from '@/context/LoadingContext';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -18,6 +19,15 @@ const onPointerMove = (event: PointerEvent) => {
   pointerRef.x = (event.clientX / window.innerWidth) * 2 - 1;
   pointerRef.y = -(event.clientY / window.innerHeight) * 2 + 1;
 };
+
+function ModelLoader() {
+  const { setIsLoaded } = useLoading();
+  useEffect(() => {
+    setIsLoaded(true);
+  }, [setIsLoaded]);
+
+  return null;
+}
 
 function MeshComponent() {
     const meshRef = useRef<THREE.Mesh>(null!);
@@ -31,7 +41,14 @@ function MeshComponent() {
 }
 
 export function Scene({ children }: { children: ReactNode }) {
+  const [isMobile, setIsMobile] = useState(false);
+
   useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 1024);
+    };
+    checkMobile();
+
     const lenis = new Lenis({
       lerp: 0.1,
       smoothWheel: true,
@@ -44,16 +61,21 @@ export function Scene({ children }: { children: ReactNode }) {
 
     gsap.ticker.lagSmoothing(0);
 
-    window.addEventListener('pointermove', onPointerMove);
+    if (!isMobile) {
+      window.addEventListener('pointermove', onPointerMove);
+    }
 
     return () => {
       lenis.destroy();
-      window.removeEventListener('pointermove', onPointerMove);
+      if (!isMobile) {
+        window.removeEventListener('pointermove', onPointerMove);
+      }
     };
-  }, []);
+  }, [isMobile]);
 
   return (
     <>
+      {!isMobile && (
       <Canvas
         style={{
           position: 'fixed',
@@ -63,15 +85,18 @@ export function Scene({ children }: { children: ReactNode }) {
           opacity: 0.3,
         }}
         camera={{ position: [0, 0, 5], fov: 50 }}
-        shadows={false}
+        shadows
+        className='fade-in'
       >
         <Suspense fallback={null}>
           <ambientLight intensity={1}/>
           <Environment preset="apartment"/>
           <Model />
           <Preload all />
+          <ModelLoader />
         </Suspense>
       </Canvas>
+      )}
       {children}
     </>
   );

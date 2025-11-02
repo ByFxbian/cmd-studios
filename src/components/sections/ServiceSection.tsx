@@ -18,8 +18,14 @@ const cardVariants: Variants = {
 };
 
 export function ServiceSection() {
+            {/*<section className="w-full py-20 md:py-32 bg-zinc-50
+            relative -mt-[100px] pt-[200px] md:pt-[220px]
+            [mask-image:url('/mask.svg')] [mask-size:100%_100px] [mask-repeat:no-repeat] [mask-position:top_center]
+        ">*/}
     return (
-        <section className="w-full py-20 md:py-32 bg-zinc-50">
+        <section 
+            className="w-full py-20 md:py-32 bg-zinc-50"
+        >
             <div className="container mx-auto max-w-7xl px-6">
                 <motion.div
                     className="text-center mb-12"

@@ -2,6 +2,8 @@
 
 import { Suspense } from 'react';
 import { motion, type Variants } from "framer-motion";
+import Link from 'next/link';
+import { AnimatedText } from '../ui/AnimatedText';
 
 const containerVariants: Variants = {
     hidden: { opacity: 0 },
@@ -32,8 +34,6 @@ export function HeroSection() {
                 className="relative z-10 flex flex-col items-center text-center p-6"
                 variants={containerVariants}
                 initial="hidden"
-                whileInView="visible"
-                viewport={{ once: true, amount: 0.5 }}
                 animate="visible"
             >
                 <motion.h1
@@ -56,12 +56,20 @@ export function HeroSection() {
                 </motion.p>
 
                 <motion.div className="flex gap-4" variants={itemVariants}>
-                    <button className="bg-accent text-white font-semibold px-6 py-3 rounded-md hover:bg-accent-dark transition-colors">
+                    <Link
+                        href="/portfolio"
+                        className="bg-accent text-white font-semibold px-6 py-3 rounded-md hover:bg-accent-dark transition-colors"
+                    >
                         Unsere Arbeit
-                    </button>
-                    <button className="bg-transparent border border-zinc-300 text-zinc-700 font-semibold px-6 py-3 rounded-md hover:bg-zinc-100 transition-colors">
+                    </Link>
+                    <Link 
+                        href="/contact"
+                        className="bg-transparent border border-zinc-300 text-zinc-700 font-semibold px-6 py-3 rounded-md 
+                                   hover:bg-zinc-100 transition-colors
+                                   dark:border-zinc-700 dark:text-zinc-300 dark:hover:bg-zinc-800"
+                    >
                         Kontakt
-                    </button>
+                    </Link>
                 </motion.div>
             </motion.div>
         </section>

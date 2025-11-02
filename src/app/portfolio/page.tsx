@@ -4,59 +4,7 @@ import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { PortfolioCard } from '@/components/ui/PortfolioCard';
 import { ContactSection } from '@/components/sections/ContactSection';
-
-type Project = {
-  id: number;
-  title: string;
-  category: "Web-Entwicklung" | "Video-Produktion"; 
-  imageUrl: string;
-  href: string;
-};
-
-const allProjects : Project[] = [
-  {
-    id: 1,
-    title: "Alkos Barber Buchungssystem",
-    category: "Web-Entwicklung",
-    imageUrl: "https://placehold.co/800x800.png?text=Web+1", 
-    href: "/portfolio/alkos-barber",
-  },
-  {
-    id: 2,
-    title: "Imagefilm für 'XYZ Fitness'",
-    category: "Video-Produktion",
-    imageUrl: "https://placehold.co/800x800.png?text=Video+1",
-    href: "/portfolio/xyz-fitness",
-  },
-  {
-    id: 3,
-    title: "Website Relaunch 'Muster AG'",
-    category: "Web-Entwicklung",
-    imageUrl: "https://placehold.co/800x800.png?text=Web+2",
-    href: "/portfolio/muster-ag",
-  },
-  {
-    id: 4,
-    title: "Event-Aftermovie 'Summer Vibes'",
-    category: "Video-Produktion",
-    imageUrl: "https://placehold.co/800x800.png?text=Video+2",
-    href: "/portfolio/summer-vibes",
-  },
-  {
-    id: 5,
-    title: "Corporate Portraits 'Tech Inc.'",
-    category: "Video-Produktion",
-    imageUrl: "https://placehold.co/800x800.png?text=Video+3",
-    href: "/portfolio/tech-inc",
-  },
-  {
-    id: 6,
-    title: "Headless CMS für 'Blogify'",
-    category: "Web-Entwicklung",
-    imageUrl: "https://placehold.co/800x800.png?text=Web+3",
-    href: "/portfolio/blogify",
-  },
-];
+import { allProjects, type Project } from '@/lib/portfolio-data'
 
 type Category = "Alle" | "Web-Entwicklung" | "Video-Produktion";
 
@@ -117,7 +65,6 @@ export default function PortfolioPage() {
 
           {/* Animierte Galerie */}
           <motion.div
-            layout
             className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
           >
             <AnimatePresence>
@@ -134,7 +81,7 @@ export default function PortfolioPage() {
                     title={project.title}
                     category={project.category}
                     imageUrl={project.imageUrl}
-                    href={project.href}
+                    href={`/portfolio/${project.slug}`}
                   />
                 </motion.div>
               ))}

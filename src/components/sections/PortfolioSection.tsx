@@ -7,49 +7,8 @@ import { PortfolioCard } from '../ui/PortfolioCard';
 import { useLayoutEffect, useRef } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-
-type Project = {
-  id: number;
-  title: string;
-  category: "Web-Entwicklung" | "Video-Produktion"; 
-  imageUrl: string;
-  href: string;
-};
-
-const featuredProjects: Project[] = [ // Typ 'Project[]' anwenden
-  {
-    id: 1,
-    title: "Alkos Barber Buchungssystem",
-    category: "Web-Entwicklung",
-    imageUrl: "https://placehold.co/800x800.png?text=Web+Projekt", 
-    href: "/portfolio/alkos-barber",
-  },
-  {
-    id: 2,
-    title: "Imagefilm für 'XYZ Fitness'",
-    category: "Video-Produktion",
-    imageUrl: "https://placehold.co/800x800.png?text=Video+Projekt",
-    href: "/portfolio/xyz-fitness",
-  },
-  {
-    id: 3,
-    title: "Website Relaunch 'Muster AG'",
-    category: "Web-Entwicklung",
-    imageUrl: "https://placehold.co/800x800.png?text=Web+Projekt+2",
-    href: "/portfolio/muster-ag",
-  },
-];
-
-/*const gridVariants: Variants = {
-  hidden: { opacity: 0 },
-  visible: {
-    opacity: 1,
-    transition: {
-      staggerChildren: 0.2,
-    },
-  },
-};
-*/
+import { featuredProjects, type Project } from '@/lib/portfolio-data';
+import Link from 'next/link';
 
 export function PortfolioSection() {
     const sectionRef = useRef<HTMLDivElement>(null);
@@ -139,21 +98,25 @@ export function PortfolioSection() {
               title={project.title}
               category={project.category}
               imageUrl={project.imageUrl}
-              href={project.href}
+              href={`/portfolio/${project.slug}`}
             />
           ))}
         </div>
 
         <div className="text-center mt-16">
-          <motion.button 
-            className="bg-accent text-white font-semibold px-6 py-3 rounded-md hover:bg-accent-dark transition-colors"
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, amount: 0.5 }}
-            transition={{ duration: 0.6, ease: "easeOut", delay: 0.3 }}
-          >
-            Alle Projekte ansehen
-          </motion.button>
+            <Link 
+                href="/portfolio"
+                className="inline-block bg-accent text-white font-semibold px-6 py-3 rounded-md hover:bg-accent-dark transition-colors"
+            > 
+                <motion.span 
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true, amount: 0.5 }}
+                    transition={{ duration: 0.6, ease: "easeOut", delay: 0.3 }}
+                >
+                    Alle Projekte ansehen
+                </motion.span>
+          </Link>
         </div>
 
       </div>

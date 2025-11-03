@@ -45,3 +45,13 @@ a, button, [role="button"], .cursor-pointer {
     cursor: none;
   }
 }
+
+.no-hscroll-on-form {
+  overscroll-behavior: contain;
+}
+
+.no-hscroll-on-form,
+.no-hscroll-on-form * {
+  touch-action: pan-y;
+}
+

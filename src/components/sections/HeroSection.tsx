@@ -4,6 +4,7 @@ import { Suspense } from 'react';
 import { motion, type Variants } from "framer-motion";
 import Link from 'next/link';
 import { AnimatedText } from '../ui/AnimatedText';
+import { MagneticLink } from '../ui/MagneticLink';
 
 const containerVariants: Variants = {
     hidden: { opacity: 0 },
@@ -56,20 +57,20 @@ export function HeroSection() {
                 </motion.p>
 
                 <motion.div className="flex gap-4" variants={itemVariants}>
-                    <Link
+                    <MagneticLink
                         href="/portfolio"
                         className="bg-accent text-white font-semibold px-6 py-3 rounded-md hover:bg-accent-dark transition-colors"
                     >
                         Unsere Arbeit
-                    </Link>
-                    <Link 
+                    </MagneticLink>
+                    <MagneticLink 
                         href="/contact"
                         className="bg-transparent border border-zinc-300 text-zinc-700 font-semibold px-6 py-3 rounded-md 
                                    hover:bg-zinc-100 transition-colors
                                    dark:border-zinc-700 dark:text-zinc-300 dark:hover:bg-zinc-800"
                     >
                         Kontakt
-                    </Link>
+                    </MagneticLink>
                 </motion.div>
             </motion.div>
         </section>

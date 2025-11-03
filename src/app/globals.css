@@ -35,3 +35,13 @@ body.on-dark-panel {
   --color-scroll-button-text: white;
   --color-scroll-button-hover-bg: #3f3f46; /* war: theme('colors.zinc.700') */
 }
+
+a, button, [role="button"], .cursor-pointer {
+  cursor: pointer;
+}
+
+@media (min-width: 1024px) {
+  html, body, a, button, [role="button"], .cursor-pointer {
+    cursor: none;
+  }
+}

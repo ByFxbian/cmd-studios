@@ -7,6 +7,8 @@ import { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import { MenuToggle } from './MenuToggle';
 import { MobileMenu } from './MobileMenu';
+import { HoverStaggeredLink } from '../ui/HoverStaggeredLink';
+import { MagneticLink } from '../ui/MagneticLink';
 
 export function Navbar() {
     const [isOpen, setIsOpen] = useState(false);
@@ -26,17 +28,29 @@ export function Navbar() {
                     
                     {/* Desktop Links (unverändert) */}
                     <div className='hidden md:flex gap-6 items-center'>
-                        <Link href="/services" className="text-[var(--color-text)] hover:text-[var(--color-heading)] transition-colors">Services</Link>
-                        <Link href="/portfolio" className="text-[var(--color-text)] hover:text-[var(--color-heading)] transition-colors">Portfolio</Link>
-                        <Link href="/about" className="text-[var(--color-text)] hover:text-[var(--color-heading)] transition-colors">Über uns</Link>
-                        <Link
+                        <HoverStaggeredLink 
+                            href="/services" 
+                            title="Services"
+                            className="text-[var(--color-text)] hover:text-[var(--color-heading)] transition-colors"
+                        />
+                        <HoverStaggeredLink 
+                            href="/portfolio" 
+                            title="Portfolio"
+                            className="text-[var(--color-text)] hover:text-[var(--color-heading)] transition-colors"
+                        />
+                        <HoverStaggeredLink 
+                            href="/about" 
+                            title="Über uns"
+                            className="text-[var(--color-text)] hover:text-[var(--color-heading)] transition-colors"
+                        />
+                        <MagneticLink
                             href="/contact"
                             className="contact-button bg-[var(--color-button-bg)] 
                         text-[var(--color-button-text)] 
                         hover:bg-[var(--color-button-hover-bg)] font-semibold px-4 py-2 rounded-md transition-colors"
                         >
                             Kontakt
-                        </Link>
+                        </MagneticLink>
                     </div>
                 </nav>
             </header>

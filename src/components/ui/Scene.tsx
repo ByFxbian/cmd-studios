@@ -10,6 +10,7 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { Model } from './Model';
 import { pointerRef } from '@/lib/three-store';
 import { useLoading } from '@/context/LoadingContext';
+import { usePathname } from 'next/navigation';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -46,6 +47,10 @@ export function Scene({ children }: { children: ReactNode }) {
   const [isModelActuallyLoaded, setIsModelActuallyLoaded] = useState(false);
   const [isMinTimePassed, setIsMinTimePassed] = useState(false);
 
+  const canvasRef = useRef<HTMLCanvasElement>(null!);
+
+  const pathname = usePathname();
+
   function ModelLoaderHelper() {
     useEffect(() => {
       setIsModelActuallyLoaded(true);
@@ -76,13 +81,9 @@ export function Scene({ children }: { children: ReactNode }) {
 
   useEffect(() => {
     const isDesktop = window.innerWidth >= 1024;
+    const canvasEl = canvasRef.current;
 
-    /*if (!isDesktop) {
-      const minLoadTimer = setTimeout(() => {
-        setIsLoaded(true);
-      }, 1500);
-      return () => clearTimeout(minLoadTimer);
-    }*/
+    ScrollTrigger.getAll().forEach(t => t.kill());
 
     const lenis = new Lenis({
       lerp: 0.1,
@@ -98,6 +99,18 @@ export function Scene({ children }: { children: ReactNode }) {
 
     if (isDesktop) {
       window.addEventListener('pointermove', onPointerMove);
+
+      if (pathname === '/' && canvasEl) {
+        gsap.to(canvasEl, {
+          opacity: 0,
+          scrollTrigger: {
+            trigger: "body",
+            start: "250vh top",
+            end: "300vh top",
+            scrub: true,
+          }
+        });
+      }
     }
 
     return () => {
@@ -105,12 +118,14 @@ export function Scene({ children }: { children: ReactNode }) {
       if (isDesktop) {
         window.addEventListener('pointermove', onPointerMove);
       }
+      ScrollTrigger.getAll().forEach(t => t.kill());
     };
-  }, []);
+  }, [pathname]);
 
   return (
     <>
       <Canvas
+        ref={canvasRef}
         style={{
           position: 'fixed',
           top: 0,

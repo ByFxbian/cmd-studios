@@ -3,6 +3,11 @@
 import { motion, type Variants } from "framer-motion";
 import { HiCode, HiCamera } from "react-icons/hi";
 import Link from "next/link";
+import { HoverStaggeredLink } from "../ui/HoverStaggeredLink";
+import { ArrowRight } from "lucide-react";
+import { AnimatedStaggeredText } from "../ui/AnimatedStaggeredText";
+import { useState } from "react";
+import { AnimatedIconLink } from "../ui/AnimatedIconLink";
 
 const cardVariants: Variants = {
     hidden: { opacity: 0, y: 50},
@@ -18,10 +23,8 @@ const cardVariants: Variants = {
 };
 
 export function ServiceSection() {
-            {/*<section className="w-full py-20 md:py-32 bg-zinc-50
-            relative -mt-[100px] pt-[200px] md:pt-[220px]
-            [mask-image:url('/mask.svg')] [mask-size:100%_100px] [mask-repeat:no-repeat] [mask-position:top_center]
-        ">*/}
+    const [isServiceLinkHovering, setIsServiceLinkHovering] = useState(false);
+
     return (
         <section 
             className="w-full py-20 md:py-32 bg-zinc-50"
@@ -59,12 +62,13 @@ export function ServiceSection() {
                         Web-Applikationen. Wir bauen performante, SEO-optimierte und 
                         responsive Websites für KMUs.
                         </p>
-                        <Link 
-                        href="/services#web" 
-                        className="text-accent font-semibold hover:text-accent-dark transition-colors"
+                        <AnimatedIconLink
+                            href="/services#web"
+                            title="Mehr über Web Services"
+                            className="text-lg font-medium text-accent"
                         >
-                        Mehr über Web-Services &rarr;
-                        </Link>
+                            <ArrowRight className="h-5 w-5 transition-transform group-hover:translate-x-1" />
+                        </AnimatedIconLink>
                     </motion.div>
 
                     <motion.div
@@ -82,12 +86,13 @@ export function ServiceSection() {
                         Branding. Wir erzählen Ihre Geschichte visuell und sorgen dafür, 
                         dass Ihre Botschaft ankommt.
                         </p>
-                        <Link 
-                        href="/services#video" 
-                        className="text-accent font-semibold hover:text-accent-dark transition-colors"
+                        <AnimatedIconLink
+                            href="/services#video"
+                            title="Mehr über Content-Services"
+                            className="text-lg font-medium text-accent"
                         >
-                        Mehr über Content-Services &rarr;
-                        </Link>
+                            <ArrowRight className="h-5 w-5 transition-transform group-hover:translate-x-1" />
+                        </AnimatedIconLink>
                     </motion.div>
                 </div>
             </div>

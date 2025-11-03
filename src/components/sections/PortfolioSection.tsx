@@ -9,6 +9,7 @@ import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { featuredProjects, type Project } from '@/lib/portfolio-data';
 import Link from 'next/link';
+import { MagneticLink } from '../ui/MagneticLink';
 
 export function PortfolioSection() {
     const sectionRef = useRef<HTMLDivElement>(null);
@@ -125,10 +126,10 @@ export function PortfolioSection() {
         </div>
 
         <div className="text-center mt-16">
-            <Link 
-                href="/portfolio"
-                className="inline-block bg-accent text-white font-semibold px-6 py-3 rounded-md hover:bg-accent-dark transition-colors"
-            > 
+            <MagneticLink 
+              href="/portfolio"
+              className="inline-block bg-accent text-white font-semibold px-6 py-3 rounded-md hover:bg-accent-dark transition-colors"
+            >
                 <motion.span 
                     initial={{ opacity: 0, y: 20 }}
                     whileInView={{ opacity: 1, y: 0 }}
@@ -137,7 +138,7 @@ export function PortfolioSection() {
                 >
                     Alle Projekte ansehen
                 </motion.span>
-          </Link>
+          </MagneticLink>
         </div>
 
       </div>

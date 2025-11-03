@@ -7,6 +7,7 @@ import { Scene } from "@/components/ui/Scene";
 import { PageTransition } from "@/components/layout/PageTransition";
 import { LoadingProvider } from "@/context/LoadingContext";
 import { ClientLoader } from "@/components/layout/ClientLoader";
+import { CustomCursor } from "@/components/ui/CustomCursor";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -24,6 +25,7 @@ export default function RootLayout({
     <html lang="de">
       <body className={`${inter.className} bg-[var(--color-page-bg)] text-[var(--color-heading)] antialiased`}>
         <LoadingProvider>
+          <CustomCursor />
           <ClientLoader />
           <Scene>
             <Navbar />

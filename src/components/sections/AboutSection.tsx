@@ -3,6 +3,7 @@
 import Image from 'next/image';
 import { motion, type Variants } from 'framer-motion';
 import { HiArrowRight } from 'react-icons/hi';
+import { AnimatedIconLink } from '../ui/AnimatedIconLink';
 
 const containerVariants: Variants = {
   hidden: { opacity: 0 },
@@ -63,10 +64,13 @@ export function AboutSection() {
                 Branding.
               </p>
             </div>
-            <button className="group mt-8 flex items-center gap-2 bg-transparent text-accent font-semibold transition-colors">
-              Mehr über uns erfahren
+            <AnimatedIconLink 
+              href="/about"
+              title="Mehr über uns erfahren"
+              className="mt-8 bg-transparent text-accent font-semibold transition-colors"
+            >
               <HiArrowRight className="transition-transform duration-300 group-hover:translate-x-1" />
-            </button>
+            </AnimatedIconLink>
           </motion.div>
 
           <motion.div 

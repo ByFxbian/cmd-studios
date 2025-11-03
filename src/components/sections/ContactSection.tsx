@@ -3,6 +3,7 @@
 import { motion, type Variants } from 'framer-motion';
 import { HiArrowRight } from 'react-icons/hi';
 import Link from 'next/link';
+import { MagneticLink } from '../ui/MagneticLink';
 
 const variants: Variants = {
   hidden: { opacity: 0, y: 40 },
@@ -35,17 +36,15 @@ export function ContactSection() {
           Ihre Vision Realität werden zu lassen.
         </p>
         
-        <Link 
+        <MagneticLink
           href="/contact" 
           className="group inline-flex items-center justify-center gap-2 
                      bg-accent text-white font-semibold 
-                     px-8 py-4 rounded-md 
-                     hover:bg-accent-dark transition-colors 
-                     text-lg mt-10"
+                     px-8 py-4 rounded-full text-lg 
+                     mt-10 transition-all hover:bg-accent-dark shadow-xl shadow-accent/20"
         >
-          Jetzt Kontakt aufnehmen
-          <HiArrowRight className="transition-transform duration-300 group-hover:translate-x-1" />
-        </Link>
+          Projekt anfragen <HiArrowRight className="transition-transform duration-300 group-hover:translate-x-1" />
+        </MagneticLink>
       </motion.div>
     </section>
   );

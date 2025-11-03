@@ -1,20 +1,30 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable prefer-const */
 "use client";
 
-import { useLayoutEffect, useRef, useState } from 'react';
+import { FormEvent, useLayoutEffect, useRef, useState } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { ScrollToPlugin } from 'gsap/ScrollToPlugin';
-import { HiArrowLeft, HiArrowRight } from 'react-icons/hi';
+import { HiArrowLeft, HiArrowRight, HiOutlineArrowRight } from 'react-icons/hi';
+import { usePathname } from 'next/navigation';
+import { AnimatePresence, motion } from 'framer-motion';
+import { MagneticButton } from '../ui/MagneticButton';
+import { ContactSuccessAnimation } from '../ui/ContactSuccessAnimation';
 
 gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
 
 const TOTAL_PANELS = 3;
+type Status = 'idle' | 'submitting' | 'success' | 'error';
 
 export function ContactHorizontalScroll() {
   const sectionRef = useRef<HTMLDivElement>(null);
   const panelsRef = useRef<HTMLDivElement>(null);
   const [activePanel, setActivePanel] = useState(0);
+
+  const [status, setStatus] = useState<Status>('idle');
+  const [errorMessage, setErrorMessage] = useState('');
+  const pathname = usePathname();
 
   const goToPanel = (index: number) => {
     if (index < 0 || index >= TOTAL_PANELS) return;
@@ -63,8 +73,37 @@ export function ContactHorizontalScroll() {
         });
     }, sectionRef);
 
-    return () => ctx.revert();
-  }, []);
+    return () => {
+        ctx.revert();
+    };
+  }, [pathname]);
+
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setStatus('submitting');
+    setErrorMessage('');
+
+    const formData = new FormData(e.currentTarget);
+    
+    try {
+        const response = await fetch('/api/send', {
+            method: 'POST',
+            body: formData,
+        });
+
+        const data = await response.json();
+
+        if (!response.ok) {
+            throw new Error(data.error || 'Etwas ist schiefgelaufen.');
+        }
+
+        setStatus('success');
+    } catch (error: any) {
+        console.error(error);
+        setStatus('error');
+        setErrorMessage(error.message);
+    }
+  };
 
   return (
     <section ref={sectionRef} className="overflow-hidden">
@@ -89,27 +128,68 @@ export function ContactHorizontalScroll() {
 
             <div className="panel flex h-screen w-screen items-center justify-center p-8 bg-white">
                 <div className="w-full max-w-lg">
-                    <h2 className="text-3xl font-bold mb-6 text-zinc-900">Schreiben Sie uns.</h2>
-                    <form className="space-y-4">
-                    <div>
-                        <label htmlFor="name" className="block text-sm font-semibold text-zinc-700">Name</label>
-                        <input type="text" id="name" className="w-full p-3 mt-1 border border-zinc-300 rounded-md" />
-                    </div>
-                    <div>
-                        <label htmlFor="email" className="block text-sm font-semibold text-zinc-700">E-Mail</label>
-                        <input type="email" id="email" className="w-full p-3 mt-1 border border-zinc-300 rounded-md" />
-                    </div>
-                    <div>
-                        <label htmlFor="message" className="block text-sm font-semibold text-zinc-700">Ihre Nachricht</label>
-                        <textarea id="message" rows={5} className="w-full p-3 mt-1 border border-zinc-300 rounded-md"></textarea>
-                    </div>
-                    <button 
-                        type="submit" 
-                        className="bg-accent text-white font-semibold px-8 py-3 rounded-md hover:bg-accent-dark transition-colors w-full"
-                    >
-                        Anfrage senden
-                    </button>
-                    </form>
+                    <AnimatePresence mode="wait">
+                        {status !== 'success' && (
+                            <motion.div
+                                key="form"
+                                exit={{ opacity: 0, y: -20 }}
+                                transition={{ duration: 0.2 }}
+                            >
+                                <h2 className="text-4xl md:text-5xl font-bold tracking-tighter text-[var(--color-heading)] mb-4">
+                                    Schreiben Sie uns.
+                                </h2>
+                                <p className="text-lg text-[var(--color-text)] mb-8">
+                                    Wir freuen uns darauf, von Ihrer Idee zu hören und 
+                                    sie gemeinsam umzusetzen.
+                                </p>
+
+                                <form className="space-y-4" onSubmit={handleSubmit}>
+                                    <div>
+                                        <label htmlFor="name" className="block text-sm font-medium text-[var(--color-text)] mb-1">Name</label>
+                                        <input type="text" id="name" name="name" required 
+                                            className="w-full px-4 py-3 bg-zinc-50 border border-zinc-200 rounded-md 
+                                                    text-[var(--color-heading)] focus:ring-2 focus:ring-accent focus:outline-none"/>
+                                    </div>
+                                    <div>
+                                        <label htmlFor="email" className="block text-sm font-medium text-[var(--color-text)] mb-1">E-Mail</label>
+                                        <input type="email" id="email" name="email" required 
+                                            className="w-full px-4 py-3 bg-zinc-50 border border-zinc-200 rounded-md 
+                                                        text-[var(--color-heading)] focus:ring-2 focus:ring-accent focus:outline-none"/>
+                                    </div>
+                                    <div>
+                                        <label htmlFor="message" className="block text-sm font-medium text-[var(--color-text)] mb-1">Deine Nachricht</label>
+                                        <textarea id="message" name="message" rows={5} required 
+                                                className="w-full px-4 py-3 bg-zinc-50 border border-zinc-200 rounded-md 
+                                                            text-[var(--color-heading)] focus:ring-2 focus:ring-accent focus:outline-none"/>
+                                    </div>
+                                    <MagneticButton
+                                        type="submit"
+                                        className="group inline-flex items-center justify-center gap-2 
+                                                    bg-accent text-white font-semibold 
+                                                    px-8 py-3 rounded-full text-lg 
+                                                    mt-6 transition-all hover:bg-accent-dark shadow-xl shadow-accent/20"
+                                        disabled={status === 'submitting'}
+                                        >
+                                        {status === 'submitting' ? 'Sende...' : 'Anfrage senden'}
+                                        <HiOutlineArrowRight className="transition-transform duration-300 group-hover:translate-x-1" />
+                                    </MagneticButton>
+
+                                    {status === 'error' && (
+                                        <p className="text-red-600 mt-4">
+                                            Fehler: {errorMessage}
+                                        </p>
+                                    )}
+                                </form>
+                            </motion.div>
+                        )}
+
+                        {status === 'success' && (
+                            <motion.div key="success" className="h-[450px]">
+                                <ContactSuccessAnimation />
+                            </motion.div>
+                        )}
+
+                    </AnimatePresence>
                 </div>
             </div>
         

@@ -8,14 +8,24 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { ScrollToPlugin } from 'gsap/ScrollToPlugin';
 import { HiArrowLeft, HiArrowRight, HiOutlineArrowRight } from 'react-icons/hi';
 import { usePathname } from 'next/navigation';
-import { AnimatePresence, motion } from 'framer-motion';
+import { AnimatePresence, motion, type Variants } from 'framer-motion';
 import { MagneticButton } from '../ui/MagneticButton';
 import { ContactSuccessAnimation } from '../ui/ContactSuccessAnimation';
+import { useMediaQuery } from '@/hooks/useMediaQuery';
 
 gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
 
 const TOTAL_PANELS = 3;
 type Status = 'idle' | 'submitting' | 'success' | 'error';
+
+const panelVariants: Variants = {
+  hidden: { opacity: 0, y: 50 },
+  visible: { 
+    opacity: 1, 
+    y: 0, 
+    transition: { duration: 0.6, ease: 'easeOut' } 
+  }
+};
 
 export function ContactHorizontalScroll() {
   const sectionRef = useRef<HTMLDivElement>(null);
@@ -33,6 +43,8 @@ export function ContactHorizontalScroll() {
 
   const getScrollTrigger = () => stRef.current ?? (ScrollTrigger.getById("contact-scroll") as ScrollTrigger | null);
   const getIndexByFloat = (st: ScrollTrigger, total: number) => st.progress * (total - 1);
+
+  const isMobile = useMediaQuery("(max-width: 767px)");
 
   const goToIndex = (index:number) => {
     const st = getScrollTrigger();
@@ -70,130 +82,122 @@ export function ContactHorizontalScroll() {
     goToIndex(current - 1);
   };
 
-  /*const goToPanel = (index: number) => {
-     if (index < 0 || index >= TOTAL_PANELS) return;
-    const st = ScrollTrigger.getById("contact-scroll") as ScrollTrigger | null;
-    if (!st) return;
-
-    const segment = 1 / (TOTAL_PANELS - 1);
-    const snapTarget = st.start + (st.end - st.start) * (index / segment);
-    
-    gsap.to(window, {
-        scrollTo: { y: snapTarget, autoKill: false },
-        duration: 0.8,
-        ease: 'power2.inOut',
-        overwrite: 'auto'
-    });
-  };*/
-
   useLayoutEffect(() => {
     if (typeof window === 'undefined') return;
 
-    const threshold = 0.25;
-    let ctxCleanup: (() => void) | null = null;
+    let mm = gsap.matchMedia();
 
-    const init = () => {
-        const el = sectionRef.current;
-        if(!el) { rafId.current = requestAnimationFrame(init); return;}
+    mm.add("(min-width: 768px)", () => {
+        const threshold = 0.25;
+        let ctxCleanup: (() => void) | null = null;
 
-        const panels = Array.from(el.querySelectorAll<HTMLElement>('.panel'));
-        if(el.offsetWidth === 0 || panels.length < 2) {
-            rafId.current = requestAnimationFrame(init);
-            return;
-        }
+        const init = () => {
+            const el = sectionRef.current;
+            if(!el) { rafId.current = requestAnimationFrame(init); return;}
 
-        const ctx = gsap.context(() => {
-            gsap.to(panels, {
-                xPercent: -100 * (panels.length - 1),
-                ease: "none",
-                scrollTrigger: {
-                    id: "contact-scroll",
-                    trigger: el,
-                    pin: true,
-                    scrub: 1,
-                    end: () => `+=${el.offsetWidth * (panels.length - 1)}`,
-                    onUpdate: (self) => {
-                        const v = (self as any).getVelocity?.() ?? 1;
-                        lastDir.current = v < 0 ? -1 : 1;
-
-                        const idx = Math.round(self.progress * (panels.length - 1));
-                        setActivePanel(idx);
-                        if (idx === 2) {
-                            document.body.classList.add('on-dark-panel');
-                        } else {
-                            document.body.classList.remove('on-dark-panel');
-                        }
-                    },
-                    onRefresh: (self) => { stRef.current = self; },
-                },
-            });
-
-            const onScrollEnd = () => {
-                const st = stRef.current;
-                if (!st || programmatic.current) return;
-                const total = panels.length;
-                const idxFloat = st.progress * (total - 1)
-                const base = Math.floor(idxFloat);
-                const frac = idxFloat - base;
-
-                const v = (st as any).getVelocity?.() ?? 0;
-                const dir = v < 0 ? -1 : 1;
-
-                let targetIndex: number;
-
-                if (dir > 0) {
-                    targetIndex = base + (frac >= threshold ? 1 : 0);
-                } else {
-                    targetIndex = base + (frac > 1 - threshold ? 1 : 0);
-                }
-
-                targetIndex = Math.max(0, Math.min(total - 1, targetIndex));
-
-                const y = st.start + (st.end - st.start) * (targetIndex / (total - 1));
-
-                programmatic.current = true;
-                gsap.to(window, {
-                    scrollTo: { y, autoKill: false },
-                    duration: 0.5,
-                    ease: "power2.inOut",
-                    overwrite: "auto",
-                    onComplete: () => { programmatic.current = false; }
-                });
-            };
-
-            ScrollTrigger.addEventListener("scrollEnd", onScrollEnd);
-
-            ctxCleanup = () => {
-                ScrollTrigger.removeEventListener("scrollEnd", onScrollEnd);
-                ctx.revert();
-            };
-
-            ScrollTrigger.refresh();
-        }, sectionRef);
-
-        if ((document as any).fonts?.ready) {
-            (document as any).fonts.ready.then(() => ScrollTrigger.refresh());
-        }
-
-        roRef.current = new ResizeObserver(() => {
-            if (stRef.current && sectionRef.current) {
-                const elNow = sectionRef.current;
-                const pNow = Array.from(elNow.querySelectorAll<HTMLElement>('.panel'));
-                stRef.current.vars.end = () => `+=${elNow.offsetWidth * (pNow.length - 1)}`;
-                ScrollTrigger.refresh();
+            const panels = Array.from(el.querySelectorAll<HTMLElement>('.panel'));
+            if(el.offsetWidth === 0 || panels.length < 2) {
+                rafId.current = requestAnimationFrame(init);
+                return;
             }
-        });
-        roRef.current.observe(el);
-    };
 
-    rafId.current = requestAnimationFrame(init);
+            const ctx = gsap.context(() => {
+                gsap.to(panels, {
+                    xPercent: -100 * (panels.length - 1),
+                    ease: "none",
+                    scrollTrigger: {
+                        id: "contact-scroll",
+                        trigger: el,
+                        pin: true,
+                        scrub: 1,
+                        end: () => `+=${el.offsetWidth * (panels.length - 1)}`,
+                        onUpdate: (self) => {
+                            const v = (self as any).getVelocity?.() ?? 1;
+                            lastDir.current = v < 0 ? -1 : 1;
+
+                            const idx = Math.round(self.progress * (panels.length - 1));
+                            setActivePanel(idx);
+                            if (idx === 2) {
+                                document.body.classList.add('on-dark-panel');
+                            } else {
+                                document.body.classList.remove('on-dark-panel');
+                            }
+                        },
+                        onRefresh: (self) => { stRef.current = self; },
+                    },
+                });
+
+                const onScrollEnd = () => {
+                    const st = stRef.current;
+                    if (!st || programmatic.current) return;
+                    const total = panels.length;
+                    const idxFloat = st.progress * (total - 1)
+                    const base = Math.floor(idxFloat);
+                    const frac = idxFloat - base;
+
+                    const v = (st as any).getVelocity?.() ?? 0;
+                    const dir = v < 0 ? -1 : 1;
+
+                    let targetIndex: number;
+
+                    if (dir > 0) {
+                        targetIndex = base + (frac >= threshold ? 1 : 0);
+                    } else {
+                        targetIndex = base + (frac > 1 - threshold ? 1 : 0);
+                    }
+
+                    targetIndex = Math.max(0, Math.min(total - 1, targetIndex));
+
+                    const y = st.start + (st.end - st.start) * (targetIndex / (total - 1));
+
+                    programmatic.current = true;
+                    gsap.to(window, {
+                        scrollTo: { y, autoKill: false },
+                        duration: 0.5,
+                        ease: "power2.inOut",
+                        overwrite: "auto",
+                        onComplete: () => { programmatic.current = false; }
+                    });
+                };
+
+                ScrollTrigger.addEventListener("scrollEnd", onScrollEnd);
+
+                ctxCleanup = () => {
+                    ScrollTrigger.removeEventListener("scrollEnd", onScrollEnd);
+                    ctx.revert();
+                };
+
+                ScrollTrigger.refresh();
+            }, sectionRef);
+
+            if ((document as any).fonts?.ready) {
+                (document as any).fonts.ready.then(() => ScrollTrigger.refresh());
+            }
+
+            roRef.current = new ResizeObserver(() => {
+                if (stRef.current && sectionRef.current) {
+                    const elNow = sectionRef.current;
+                    const pNow = Array.from(elNow.querySelectorAll<HTMLElement>('.panel'));
+                    stRef.current.vars.end = () => `+=${elNow.offsetWidth * (pNow.length - 1)}`;
+                    ScrollTrigger.refresh();
+                }
+            });
+            roRef.current.observe(el);
+        };
+
+        rafId.current = requestAnimationFrame(init);
+
+        return () => {
+            if (rafId.current) cancelAnimationFrame(rafId.current);
+            roRef.current?.disconnect();
+            roRef.current = null;
+            ctxCleanup?.();
+        };
+    });
 
     return () => {
-        if (rafId.current) cancelAnimationFrame(rafId.current);
-        roRef.current?.disconnect();
-        roRef.current = null;
-        ctxCleanup?.();
-    };
+        mm.revert();
+    }
   }, [pathname]);
 
   useEffect(() => {
@@ -233,9 +237,15 @@ export function ContactHorizontalScroll() {
     <section ref={sectionRef} className="overflow-hidden">
         <div 
             ref={panelsRef}
-            className="flex w-[300vw]" // 3 Panels * 100vw = 300vw
+            className="flex w-full flex-col md:w-[300vw] md:flex-row" // 3 Panels * 100vw = 300vw
         >
-            <div className="panel flex h-screen w-screen items-center justify-center p-8 bg-zinc-100">
+            <motion.div 
+                className="panel flex h-auto min-h-screen w-full items-center justify-center p-8 bg-zinc-100 md:h-screen md:w-screen"
+                variants={isMobile ? panelVariants : {}}
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true, amount: 0.3 }}
+            >
                 <div className="text-center max-w-2xl">
                     <h1 className="text-6xl md:text-8xl font-bold tracking-tighter text-zinc-900">
                     Bereit, etwas
@@ -248,9 +258,15 @@ export function ContactHorizontalScroll() {
                     Scrollen Sie weiter, um mit uns in Kontakt zu treten.
                     </p>
                 </div>
-            </div>
+            </motion.div>
 
-            <div className="panel flex h-screen w-screen items-center justify-center p-8 bg-white">
+            <motion.div 
+                className="panel flex h-auto min-h-screen w-full items-center justify-center p-8 bg-white md:h-screen md:w-screen"
+                variants={isMobile ? panelVariants : {}}
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true, amount: 0.3 }}
+            >
                 <div className="w-full max-w-lg no-hscroll-on-form">
                     <AnimatePresence mode="wait">
                         {status !== 'success' && (
@@ -315,9 +331,15 @@ export function ContactHorizontalScroll() {
 
                     </AnimatePresence>
                 </div>
-            </div>
+            </motion.div>
         
-            <div className="panel flex h-screen w-screen items-center justify-center p-8 bg-zinc-900 text-white">
+            <motion.div 
+                className="panel flex h-auto min-h-screen w-full items-center justify-center p-8 bg-zinc-900 text-white md:h-screen md:w-screen"
+                variants={isMobile ? panelVariants : {}}
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true, amount: 0.3 }}
+            >
                 <div className="text-left max-w-lg">
                     <h2 className="text-4xl font-bold mb-8">
                     Oder treffen wir uns.
@@ -333,10 +355,10 @@ export function ContactHorizontalScroll() {
                     </p>
                     </div>
                 </div>
-            </div>
+            </motion.div>
         </div>
 
-        <div className="fixed bottom-10 right-10 z-50 flex gap-3">
+        <div className="fixed bottom-10 right-10 z-50 gap-3 md:flex hidden">
             <button
                 onClick={() => goPrev()}
                 disabled={activePanel === 0}

@@ -36,7 +36,7 @@ export function MagneticLink({ children, className, ...props }: MagneticLinkProp
     y.set(0);
   };
 
-  const MotionLink = motion(Link);
+  const MotionLink = motion.create(Link);
 
   return (
     <MotionLink

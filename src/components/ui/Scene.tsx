@@ -51,6 +51,8 @@ export function Scene({ children }: { children: ReactNode }) {
 
   const pathname = usePathname();
 
+  const isContactPage = pathname === '/contact';
+
   function ModelLoaderHelper() {
     useEffect(() => {
       setIsModelActuallyLoaded(true);
@@ -99,8 +101,9 @@ export function Scene({ children }: { children: ReactNode }) {
 
     if (isDesktop) {
       window.addEventListener('pointermove', onPointerMove);
-
-      if (pathname === '/' && canvasEl) {
+      if (isContactPage && canvasEl) {
+        gsap.set(canvasEl, { opacity: 0 });
+      } else if (pathname === '/' && canvasEl) {
         gsap.to(canvasEl, {
           opacity: 0,
           scrollTrigger: {
@@ -110,6 +113,8 @@ export function Scene({ children }: { children: ReactNode }) {
             scrub: true,
           }
         });
+      } else if (canvasEl) {
+        gsap.set(canvasEl, { opacity: 0.3 });
       }
     }
 
@@ -120,7 +125,7 @@ export function Scene({ children }: { children: ReactNode }) {
       }
       ScrollTrigger.getAll().forEach(t => t.kill());
     };
-  }, [pathname]);
+  }, [pathname, isContactPage]);
 
   return (
     <>

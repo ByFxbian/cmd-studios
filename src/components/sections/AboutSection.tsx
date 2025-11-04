@@ -40,8 +40,8 @@ export function AboutSection() {
           className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center"
           variants={containerVariants}
           initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, amount: 0.3 }}
+          animate="visible"
+          viewport={{ once: true, amount: 0.2 }}
         >
           
           <motion.div variants={itemVariants}>

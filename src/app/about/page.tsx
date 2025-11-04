@@ -2,6 +2,7 @@
 
 import { AboutSection } from "@/components/sections/AboutSection";
 import { ContactSection } from "@/components/sections/ContactSection";
+import { ProcessSection } from "@/components/sections/ProcessSection";
 import { ValuesBentoSection } from "@/components/sections/ValuesBentoSection";
 import { motion } from "framer-motion";
 
@@ -28,6 +29,8 @@ export default function AboutPage() {
       
       {/* 2. Die existierende AboutSection */}
       <AboutSection />
+
+      <ProcessSection />
 
       {/* 3. Die neue Bento-Grid Sektion */}
       <ValuesBentoSection />

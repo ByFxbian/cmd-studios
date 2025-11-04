@@ -54,4 +54,3 @@ a, button, [role="button"], .cursor-pointer {
 .no-hscroll-on-form * {
   touch-action: pan-y;
 }
-

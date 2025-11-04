@@ -10,13 +10,17 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { featuredProjects, type Project } from '@/lib/portfolio-data';
 import Link from 'next/link';
 import { MagneticLink } from '../ui/MagneticLink';
+import { useLoading } from '@/context/LoadingContext';
 
 export function PortfolioSection() {
     const sectionRef = useRef<HTMLDivElement>(null);
     const gridRef = useRef<HTMLDivElement>(null);
     const triggerRef = useRef<HTMLDivElement>(null);
 
+    const { isLoaded } = useLoading();
+
     useLayoutEffect(() =>{
+        if(!isLoaded) return;
         gsap.registerPlugin(ScrollTrigger);
 
         const cards = gsap.utils.toArray(gridRef.current?.children || []);
@@ -86,11 +90,11 @@ export function PortfolioSection() {
         
 
         return () => mm.revert();
-    }, []);
+    }, [isLoaded]);
 
   return (
-    <section className="w-full py-20 md:py-32 bg-white border-y border-zinc-200">
-      <div className="container mx-auto max-w-7xl px-6">
+    <section ref={sectionRef} className="w-full py-20 md:py-32 bg-white border-y border-zinc-200">
+      <div ref={triggerRef} className="container mx-auto max-w-7xl px-6">
         
         {/* Überschrift */}
         <motion.div

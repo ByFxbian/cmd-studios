@@ -37,8 +37,6 @@ export default function AboutPage() {
       {/* 2. Die existierende AboutSection */}
       <AboutSection />
 
-      <ProcessSection />
-
       {/* 3. Die neue Bento-Grid Sektion */}
       <ValuesBentoSection />
 

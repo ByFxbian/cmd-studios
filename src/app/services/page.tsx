@@ -2,6 +2,8 @@
 'use client';
 
 import { ContactSection } from '@/components/sections/ContactSection';
+import { PackageSection } from '@/components/sections/PackageSection';
+import { ProcessSection } from '@/components/sections/ProcessSection';
 import { ServiceDetailSection } from '@/components/sections/ServiceDetailSection';
 import { ServiceHeroSection } from '@/components/sections/ServiceHeroSection';
 import { HiCode, HiCamera, HiOutlineSparkles, HiOutlineDatabase, HiOutlineChartSquareBar, HiOutlineFilm } from 'react-icons/hi';
@@ -47,7 +49,7 @@ export default function ServicesPage() {
     <>
       <ServiceHeroSection />
       
-      <ServiceDetailSection
+      {/*<ServiceDetailSection
         id="web"
         title="Web-Entwicklung"
         subtitle="Von der Vision zur Applikation."
@@ -68,7 +70,10 @@ export default function ServicesPage() {
         icon={HiCamera}
         imageSide="left"
         isDark={true}
-      />
+      />*/}
+      <PackageSection />
+
+      <ProcessSection />
 
       <ContactSection />
     </>

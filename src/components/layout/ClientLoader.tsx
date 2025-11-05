@@ -3,7 +3,7 @@
 import { motion, AnimatePresence } from 'framer-motion';
 import { useLoading } from '@/context/LoadingContext';
 import { LoaderLogo } from '@/components/ui/LoaderLogo';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { usePathname } from 'next/navigation';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
@@ -12,6 +12,8 @@ export function ClientLoader() {
     const { isLoaded, setIsLoaded: setGlobalIsLoaded } = useLoading();
     const [isMinTimePassed, setIsMinTimePassed] = useState(false);
     const pathname = usePathname();
+
+    const originalTitleRef = useRef(document.title);
 
     const [isDesktop] = useState(() => {
         if(typeof window !== 'undefined') {
@@ -25,26 +27,29 @@ export function ClientLoader() {
 
         gsap.registerPlugin(ScrollTrigger);
 
-        ScrollTrigger.getAll().forEach(t => t.kill());
+        const existing = ScrollTrigger.getById?.('contact-dark-toggle');
+        existing?.kill();
 
         if(pathname === '/contact') {
             setTimeout(() => {
                 ScrollTrigger.create({
-                trigger: "#dark-contact-panel",
-                start: "top 50%",
-                end: "bottom 50%",
-                onEnter: () => document.body.classList.add('on-dark-panel'),
-                onLeaveBack: () => document.body.classList.add('on-dark-panel'),
-                onLeave: () => document.body.classList.remove('on-dark-panel'),
-                onEnterBack: () => document.body.classList.remove('on-dark-panel'),
+                    trigger: "#dark-contact-panel",
+                    start: "top 50%",
+                    end: "bottom 50%",
+                    onEnter: () => document.body.classList.add('on-dark-panel'),
+                    onLeaveBack: () => document.body.classList.add('on-dark-panel'),
+                    onLeave: () => document.body.classList.remove('on-dark-panel'),
+                    onEnterBack: () => document.body.classList.remove('on-dark-panel'),
                 });
+                ScrollTrigger.refresh();
             }, 100);
         } else {
             document.body.classList.remove('on-dark-panel');
         }
 
         return () => {
-            ScrollTrigger.getAll().forEach(t => t.kill());
+            const t = ScrollTrigger.getById?.('contact-dark-toggle');
+            t?.kill();
             document.body.classList.remove('on-dark-panel');
         }
     }, [isLoaded, pathname])
@@ -69,6 +74,25 @@ export function ClientLoader() {
             }
         }
     }, [isMinTimePassed, setGlobalIsLoaded]);
+
+    useEffect(() => {
+        originalTitleRef.current = document.title;
+
+        const handleVisibilityChange = () => {
+            if(document.hidden) {
+                document.title = "Wir vermissen dich! 😢";
+            } else {
+                document.title = originalTitleRef.current;
+            }
+        };
+
+        document.addEventListener('visibilitychange', handleVisibilityChange);
+
+        return () => {
+            document.removeEventListener('visibilitychange', handleVisibilityChange);
+            document.title = originalTitleRef.current;
+        };
+    }, []);
 
     const curtainOpenDelay = isDesktop ? 1.0 : 0.2;
 

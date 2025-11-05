@@ -7,11 +7,12 @@ import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { ScrollToPlugin } from 'gsap/ScrollToPlugin';
 import { HiArrowLeft, HiArrowRight, HiOutlineArrowRight } from 'react-icons/hi';
-import { usePathname } from 'next/navigation';
+import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { AnimatePresence, motion, type Variants } from 'framer-motion';
 import { MagneticButton } from '../ui/MagneticButton';
 import { ContactSuccessAnimation } from '../ui/ContactSuccessAnimation';
 import { useMediaQuery } from '@/hooks/useMediaQuery';
+import { useLoading } from '@/context/LoadingContext';
 
 gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
 
@@ -45,6 +46,11 @@ export function ContactHorizontalScroll() {
   const getIndexByFloat = (st: ScrollTrigger, total: number) => st.progress * (total - 1);
 
   const isMobile = useMediaQuery("(max-width: 767px)");
+
+  const { isLoaded } = useLoading();
+
+  const searchParams = useSearchParams();
+  const router = useRouter();
 
   const goToIndex = (index:number) => {
     const st = getScrollTrigger();
@@ -83,6 +89,7 @@ export function ContactHorizontalScroll() {
   };
 
   useLayoutEffect(() => {
+    if (!isLoaded) return;
     if (typeof window === 'undefined') return;
 
     let mm = gsap.matchMedia();
@@ -195,10 +202,30 @@ export function ContactHorizontalScroll() {
         };
     });
 
+    const pkg = searchParams.get('package');
+
+    if(pkg) {
+        setTimeout(() => {
+            goNext();
+        }, 150);
+
+        const selectEl = document.getElementById('package') as HTMLSelectElement;
+        if(selectEl) {
+            const optionExists = Array.from(selectEl.options).some(opt => opt.value === pkg);
+            if (optionExists) {
+                selectEl.value = pkg;
+            }
+        }
+
+        setTimeout(() => {
+            router.replace(pathname, { scroll: false });
+        }, 100);
+    }
+
     return () => {
         mm.revert();
     }
-  }, [pathname]);
+  }, [pathname, isLoaded, searchParams, router]);
 
   useEffect(() => {
     const onLoad = () => ScrollTrigger.refresh();
@@ -297,10 +324,29 @@ export function ContactHorizontalScroll() {
                                                         text-[var(--color-heading)] focus:ring-2 focus:ring-accent focus:outline-none"/>
                                     </div>
                                     <div>
+                                        <label htmlFor="package" className="block text-sm font-medium text-[var(--color-text)] mb-1">
+                                            Interessiert an
+                                        </label>
+                                        <select
+                                            id="package"
+                                            name="package"
+                                            required
+                                            className="w-full px-4 py-3 bg-zinc-50 border border-zinc-200 rounded-md 
+                                                    text-[var(--color-heading)] focus:ring-2 focus:ring-accent focus:outline-none
+                                                    appearance-none"
+                                        >
+                                            <option value="Kein bestimmtes Paket">Bitte auswählen...</option>
+                                            <option value="Launchpad">Launchpad-Paket</option>
+                                            <option value="Accelerator">Accelerator-Paket</option>
+                                            <option value="Partner">Partner-Paket</option>
+                                            <option value="Kein bestimmtes Paket">Kein bestimmtes Paket</option>
+                                        </select>
+                                    </div>
+                                    <div>
                                         <label htmlFor="message" className="block text-sm font-medium text-[var(--color-text)] mb-1">Deine Nachricht</label>
                                         <textarea id="message" name="message" rows={5} required 
                                                 className="w-full px-4 py-3 bg-zinc-50 border border-zinc-200 rounded-md 
-                                                            text-[var(--color-heading)] focus:ring-2 focus:ring-accent focus:outline-none"/>
+                                                            text-[var(--color-heading)] focus:ring-2 focus:ring-accent focus:outline-none resize-y max-h-[200px] min-h-[128px]"/>
                                     </div>
                                     <MagneticButton
                                         type="submit"

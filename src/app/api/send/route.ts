@@ -9,21 +9,22 @@ export async function POST(request: Request) {
         const name = formData.get('name') as string;
         const email = formData.get('email') as string;
         const message = formData.get('message') as string;
+        const pkg = formData.get('package') as string;
 
-        if (!name || !email || !message) {
+        if (!name || !email || !message || !pkg) {
             return NextResponse.json({ error: 'Fehlende Felder '}, { status: 400 });
         }
 
         const { data, error } = await resend.emails.send({
             from: 'CMD STUDIOS <noreply@alkosbarber.at>',
             to: ['sopa.fabian@gmx.net'],
-            subject: `Neue Kontaktanfrage von ${name}`,
+            subject: `Neue Anfrage (${pkg}) von ${name}`,
             html: `
                 <div>
                     <h2>Neue Anfrage von der Website</h2>
                     <p><strong>Name:</strong> ${name}</p>
                     <p><strong>E-Mail:</strong> ${email}</p>
-                    <hr />
+                    <p><strong>Paket-Interesse:</strong> ${pkg}</p> <hr />
                     <p><strong>Nachricht:</strong></p>
                     <p>${message.replace(/\n/g, '<br>')}</p>
                 </div>

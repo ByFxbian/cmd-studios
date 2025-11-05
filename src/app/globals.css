@@ -76,3 +76,19 @@ a, button, [role="button"], .cursor-pointer {
     color: transparent;
   }
 }
+
+@layer base {
+  body {
+    user-select: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+  }
+
+  input, textarea, select, .prose {
+    user-select: auto;
+    -webkit-user-select: auto;
+    -moz-user-select: auto;
+    -ms-user-select: auto;
+  }
+}

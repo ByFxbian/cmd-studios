@@ -8,7 +8,7 @@ import { pointerRef } from '@/lib/three-store';
 
 export function Model(props: ThreeElements['group']): JSX.Element {
     const groupRef = useRef<THREE.Group>(null!);
-    const { scene } = useGLTF('/models/model2.glb');
+    //const { scene } = useGLTF('/models/model2.glb');
 
     useEffect(() => {
         const newMaterial = new THREE.MeshStandardMaterial({
@@ -16,12 +16,12 @@ export function Model(props: ThreeElements['group']): JSX.Element {
             metalness: 0.5,
             roughness: 0.5,
         });
-        scene.traverse((child) => {
+        /*scene.traverse((child) => {
             if(child instanceof THREE.Mesh) {
                 child.material = newMaterial;
             }
-        });
-    }, [scene]);
+        });*/
+    }, /*[scene]*/[]);
 
     useFrame(({ viewport }) => {
         const x = (pointerRef.x * viewport.width) / 2.5;
@@ -43,9 +43,9 @@ export function Model(props: ThreeElements['group']): JSX.Element {
             scale={0.4}
             position={[0, 0, 0]}
         >
-        <primitive 
+        {/*<primitive 
             object={scene} 
-        />
+        />*/}
         </group>
     );
 }

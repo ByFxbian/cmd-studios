@@ -117,13 +117,15 @@ export function TestimonialsSection() {
                 <div className="flex justify-center gap-4 mt-16">
                     <button
                         onClick={showPrev}
+                        aria-label="Vorheriges Testimonial"
                         className="bg-white rounded-full p-3 shadow-lg border border-zinc-200 text-zinc-600
-                                hover:bg-zinc-100 transition-colors disabled:opacity-50"
+                                hover:bg-zinc-100 transition-colors disabled:opacity-50" 
                     >
                         <HiArrowLeft className="w-6 h-6" />
                     </button>
                     <button
                         onClick={showNext}
+                        aria-label="Nächstes Testimonial"
                         className="bg-white rounded-full p-3 shadow-lg border border-zinc-200 text-zinc-600
                                 hover:bg-zinc-100 transition-colors disabled:opacity-50"
                     >

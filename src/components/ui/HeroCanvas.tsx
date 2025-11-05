@@ -11,7 +11,7 @@ import { usePathname } from 'next/navigation';
 
 gsap.registerPlugin(ScrollTrigger);
 
-useGLTF.preload('/models/model2.glb');
+//useGLTF.preload('/models/model2.glb');
 
 /*const onPointerMove = (event: PointerEvent) => {
   pointerRef.x = (event.clientX / window.innerWidth) * 2 - 1;

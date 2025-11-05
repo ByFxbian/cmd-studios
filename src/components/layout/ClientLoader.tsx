@@ -57,7 +57,7 @@ export function ClientLoader() {
     useEffect(() => {
         const timer = setTimeout(() => {
             setIsMinTimePassed(true);
-        }, 1500);
+        }, 1000);
         return () => clearTimeout(timer);
     }, []);
 

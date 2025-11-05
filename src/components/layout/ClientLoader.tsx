@@ -13,7 +13,7 @@ export function ClientLoader() {
     const [isMinTimePassed, setIsMinTimePassed] = useState(false);
     const pathname = usePathname();
 
-    const originalTitleRef = useRef(document.title);
+    const originalTitleRef = useRef<string>("");
 
     const [isDesktop] = useState(() => {
         if(typeof window !== 'undefined') {

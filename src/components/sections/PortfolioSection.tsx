@@ -11,6 +11,7 @@ import { featuredProjects, type Project } from '@/lib/portfolio-data';
 import Link from 'next/link';
 import { MagneticLink } from '../ui/MagneticLink';
 import { useLoading } from '@/context/LoadingContext';
+import { SectionMask } from '../ui/SectionMask';
 
 export function PortfolioSection() {
     const sectionRef = useRef<HTMLDivElement>(null);
@@ -34,7 +35,7 @@ export function PortfolioSection() {
 
           let ctx = gsap.context(() => {
               cards.forEach((card: any, i) => {
-                  const yPercent = i === 1 ? 15 : -15;
+                  const yPercent = i === 1 ? 8 : -8;
                   gsap.fromTo(card,
                       {
                           yPercent: yPercent * 1.5
@@ -94,9 +95,9 @@ export function PortfolioSection() {
 
   return (
     <section ref={sectionRef} className="w-full py-20 md:py-32 bg-white border-y border-zinc-200">
+
       <div ref={triggerRef} className="container mx-auto max-w-7xl px-6">
-        
-        {/* Überschrift */}
+
         <motion.div
           className="text-center mb-12"
           initial={{ opacity: 0, y: 20 }}
@@ -113,7 +114,6 @@ export function PortfolioSection() {
           </p>
         </motion.div>
 
-        {/* Portfolio-Grid */}
         <div 
           ref={gridRef}
           className="grid grid-cols-1 md:grid-cols-3 gap-8"

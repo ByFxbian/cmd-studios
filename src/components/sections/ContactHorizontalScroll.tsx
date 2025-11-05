@@ -334,10 +334,11 @@ export function ContactHorizontalScroll() {
             </motion.div>
         
             <motion.div 
+                id="dark-contact-panel"
                 className="panel flex h-auto min-h-screen w-full items-center justify-center p-8 bg-zinc-900 text-white md:h-screen md:w-screen"
                 variants={isMobile ? panelVariants : {}}
                 initial="hidden"
-                whileInView="visible"
+                whileInView={isMobile ? "visible" : ""}
                 viewport={{ once: true, amount: 0.3 }}
             >
                 <div className="text-left max-w-lg">

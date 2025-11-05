@@ -1,14 +1,11 @@
 'use client';
 
-import { RefObject, Suspense, useEffect, useRef, useState, type ReactNode } from 'react';
-import { Canvas, useFrame } from '@react-three/fiber';
-import { Environment, OrbitControls, Preload, useGLTF } from '@react-three/drei';
-import * as THREE from 'three';
+import { Suspense, useEffect, useRef, useState, type ReactNode } from 'react';
+import { Canvas, } from '@react-three/fiber';
+import { Environment,Preload, useGLTF } from '@react-three/drei';
 import Lenis from 'lenis';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { Model } from './Model';
-import { pointerRef } from '@/lib/three-store';
 import { useLoading } from '@/context/LoadingContext';
 import { usePathname } from 'next/navigation';
 
@@ -16,10 +13,10 @@ gsap.registerPlugin(ScrollTrigger);
 
 useGLTF.preload('/models/model2.glb');
 
-const onPointerMove = (event: PointerEvent) => {
+/*const onPointerMove = (event: PointerEvent) => {
   pointerRef.x = (event.clientX / window.innerWidth) * 2 - 1;
   pointerRef.y = -(event.clientY / window.innerHeight) * 2 + 1;
-};
+};*/
 
 function ModelLoader() {
   const { setIsLoaded } = useLoading();
@@ -30,7 +27,7 @@ function ModelLoader() {
   return null;
 }
 
-function MeshComponent() {
+/*function MeshComponent() {
     const meshRef = useRef<THREE.Mesh>(null!);
 
     return (
@@ -39,10 +36,10 @@ function MeshComponent() {
             <meshStandardMaterial color="#14b8a6" wireframe />
         </mesh>
     );
-}
+}*/
 
-export function Scene({ children }: { children: ReactNode }) {
-  const { setIsLoaded: setGlobalIsLoaded } = useLoading();
+export function HeroCanvas() {
+  {/*const { setIsLoaded: setGlobalIsLoaded } = useLoading();
 
   const [isModelActuallyLoaded, setIsModelActuallyLoaded] = useState(false);
   const [isMinTimePassed, setIsMinTimePassed] = useState(false);
@@ -100,7 +97,7 @@ export function Scene({ children }: { children: ReactNode }) {
     gsap.ticker.lagSmoothing(0);
 
     if (isDesktop) {
-      window.addEventListener('pointermove', onPointerMove);
+      //window.addEventListener('pointermove', onPointerMove);
       if (isContactPage && canvasEl) {
         gsap.set(canvasEl, { opacity: 0 });
       } else if (pathname === '/' && canvasEl) {
@@ -121,18 +118,19 @@ export function Scene({ children }: { children: ReactNode }) {
     return () => {
       lenis.destroy();
       if (isDesktop) {
-        window.addEventListener('pointermove', onPointerMove);
+        //window.addEventListener('pointermove', onPointerMove);
       }
       ScrollTrigger.getAll().forEach(t => t.kill());
+      document.body.classList.remove('on-dark-panel');
     };
   }, [pathname, isContactPage]);
-
+*/}
   return (
     <>
       <Canvas
-        ref={canvasRef}
+        //ref={canvasRef}
         style={{
-          position: 'fixed',
+          position: 'absolute',
           top: 0,
           left: 0,
           zIndex: 0,
@@ -145,12 +143,11 @@ export function Scene({ children }: { children: ReactNode }) {
         <Suspense fallback={null}>
           <ambientLight intensity={1}/>
           <Environment preset="apartment"/>
-          <Model />
+          {/*<Model />*/}
           <Preload all />
           <ModelLoader />
         </Suspense>
       </Canvas>
-      {children}
     </>
   );
 }

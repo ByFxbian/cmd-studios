@@ -8,6 +8,7 @@ import { ArrowRight } from "lucide-react";
 import { AnimatedStaggeredText } from "../ui/AnimatedStaggeredText";
 import { useState } from "react";
 import { AnimatedIconLink } from "../ui/AnimatedIconLink";
+import { SectionMask } from "../ui/SectionMask";
 
 const cardVariants: Variants = {
     hidden: { opacity: 0, y: 50},

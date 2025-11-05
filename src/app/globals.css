@@ -34,6 +34,11 @@ body.on-dark-panel {
   --color-scroll-button-bg: #27272a; /* war: theme('colors.zinc.800') */
   --color-scroll-button-text: white;
   --color-scroll-button-hover-bg: #3f3f46; /* war: theme('colors.zinc.700') */
+
+  .custom-cursor-ring {
+    --cursor-border-color: white;
+    --cursor-bg-color: white;
+  }
 }
 
 a, button, [role="button"], .cursor-pointer {
@@ -53,4 +58,21 @@ a, button, [role="button"], .cursor-pointer {
 .no-hscroll-on-form,
 .no-hscroll-on-form * {
   touch-action: pan-y;
+}
+
+@layer utilities {
+  .mask-wave {
+    mask-image: url('/mask.svg');
+    mask-size: 100% 100%;
+    mask-repeat: no-repeat;
+    mask-position: center;
+  }
+
+  .heading-fill { will-change: clip-path; }
+
+  .text-outline {
+    -webkit-text-stroke: 1px var(--color-text-muted);
+    -webkit-text-fill-color: transparent; /* Safari */
+    color: transparent;
+  }
 }

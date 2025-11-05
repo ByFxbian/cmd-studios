@@ -3,11 +3,11 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
-import { Scene } from "@/components/ui/Scene";
 import { PageTransition } from "@/components/layout/PageTransition";
 import { LoadingProvider } from "@/context/LoadingContext";
 import { ClientLoader } from "@/components/layout/ClientLoader";
 import { CustomCursor } from "@/components/ui/CustomCursor";
+import { ImageTrail } from "@/components/ui/ImageTrail";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -27,7 +27,6 @@ export default function RootLayout({
         <LoadingProvider>
           <CustomCursor />
           <ClientLoader />
-          <Scene>
             <Navbar />
             <main className="flex flex-col min-h-screen">
               <div className="flex-grow relative z-10 bg-transparent">
@@ -36,7 +35,6 @@ export default function RootLayout({
                 </PageTransition>
               </div>
             </main>
-          </Scene>
           <Footer />
         </LoadingProvider>
       </body>

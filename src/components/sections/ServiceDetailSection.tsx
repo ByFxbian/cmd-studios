@@ -64,7 +64,7 @@ export function ServiceDetailSection({
   
   const textColor = isDark ? 'text-zinc-300' : 'text-[var(--color-text)]';
   const headingColor = isDark ? 'text-white' : 'text-[var(--color-heading)]';
-  const bgColor = isDark ? 'bg-zinc-900' : 'bg-white';
+  const bgColor = isDark ? 'bg-zinc-900' : 'bg-[var(--color-page-bg)]';
   const cardBg = isDark ? 'bg-zinc-800 border-zinc-700' : 'bg-white border-zinc-200';
 
   const sectionRef = useRef<HTMLDivElement>(null);

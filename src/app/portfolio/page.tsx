@@ -1,10 +1,12 @@
 'use client';
 
-import { useState } from 'react';
+import { RefObject, useRef, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { PortfolioCard } from '@/components/ui/PortfolioCard';
 import { ContactSection } from '@/components/sections/ContactSection';
 import { allProjects, type Project } from '@/lib/portfolio-data'
+import { HeroCanvas } from '@/components/ui/HeroCanvas';
+import { ImageTrail } from '@/components/ui/ImageTrail';
 
 type Category = "Alle" | "Web-Entwicklung" | "Video-Produktion";
 
@@ -17,10 +19,14 @@ export default function PortfolioPage() {
 
   const categories: Category[] = ["Alle", "Web-Entwicklung", "Video-Produktion"];
 
+  const sectionRef = useRef<HTMLElement>(null);
   return (
     <>
       {/* 1. Hero-Sektion */}
-      <section className="relative flex h-[70vh] min-h-[500px] w-full items-center justify-center pt-20 text-center">
+      <section ref={sectionRef} className="relative flex h-[70vh] min-h-[500px] w-full items-center justify-center pt-20 text-center">
+        <HeroCanvas />
+        <ImageTrail containerRef={sectionRef as RefObject<HTMLElement>} />
+        <div className="absolute bottom-0 left-0 w-full h-32 bg-gradient-to-t from-[var(--color-page-bg)] to-transparent z-[1]" />
         <motion.div
           className="relative z-10 p-6"
           initial={{ opacity: 0, y: 20 }}
@@ -38,7 +44,7 @@ export default function PortfolioPage() {
       </section>
 
       {/* 2. Filter & Galerie */}
-      <section className="w-full py-20 md:py-32 bg-zinc-50 border-y border-zinc-200">
+      <section className="w-full py-20 md:py-32 bg-zinc-50 border-bottom border-zinc-200">
         <div className="container mx-auto max-w-7xl px-6">
           
           {/* Filter-Buttons */}

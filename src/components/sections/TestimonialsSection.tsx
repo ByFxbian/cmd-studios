@@ -1,5 +1,6 @@
 'use client';
 
+import { useMediaQuery } from "@/hooks/useMediaQuery";
 import { Testimonial, testimonials } from "@/lib/testimonial-data";
 import { useMeasure } from "@uidotdev/usehooks";
 import { AnimatePresence, PanInfo, motion, type Variants } from "framer-motion";
@@ -7,6 +8,7 @@ import Image from "next/image";
 import { useState } from "react";
 import { FaQuoteLeft } from "react-icons/fa";
 import { HiArrowLeft, HiArrowRight } from "react-icons/hi";
+import { SectionMask } from "../ui/SectionMask";
 
 const DRAG_THRESHOLD = 150;
 
@@ -37,6 +39,8 @@ export function TestimonialsSection() {
     const [exitDirection, setExitDirection] = useState(0);
 
     const [ref, { height }] = useMeasure();
+
+    const isMobile = useMediaQuery("(max-width: 767px)");
 
     const showNext = () => {
         setExitDirection(-1);
@@ -76,7 +80,7 @@ export function TestimonialsSection() {
 
                 <motion.div 
                     className="relative max-w-2xl mx-auto"
-                    animate={{ height: height || "auto" }}
+                    animate={{ height: isMobile ? (height || 350) : 350 }}
                     transition={{ type: "spring", stiffness: 300, damping: 30}}
                 >
                     <AnimatePresence mode="wait">

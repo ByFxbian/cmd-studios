@@ -4,6 +4,7 @@ import Image from 'next/image';
 import { motion, type Variants } from 'framer-motion';
 import { HiArrowRight } from 'react-icons/hi';
 import { AnimatedIconLink } from '../ui/AnimatedIconLink';
+import { SectionMask } from '../ui/SectionMask';
 
 const containerVariants: Variants = {
   hidden: { opacity: 0 },
@@ -33,7 +34,7 @@ const imageVariants: Variants = {
 
 export function AboutSection() {
   return (
-    <section className="w-full py-20 md:py-32 bg-white">
+    <section className="w-full py-20 md:py-32 bg-[var(--color-page-bg)]">
       <div className="container mx-auto max-w-7xl px-6">
         
         <motion.div 

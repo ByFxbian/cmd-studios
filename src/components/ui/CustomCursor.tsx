@@ -5,6 +5,9 @@ import { motion, useMotionValue, useSpring } from "framer-motion";
 import gsap from "gsap";
 import { useEffect, useRef, useState } from "react";
 
+const CSS_VAR_CURSOR_BORDER = '--cursor-border-color';
+const CSS_VAR_CURSOR_BG = '--cursor-bg-color';
+
 export function CustomCursor() {
     const [isDesktop] = useState(() => {
         if(typeof window !== 'undefined') {
@@ -14,20 +17,27 @@ export function CustomCursor() {
     });
 
     const cursorRef = useRef<HTMLDivElement>(null);
-    const innerCursorRef = useRef<HTMLDivElement>(null);
     const isHoveringRef = useRef(false);
 
     useEffect(() => {
         if (!isDesktop || !cursorRef.current) return;
 
-        const accentColor = '#14b8a6';
+        const getAccentColor = () => getComputedStyle(document.body)
+                                .getPropertyValue(CSS_VAR_CURSOR_BORDER)
+                                .trim() || '#14b8a6'; // Fallback
+                                
+        const getBgColor = () => getComputedStyle(document.body)
+                              .getPropertyValue(CSS_VAR_CURSOR_BG)
+                              .trim() || '#14b8a6'; // Fallback
+
 
         gsap.set(cursorRef.current, { 
             x: -100, 
             y: -100, 
             translateX: '-50%', 
             translateY: '-50%',
-            opacity: 1 
+            opacity: 1,
+            borderColor: getAccentColor()
         });
 
         const quickSetX = gsap.quickTo(cursorRef.current, "x", { 
@@ -52,7 +62,8 @@ export function CustomCursor() {
 
                 gsap.to(cursorRef.current, { 
                     scale: 1.3, 
-                    backgroundColor: accentColor,
+                    backgroundColor: getBgColor(),
+                    borderCOlor: getBgColor(),
                     duration: 0.2, 
                     ease: 'power3.out' 
                 });
@@ -62,6 +73,7 @@ export function CustomCursor() {
                 gsap.to(cursorRef.current, { 
                     scale: 1, 
                     backgroundColor: 'transparent',
+                    borderColor: getAccentColor(),
                     duration: 0.2, 
                     ease: 'power3.out' 
                 });
@@ -84,11 +96,11 @@ export function CustomCursor() {
     return (
         <div
             ref={cursorRef}
-            className="fixed top-0 left-0 w-6 h-6 rounded-full border-2 border-accent pointer-events-none"
+            className="custom-cursor-ring fixed top-0 left-0 w-6 h-6 rounded-full border-2 pointer-events-none bg-transparent"
             style={{
                 zIndex: 9999,
                 opacity: 0,
-                backgroundColor: 'transparent',
+                borderColor: 'var(--cursor-border-color, var(--color-accent))',
             }}
         />
     )

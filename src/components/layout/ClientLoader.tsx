@@ -4,9 +4,14 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { useLoading } from '@/context/LoadingContext';
 import { LoaderLogo } from '@/components/ui/LoaderLogo';
 import { useState, useEffect } from 'react';
+import { usePathname } from 'next/navigation';
+import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
 export function ClientLoader() {
-    const { isLoaded } = useLoading();
+    const { isLoaded, setIsLoaded: setGlobalIsLoaded } = useLoading();
+    const [isMinTimePassed, setIsMinTimePassed] = useState(false);
+    const pathname = usePathname();
 
     const [isDesktop] = useState(() => {
         if(typeof window !== 'undefined') {
@@ -14,6 +19,56 @@ export function ClientLoader() {
         }
         return false;
     });
+
+    useEffect(() => {
+        if(!isLoaded) return;
+
+        gsap.registerPlugin(ScrollTrigger);
+
+        ScrollTrigger.getAll().forEach(t => t.kill());
+
+        if(pathname === '/contact') {
+            setTimeout(() => {
+                ScrollTrigger.create({
+                trigger: "#dark-contact-panel",
+                start: "top 50%",
+                end: "bottom 50%",
+                onEnter: () => document.body.classList.add('on-dark-panel'),
+                onLeaveBack: () => document.body.classList.add('on-dark-panel'),
+                onLeave: () => document.body.classList.remove('on-dark-panel'),
+                onEnterBack: () => document.body.classList.remove('on-dark-panel'),
+                });
+            }, 100);
+        } else {
+            document.body.classList.remove('on-dark-panel');
+        }
+
+        return () => {
+            ScrollTrigger.getAll().forEach(t => t.kill());
+            document.body.classList.remove('on-dark-panel');
+        }
+    }, [isLoaded, pathname])
+
+    useEffect(() => {
+        const timer = setTimeout(() => {
+            setIsMinTimePassed(true);
+        }, 1500);
+        return () => clearTimeout(timer);
+    }, []);
+
+    useEffect(() => {
+        const isDesktop = window.innerWidth >= 1024;
+
+        if (isDesktop) {
+            if (isMinTimePassed) {
+                setGlobalIsLoaded(true);
+            }
+        } else {
+            if (isMinTimePassed) {
+                setGlobalIsLoaded(true);
+            }
+        }
+    }, [isMinTimePassed, setGlobalIsLoaded]);
 
     const curtainOpenDelay = isDesktop ? 1.0 : 0.2;
 

@@ -1,8 +1,10 @@
 import { ContactHorizontalScroll } from "@/components/sections/ContactHorizontalScroll";
 
 
-export default function ContactPage() {
+export default function ContactPage({searchParams, }: { searchParams?: { package?: string}; }) {
+  const packageName = searchParams?.package;
+
   return (
-    <ContactHorizontalScroll />
+    <ContactHorizontalScroll initialPackage={packageName}/>
   );
 }

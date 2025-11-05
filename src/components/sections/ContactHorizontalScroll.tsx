@@ -28,7 +28,7 @@ const panelVariants: Variants = {
   }
 };
 
-export function ContactHorizontalScroll() {
+export function ContactHorizontalScroll({ initialPackage }: { initialPackage?: string}) {
   const sectionRef = useRef<HTMLDivElement>(null);
   const panelsRef = useRef<HTMLDivElement>(null);
   const [activePanel, setActivePanel] = useState(0);
@@ -48,9 +48,6 @@ export function ContactHorizontalScroll() {
   const isMobile = useMediaQuery("(max-width: 767px)");
 
   const { isLoaded } = useLoading();
-
-  const searchParams = useSearchParams();
-  const router = useRouter();
 
   const goToIndex = (index:number) => {
     const st = getScrollTrigger();
@@ -202,30 +199,24 @@ export function ContactHorizontalScroll() {
         };
     });
 
-    const pkg = searchParams.get('package');
-
-    if(pkg) {
+    if(initialPackage) {
         setTimeout(() => {
-            goNext();
+            goToIndex(1);
         }, 150);
 
         const selectEl = document.getElementById('package') as HTMLSelectElement;
-        if(selectEl) {
-            const optionExists = Array.from(selectEl.options).some(opt => opt.value === pkg);
+        if (selectEl) {
+            const optionExists = Array.from(selectEl.options).some(opt => opt.value === initialPackage);
             if (optionExists) {
-                selectEl.value = pkg;
+            selectEl.value = initialPackage;
             }
         }
-
-        setTimeout(() => {
-            router.replace(pathname, { scroll: false });
-        }, 100);
     }
 
     return () => {
         mm.revert();
     }
-  }, [pathname, isLoaded, searchParams, router]);
+  }, [pathname, isLoaded, initialPackage]);
 
   useEffect(() => {
     const onLoad = () => ScrollTrigger.refresh();

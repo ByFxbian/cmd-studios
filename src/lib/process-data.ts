@@ -2,27 +2,56 @@ export interface ProcessStep {
   id: string;
   title: string;
   description: string;
+  details: string[];
 }
 
 export const processSteps: ProcessStep[] = [
   {
-    id: '01',
-    title: 'Briefing & Konzept',
-    description: 'Wir starten mit einem tiefen Verständnis eurer Ziele. Gemeinsam definieren wir die Vision und legen den Grundstein für das Projekt.',
+    id: "discovery",
+    title: "Discovery & Strategie",
+    description:
+      "Bevor wir eine Zeile Code schreiben, verstehen wir dein Business. Wir analysieren den Markt, definieren Ziele und entwickeln eine Roadmap, die funktioniert.",
+    details: [
+      "Markt- & Wettbewerbsanalyse",
+      "Zielgruppen-Definition",
+      "Technische Architektur & Tech-Stack",
+      "Content-Strategie Workshop",
+    ],
   },
   {
-    id: '02',
-    title: 'Design & Prototyping',
-    description: 'In Figma (oder eurem Tool der Wahl) entsteht ein klickbarer Prototyp. Hier wird die User Experience greifbar und iterierbar.',
+    id: "design",
+    title: "Design & Konzept",
+    description:
+      "Hier bekommt deine Vision eine Form. Wir gestalten High-Fidelity Screendesigns und interaktive Prototypen, die nicht nur gut aussehen, sondern Nutzer führen.",
+    details: [
+      "UX/UI Design & Wireframing",
+      "Interaktive Figma-Prototypen",
+      "Design-System & Component Library",
+      "Motion-Design Konzepte",
+    ],
   },
   {
-    id: '03',
-    title: 'Entwicklung & Testing',
-    description: 'Mit Next.js, GSAP und Framer Motion setzen wir das Design in sauberen, performanten Code um. Kontinuierliches Feedback ist hier der Schlüssel.',
+    id: "development",
+    title: "Development & Production",
+    description:
+      "Pixel-perfekte Umsetzung. Wir nutzen modernste Technologien für maximale Performance, SEO und Skalierbarkeit. Keine Baukästen, echter Code.",
+    details: [
+      "Next.js & TypeScript Entwicklung",
+      "GSAP & WebGL Animationen",
+      "Headless CMS Integration",
+      "Responsive & Performance Optimierung",
+    ],
   },
   {
-    id: '04',
-    title: 'Launch & Optimierung',
-    description: 'Go-Live! Aber unsere Arbeit endet hier nicht. Wir monitoren die Performance und stehen für zukünftige Anpassungen und Wachstum bereit.',
+    id: "launch",
+    title: "Launch & Growth",
+    description:
+      "Der Go-Live ist erst der Anfang. Wir begleiten den Start, sichern die Qualität und sorgen dafür, dass deine digitale Lösung performt und wächst.",
+    details: [
+      "Qualitätssicherung (QA) & Testing",
+      "SEO-Basis-Setup & Analytics",
+      "Deployment & Hosting Setup",
+      "Laufender Support & Weiterentwicklung",
+    ],
   },
 ];

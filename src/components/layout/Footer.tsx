@@ -10,7 +10,7 @@ export function Footer() {
   const currentYear = new Date().getFullYear();
 
   return (
-    <footer className="relative h-screen min-h-[800px] w-full bg-zinc-950 text-zinc-200 overflow-hidden flex flex-col justify-between px-6 py-12 sticky bottom-0 -z-10">
+    <footer className="relative h-auto min-h-[50vh] md:h-screen md:min-h-[800px] w-full bg-zinc-950 text-zinc-200 overflow-hidden flex flex-col justify-between px-6 py-12 sticky bottom-0 z-0">
       <div className="container mx-auto max-w-7xl flex flex-col md:flex-row justify-between items-start gap-12 pt-20">
         <div className="flex flex-col gap-6 max-w-md">
           <h3 className="text-4xl font-bold text-white">Lust auf ein Projekt?</h3>
@@ -51,7 +51,7 @@ export function Footer() {
 
       <div className="w-full overflow-hidden mt-auto pt-24">
         <motion.h1 
-          className="text-[13vw] leading-[0.8] font-bold text-center text-zinc-900 select-none whitespace-nowrap"
+          className="text-[12vw] leading-[0.8] font-bold text-center text-zinc-900 select-none whitespace-nowrap"
           initial={{ y: 100 }}
           whileInView={{ y: 0 }}
           viewport={{ once: true }}

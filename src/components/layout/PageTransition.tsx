@@ -10,22 +10,9 @@ import { LoaderLogo } from '../ui/LoaderLogo';
 export function PageTransition({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
   
-  useLayoutEffect(() => {
-    window.scrollTo(0, 0);
-
-    return () => {
-        const triggers = ScrollTrigger.getAll();
-        triggers.forEach((trigger) => {
-            trigger.kill(); 
-        });
-    }
-  }, [pathname]);
-
-  const curtainVariants = {
-    initial: { scaleY: 1, originY: 'bottom' },
-    animate: { scaleY: 0, originY: 'top' },
-    exit: { scaleY: 1, originY: 'top' },
-  };
+  if (typeof window !== 'undefined') {
+      window.scrollTo(0, 0);
+  }
 
   return (
     <AnimatePresence mode="wait">

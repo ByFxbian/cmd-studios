@@ -20,7 +20,7 @@ export function TestimonialsSection() {
     const currentTestimonial = testimonials[currentIndex];
 
     return (
-        <section className="w-full py-32 bg-[var(--color-page-bg)] overflow-hidden">
+        <section className="w-full py-20 md:py-32 bg-[var(--color-page-bg)] overflow-hidden">
             <div className="container mx-auto px-6 max-w-6xl">
                 
                 <div className="mb-12 flex items-center gap-4">
@@ -39,7 +39,7 @@ export function TestimonialsSection() {
                             className="flex flex-col md:flex-row gap-12 md:gap-20 items-start md:items-center"
                         >
                             <div className="flex-1">
-                                <h2 className="text-3xl md:text-5xl lg:text-6xl font-medium leading-tight md:leading-tight text-[var(--color-heading)] mb-8 indent-[-0.5em]">
+                                <h2 className="text-3xl md:text-5xl lg:text-6xl font-medium leading-tight md:leading-tight text-[var(--color-heading)] mb-8 tracking-normal md:indent-[-0.5em]">
                                     &ldquo;{currentTestimonial.quote}&rdquo;
                                 </h2>
                                 
@@ -49,7 +49,7 @@ export function TestimonialsSection() {
                                 </div>
                             </div>
 
-                            <div className="relative w-24 h-24 md:w-40 md:h-40 flex-shrink-0 rounded-full overflow-hidden grayscale hover:grayscale-0 transition-all duration-500 border-2 border-zinc-200">
+                            <div className="relative w-20 h-20 md:w-40 md:h-40 flex-shrink-0 rounded-full overflow-hidden grayscale hover:grayscale-0 transition-all duration-500 border-2 border-zinc-200">
                                 <Image 
                                     src={currentTestimonial.imageUrl} 
                                     alt={currentTestimonial.name}

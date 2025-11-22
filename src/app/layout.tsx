@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Inter, Manrope, Syne } from "next/font/google";
 import "./globals.css";
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
@@ -23,12 +23,15 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="de">
+      <head>
+        <link href="https://api.fontshare.com/v2/css?f[]=clash-display@200,300,400,500,600,700&f[]=satoshi@300,400,500,700,900&display=swap" rel="stylesheet" />
+      </head>
       <body className={`${inter.className} bg-[var(--color-page-bg)] text-[var(--color-heading)] antialiased`}>
         <LoadingProvider>
           <CustomCursor />
           <ClientLoader />
             <Navbar />
-            <main className="flex flex-col min-h-screen">
+            <main className="flex flex-col min-h-screen relative z-10 bg-[var(--color-page-bg)] shadow-2xl">
               <div className="flex-grow relative z-10 bg-transparent">
                 <PageTransition>
                   {children}

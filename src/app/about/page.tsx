@@ -24,7 +24,7 @@ export default function AboutPage() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7, ease: "easeInOut" }}
         >
-          <h1 className="text-5xl md:text-7xl font-bold tracking-tighter mb-6 text-[var(--color-heading)]">
+          <h1 className="text-5xl md:text-7xl font-bold tracking-normal mb-6 text-[var(--color-heading)]">
             Digitales Handwerk.
           </h1>
           <p className="max-w-2xl mx-auto text-lg md:text-xl text-[var(--color-text)]">

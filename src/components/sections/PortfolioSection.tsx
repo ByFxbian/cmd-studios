@@ -105,7 +105,7 @@ export function PortfolioSection() {
           viewport={{ once: true, amount: 0.5 }}
           transition={{ duration: 0.6, ease: "easeOut" }}
         >
-          <h2 className="text-4xl md:text-5xl font-bold tracking-tighter text-zinc-900">
+          <h2 className="text-4xl md:text-5xl font-bold tracking-normal text-zinc-900">
             Ausgewählte Arbeiten
           </h2>
           <p className="mt-4 max-w-2xl mx-auto text-lg text-zinc-600">

@@ -22,7 +22,7 @@ export function Footer() {
             href="/contact"
             className="inline-block text-xl font-bold text-white underline decoration-zinc-600 underline-offset-8 hover:decoration-accent hover:text-accent transition-all"
           >
-            hallo@cmdstudios.de
+            hallo@cmdstudios.at
           </MagneticLink>
         </div>
 

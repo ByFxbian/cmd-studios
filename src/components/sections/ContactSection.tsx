@@ -27,7 +27,7 @@ export function ContactSection() {
         whileInView="visible"
         viewport={{ once: true, amount: 0.5 }}
       >
-        <h2 className="text-4xl md:text-5xl font-bold tracking-tighter text-[var(--color-heading)]">
+        <h2 className="text-4xl md:text-5xl font-bold tracking-normal text-[var(--color-heading)]">
           Lassen Sie uns Ihr Projekt starten.
         </h2>
         <p className="mt-4 max-w-xl mx-auto text-lg text-[var(--color-text)]">

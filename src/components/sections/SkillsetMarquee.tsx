@@ -7,7 +7,6 @@ import {
 import {  FaJava, FaCamera } from 'react-icons/fa';
 import { SiGreensock, SiAdobepremierepro, SiNodedotjs, SiTailwindcss, SiFigma, SiFramer, SiReact, SiTypescript, SiMysql, SiMongodb, SiAdobephotoshop, SiAdobelightroom, SiHtml5, SiCss3, SiJavascript, SiGit, SiOracle, SiFlutter, SiDart, SiSwift, SiAdobeaftereffects, SiAdobeindesign, SiAdobeillustrator, SiNextdotjs } from 'react-icons/si';
 import { IconType } from 'react-icons';
-import { SectionMask } from '../ui/SectionMask';
 
 
 function SkillItem({ icon: Icon, name}: { icon: IconType, name: string}) {

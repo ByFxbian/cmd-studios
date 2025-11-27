@@ -8,6 +8,7 @@ import { LoadingProvider } from "@/context/LoadingContext";
 import { ClientLoader } from "@/components/layout/ClientLoader";
 import { CustomCursor } from "@/components/ui/CustomCursor";
 import { ImageTrail } from "@/components/ui/ImageTrail";
+import { SmoothScroll } from "@/components/layout/SmoothScroll";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -28,17 +29,19 @@ export default function RootLayout({
       </head>
       <body className={`${inter.className} bg-[var(--color-page-bg)] text-[var(--color-heading)] antialiased`}>
         <LoadingProvider>
-          <CustomCursor />
-          <ClientLoader />
-            <Navbar />
-            <main className="flex flex-col min-h-screen relative z-10 bg-[var(--color-page-bg)] shadow-2xl">
-              <div className="flex-grow relative z-10 bg-transparent">
-                <PageTransition>
-                  {children}
-                </PageTransition>
-              </div>
-            </main>
-          <Footer />
+          <SmoothScroll>
+            <CustomCursor />
+            <ClientLoader />
+              <Navbar />
+              <main className="flex flex-col min-h-screen relative z-10 bg-[var(--color-page-bg)] shadow-2xl">
+                <div className="flex-grow relative z-10 bg-transparent">
+                  <PageTransition>
+                    {children}
+                  </PageTransition>
+                </div>
+              </main>
+            <Footer />
+          </SmoothScroll>
         </LoadingProvider>
       </body>
     </html>

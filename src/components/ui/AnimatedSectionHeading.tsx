@@ -16,7 +16,7 @@ interface AnimatedSectionHeadingProps {
   strokeWidth?: number;
 }
 
-export function AnimatedSectionHeading({ title, className, textClasses = 'text-4xl md:text-5xl font-bold tracking-tighter leading-none', outlineColor = 'var(--color-heading)', fillColor = 'var(--color-heading)', strokeWidth = 0.5 }: AnimatedSectionHeadingProps) {
+export function AnimatedSectionHeading({ title, className, textClasses = 'text-4xl md:text-5xl font-bold tracking-normal leading-none', outlineColor = 'var(--color-heading)', fillColor = 'var(--color-heading)', strokeWidth = 0.5 }: AnimatedSectionHeadingProps) {
     const { isLoaded } = useLoading();
     const triggerRef = useRef<HTMLDivElement>(null);
     const filledTextRef = useRef<SVGRectElement>(null);

@@ -265,7 +265,7 @@ export function ContactHorizontalScroll({ initialPackage }: { initialPackage?: s
                 viewport={{ once: true, amount: 0.3 }}
             >
                 <div className="text-center max-w-2xl">
-                    <h1 className="text-6xl md:text-8xl font-bold tracking-tighter text-zinc-900">
+                    <h1 className="text-6xl md:text-8xl font-bold tracking-normal text-zinc-900">
                     Bereit, etwas
                     <br />
                     <span className="text-transparent bg-clip-text bg-gradient-to-r from-accent to-blue-500">
@@ -293,7 +293,7 @@ export function ContactHorizontalScroll({ initialPackage }: { initialPackage?: s
                                 exit={{ opacity: 0, y: -20 }}
                                 transition={{ duration: 0.2 }}
                             >
-                                <h2 className="text-4xl md:text-5xl font-bold tracking-tighter text-[var(--color-heading)] mb-4">
+                                <h2 className="text-4xl md:text-5xl font-bold tracking-normal text-[var(--color-heading)] mb-4">
                                     Schreiben Sie uns.
                                 </h2>
                                 <p className="text-lg text-[var(--color-text)] mb-8">

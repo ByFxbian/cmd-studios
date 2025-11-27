@@ -2,11 +2,11 @@
 
 import { motion, AnimatePresence, type Variants } from 'framer-motion';
 import Link from 'next/link';
-import { type FC, useEffect } from 'react';
+import { type FC } from 'react';
 
 const LINKS = [
-  { href: "/services", label: "Services" },
-  { href: "/portfolio", label: "Portfolio" },
+  { href: "/services", label: "Leistungen" },
+  { href: "/portfolio", label: "Arbeiten" },
   { href: "/about", label: "Über uns" },
   { href: "/contact", label: "Kontakt" },
 ];
@@ -38,96 +38,75 @@ const curtainVariants2: Variants = {
 };
 
 const linkListVariants: Variants = {
-  open: {
-    transition: { staggerChildren: 0.1, delayChildren: 0.8 }
-  },
-  closed: {
-    transition: { staggerChildren: 0.05, staggerDirection: -1, duration: 0.2 }
-  }
+    open: { transition: { staggerChildren: 0.1, delayChildren: 0.3 } },
+    closed: { transition: { staggerChildren: 0.05, staggerDirection: -1 } }
 };
-
+  
 const linkItemVariants: Variants = {
-  open: {
-    y: 0,
-    opacity: 1,
-    transition: { y: { stiffness: 1000, velocity: -100 } }
-  },
-  closed: {
-    y: 50,
-    opacity: 0,
-    transition: { y: { stiffness: 1000 } }
-  }
+    open: { y: 0, opacity: 1, transition: { duration: 0.5, ease: [0.22, 1, 0.36, 1] } },
+    closed: { y: 40, opacity: 0, transition: { duration: 0.3, ease: [0.22, 1, 0.36, 1] } }
 };
 
-export const MobileMenu: FC<{ isOpen: boolean, toggle: () => void }> = ({ isOpen, toggle }) => {
-    useEffect(() => {
-    if (isOpen) {
-      document.body.style.overflow = 'hidden';
-    } else {
-      document.body.style.overflow = 'auto';
-    }
-    return () => {
-       document.body.style.overflow = 'auto';
-    }
-  }, [isOpen]);
+interface MobileMenuProps {
+  isOpen: boolean;
+  toggle: () => void;
+}
 
+export const MobileMenu: FC<MobileMenuProps> = ({ isOpen, toggle }) => {
   return (
-    <AnimatePresence>
+    <AnimatePresence mode="wait">
       {isOpen && (
-        <motion.div
-          key="mobile-menu-wrapper"
-          className="md:hidden"
-        >
-          <motion.div
-            className="fixed top-0 left-0 w-full h-screen bg-accent z-[81] scale-[1.01]"
-            initial={{ scaleY: 0, originY: 'top' }}
-            animate={{ 
-              scaleY: 1, 
-              originY: 'top',
-              transition: { duration: 0.7, ease: [0.22, 1, 0.36, 1], delay: 0 }
-             }}
-            exit={{ 
-              scaleY: 0, 
-              originY: 'top',
-              transition: { duration: 0.7, ease: [0.22, 1, 0.36, 1], delay: 0.1 }
-             }}
-          />
-          
-          <motion.div
-            className="fixed top-0 left-0 w-full h-screen bg-zinc-900 z-[82] flex items-center justify-center scale-[1.01]"
-            initial={{ scaleY: 0, originY: 'top' }}
-            animate={{ 
-                scaleY: 1, 
-                originY: 'top',
-                transition: { duration: 0.7, ease: [0.22, 1, 0.36, 1], delay: 0.1 }
-            }}
-            exit={{ 
-                scaleY: 0, 
-                originY: 'top',
-                transition: { duration: 0.7, ease: [0.22, 1, 0.36, 1], delay: 0 }
-            }}
-          >
-            <motion.ul
-              className="flex flex-col items-center gap-6"
-              variants={linkListVariants}
-              initial="closed"
-              animate="open"
-              exit="closed" 
-            >
-              {LINKS.map((link) => (
-                <motion.li key={link.href} variants={linkItemVariants}>
-                  <Link
-                    href={link.href}
-                    onClick={toggle} 
-                    className="text-4xl font-bold text-white hover:text-accent transition-colors"
-                  >
-                    {link.label}
-                  </Link>
-                </motion.li>
-              ))}
-            </motion.ul>
-          </motion.div>
-        </motion.div>
+        <>
+             <motion.div
+                className="fixed top-0 left-0 w-full h-screen bg-accent z-[190]"
+                initial={{ scaleY: 0, originY: 'top' }}
+                animate={{ 
+                    scaleY: 1, 
+                    originY: 'top',
+                    transition: { duration: 0.7, ease: [0.22, 1, 0.36, 1], delay: 0 }
+                }}
+                exit={{ 
+                    scaleY: 0, 
+                    originY: 'top',
+                    transition: { duration: 0.7, ease: [0.22, 1, 0.36, 1], delay: 0.1 }
+                 }}
+              />
+              
+              <motion.div
+                className="fixed top-0 left-0 w-full h-screen bg-zinc-950 z-[191] flex items-center justify-center"
+                initial={{ scaleY: 0, originY: 'top' }}
+                animate={{ 
+                    scaleY: 1, 
+                    originY: 'top',
+                    transition: { duration: 0.7, ease: [0.22, 1, 0.36, 1], delay: 0.1 }
+                }}
+                exit={{ 
+                    scaleY: 0, 
+                    originY: 'top',
+                    transition: { duration: 0.7, ease: [0.22, 1, 0.36, 1], delay: 0 }
+                }}
+              >
+                <motion.ul
+                  className="flex flex-col items-center gap-8"
+                  variants={linkListVariants}
+                  initial="closed"
+                  animate="open"
+                  exit="closed" 
+                >
+                  {LINKS.map((link) => (
+                    <motion.li key={link.href} variants={linkItemVariants} className="overflow-hidden">
+                      <Link
+                        href={link.href}
+                        onClick={toggle} 
+                        className="text-5xl md:text-7xl font-bold text-white tracking-normal hover:text-accent transition-colors"
+                      >
+                        {link.label}
+                      </Link>
+                    </motion.li>
+                  ))}
+                </motion.ul>
+              </motion.div>
+        </>
       )}
     </AnimatePresence>
   );

@@ -4,6 +4,7 @@ import { HeroSection } from "@/components/sections/HeroSection";
 import { PortfolioSection } from "@/components/sections/PortfolioSection";
 import { ServiceSection } from "@/components/sections/ServiceSection";
 import { SkillsetMarquee } from "@/components/sections/SkillsetMarquee";
+import { TechStack } from "@/components/sections/TechStack";
 import { TestimonialsSection } from "@/components/sections/TestimonialsSection";
 
 export default function Home() {
@@ -15,7 +16,7 @@ export default function Home() {
 
       <PortfolioSection />
 
-      <SkillsetMarquee />
+      <TechStack />
 
       <TestimonialsSection />
 

@@ -109,7 +109,7 @@ export function ServiceDetailSection({
         <span className="text-2xl font-bold text-accent">{title}</span>
       </motion.div>
       <motion.h2 
-        className={`text-4xl md:text-5xl font-bold tracking-tighter ${headingColor} mb-6`}
+        className={`text-4xl md:text-5xl font-bold tracking-normal ${headingColor} mb-6`}
         variants={itemVariants}
       >
         {subtitle}

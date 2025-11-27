@@ -63,7 +63,7 @@ export default function PortfolioDetailPage() {
             >
               {project.category}
             </span>
-            <h1 className="text-4xl md:text-7xl font-bold tracking-tighter text-white">
+            <h1 className="text-4xl md:text-7xl font-bold tracking-normal text-white">
               {project.title}
             </h1>
           </div>

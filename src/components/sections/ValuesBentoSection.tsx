@@ -5,14 +5,11 @@ import { HiOutlineLightningBolt, HiOutlineCode, HiOutlineEye, HiOutlineChatAlt2 
 import Image from 'next/image';
 
 const bentoVariants: Variants = {
-  hidden: { opacity: 0, scale: 0.9 },
+  hidden: { opacity: 0, scale: 0.95 },
   visible: {
     opacity: 1,
     scale: 1,
-    transition: {
-      duration: 0.6,
-      ease: [0.22, 1, 0.36, 1],
-    },
+    transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] },
   },
 };
 
@@ -20,100 +17,97 @@ const gridContainerVariants: Variants = {
   hidden: { opacity: 0 },
   visible: {
     opacity: 1,
-    transition: {
-      staggerChildren: 0.15,
-    },
+    transition: { staggerChildren: 0.1 },
   },
 };
 
 export function ValuesBentoSection() {
   return (
-    <section className="w-full py-20 md:py-32 bg-zinc-50 border-y border-zinc-200">
+    <section className="w-full py-20 md:py-32 bg-zinc-950 border-t border-zinc-900">
       <div className="container mx-auto max-w-7xl px-6">
         
-        {/* Überschrift */}
         <motion.div
-          className="text-center mb-12"
+          className="text-center mb-16"
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 0.5 }}
-          transition={{ duration: 0.6, ease: "easeOut" }}
         >
-          <h2 className="text-4xl md:text-5xl font-bold tracking-tighter text-zinc-900">
-            Unser Ansatz
+          <h2 className="text-4xl md:text-5xl font-bold tracking-normal text-white">
+            Unsere Prinzipien
           </h2>
-          <p className="mt-4 max-w-2xl mx-auto text-lg text-zinc-600">
-            Wir glauben an Performance, Präzision und Partnerschaft. 
-            So setzen wir Projekte um.
+          <p className="mt-4 max-w-2xl mx-auto text-lg text-zinc-400">
+            Wir arbeiten nicht einfach ab. Wir denken mit, fordern heraus und liefern Qualität.
           </p>
         </motion.div>
 
-        {/* Bento Grid */}
-        <motion.div
-          className="grid grid-cols-1 md:grid-cols-3 grid-rows-3 gap-6 max-w-6xl mx-auto"
+        <motion.div 
+          className="grid grid-cols-1 md:grid-cols-3 grid-rows-2 gap-6 h-auto md:h-[600px]"
           variants={gridContainerVariants}
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, amount: 0.2 }}
         >
-          {/* 1. Performance */}
           <motion.div 
             variants={bentoVariants}
-            className="md:col-span-2 row-span-1 p-8 bg-white rounded-lg shadow-lg border border-zinc-200 flex flex-col justify-center"
+            className="md:col-span-2 row-span-1 p-8 rounded-3xl bg-zinc-900/50 border border-zinc-800 backdrop-blur-sm relative overflow-hidden group"
           >
-            <HiOutlineLightningBolt className="w-10 h-10 text-accent mb-3" />
-            <h3 className="text-2xl font-bold mb-2 text-zinc-900">Performance Zuerst</h3>
-            <p className="text-zinc-700">
-              Millisekunden entscheiden. Wir bauen Websites, die nicht nur schnell aussehen, sondern 
-              messbar schnell sind (Core Web Vitals).
-            </p>
+            <div className="relative z-10 h-full flex flex-col justify-between">
+                <HiOutlineLightningBolt className="w-12 h-12 text-accent mb-4" />
+                <div>
+                    <h3 className="text-3xl font-bold mb-2 text-white">Performance First</h3>
+                    <p className="text-zinc-400 max-w-md">
+                    Keine Ladebalken. Wir optimieren jedes Byte, damit deine Seite schneller ist als die Konkurrenz.
+                    </p>
+                </div>
+            </div>
+            <div className="absolute top-0 right-0 w-64 h-64 bg-accent/5 rounded-full blur-[100px] group-hover:bg-accent/10 transition-colors duration-500" />
           </motion.div>
 
-          {/* 2. Kommunikation */}
           <motion.div 
             variants={bentoVariants}
-            className="md:col-span-1 row-span-2 p-8 bg-white rounded-lg shadow-lg border border-zinc-200 flex flex-col"
+            className="md:col-span-1 row-span-2 rounded-3xl overflow-hidden relative border border-zinc-800 group"
           >
-            <HiOutlineChatAlt2 className="w-10 h-10 text-accent mb-3" />
-            <h3 className="text-2xl font-bold mb-2 text-zinc-900">Radikal Transparent</h3>
-            <p className="text-zinc-700 grow">
-              Kein Agentur-Blabla. Wir sind Ihre erweiterte Werkbank. 
-              Sie sprechen direkt mit uns – dem Entwickler und dem Kreativen.
-            </p>
-            <div className="relative aspect-square w-full h-auto mt-4 rounded overflow-hidden">
-                <Image 
-                    src="https://placehold.co/600x600.png?text=Teamwork" 
-                    alt="Kommunikation" 
-                    fill 
-                    className="object-cover"
-                />
+             <Image 
+                src="https://images.unsplash.com/photo-1552664730-d307ca884978?q=80&w=2940&auto=format&fit=crop" 
+                alt="Teamwork Meeting" 
+                fill 
+                className="object-cover transition-transform duration-700 group-hover:scale-105 opacity-60 group-hover:opacity-80"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-zinc-950 via-zinc-950/20 to-transparent" />
+            <div className="absolute bottom-0 left-0 p-8">
+                <HiOutlineChatAlt2 className="w-10 h-10 text-white mb-3" />
+                <h3 className="text-2xl font-bold mb-2 text-white">Direkter Draht</h3>
+                <p className="text-zinc-300 text-sm">
+                    Du sprichst direkt mit den Entwicklern, nicht mit Sales-Managern.
+                </p>
             </div>
           </motion.div>
 
-          {/* 3. Ästhetik */}
           <motion.div 
             variants={bentoVariants}
-            className="md:col-span-1 row-span-2 p-8 bg-zinc-900 rounded-lg shadow-lg border border-zinc-700 text-white"
+            className="md:col-span-1 row-span-1 p-8 rounded-3xl bg-zinc-900/50 border border-zinc-800 backdrop-blur-sm flex flex-col justify-between group"
           >
-            <HiOutlineEye className="w-10 h-10 text-accent mb-3" />
-            <h3 className="text-2xl font-bold mb-2">Visuelle Präzision</h3>
-            <p className="text-zinc-300 grow">
-              Gutes Design ist unsichtbar. Wir legen Wert auf saubere Typografie, 
-              sinnvolle Animationen und ein UI, das funktioniert.
-            </p>
+            <HiOutlineEye className="w-10 h-10 text-accent" />
+            <div>
+                <h3 className="text-2xl font-bold mb-2 text-white">Visuelle Präzision</h3>
+                <p className="text-zinc-400 text-sm">
+                Pixel-Perfect ist bei uns kein Buzzword, sondern Standard.
+                </p>
+            </div>
           </motion.div>
 
-          {/* 4. Code-Qualität */}
           <motion.div 
             variants={bentoVariants}
-            className="md:col-span-1 row-span-1 p-8 bg-white rounded-lg shadow-lg border border-zinc-200 flex flex-col justify-center"
+            className="md:col-span-1 row-span-1 p-8 rounded-3xl bg-zinc-950 border border-zinc-800 flex flex-col justify-between group relative overflow-hidden"
           >
-            <HiOutlineCode className="w-10 h-10 text-accent mb-3" />
-            <h3 className="text-2xl font-bold mb-2 text-zinc-900">Clean Code</h3>
-            <p className="text-zinc-700">
-              Skalierbarer, wartbarer und moderner Code (TypeScript, React) 
-              ist die Basis für jedes erfolgreiche Projekt.
-            </p>
+             <div className="absolute inset-0 bg-[url('/grid.svg')] opacity-10" />
+            <HiOutlineCode className="w-10 h-10 text-accent relative z-10" />
+            <div className="relative z-10">
+                <h3 className="text-2xl font-bold mb-2 text-white">Clean Code</h3>
+                <p className="text-zinc-400 text-sm">
+                 Wartbar und skalierbar. Schönheit kommt auch von innen.
+                </p>
+            </div>
           </motion.div>
 
         </motion.div>

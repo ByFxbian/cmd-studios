@@ -43,7 +43,7 @@ export function ServiceHeroSection({title}: { title?: string }) {
                 animate="visible"
             >
                 <motion.h1
-                    className="text-5xl md:text-7xl font-bold tracking-tighter mb-6 text-[var(--color-heading)]"
+                    className="text-5xl md:text-7xl font-bold tracking-normal mb-6 text-[var(--color-heading)]"
                     variants={itemVariants}
                 >
                     {title || "Unsere Leistungen" }

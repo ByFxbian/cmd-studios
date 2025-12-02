@@ -140,7 +140,6 @@ export function OldTestimonialsSection() {
 function CardContent({ testimonial }: { testimonial: Testimonial }) {
     return (
     <div className="flex flex-col md:flex-row items-center h-full gap-8 py-4 md:py-0">
-      {/* Bild */}
       <div className="relative w-32 h-32 md:w-40 md:h-40 flex-shrink-0 rounded-full overflow-hidden shadow-md">
         <Image
           src={testimonial.imageUrl}
@@ -150,7 +149,6 @@ function CardContent({ testimonial }: { testimonial: Testimonial }) {
           sizes="160px"
         />
       </div>
-      {/* Zitat */}
       <div className="relative text-center md:text-left">
         <FaQuoteLeft className="absolute -top-4 left-0 text-3xl text-accent/20 hidden md:block" />
         <p className="text-lg md:text-xl font-medium text-[var(--color-text)] mb-4">

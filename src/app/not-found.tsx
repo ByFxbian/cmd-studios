@@ -7,7 +7,6 @@ export default function NotFound() {
   return (
     <div className="h-screen w-full bg-zinc-950 flex flex-col items-center justify-center text-center overflow-hidden relative">
       
-      {/* Background Noise/Gradient */}
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-zinc-900 via-zinc-950 to-zinc-950 opacity-50" />
       
       <div className="relative z-10 px-6">

@@ -22,7 +22,6 @@ export default function PortfolioPage() {
   const sectionRef = useRef<HTMLElement>(null);
   return (
     <>
-      {/* 1. Hero-Sektion */}
       <section ref={sectionRef} className="relative flex h-[70vh] min-h-[500px] w-full items-center justify-center pt-20 text-center">
         <HeroCanvas />
         <ImageTrail containerRef={sectionRef as RefObject<HTMLElement>} />
@@ -43,11 +42,9 @@ export default function PortfolioPage() {
         </motion.div>
       </section>
 
-      {/* 2. Filter & Galerie */}
       <section className="w-full py-20 md:py-32 bg-zinc-50 border-bottom border-zinc-200">
         <div className="container mx-auto max-w-7xl px-6">
-          
-          {/* Filter-Buttons */}
+
           <motion.div 
             className="flex justify-center gap-4 mb-12"
             initial={{ opacity: 0, y: 20 }}
@@ -69,7 +66,6 @@ export default function PortfolioPage() {
             ))}
           </motion.div>
 
-          {/* Animierte Galerie */}
           <motion.div
             className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
           >

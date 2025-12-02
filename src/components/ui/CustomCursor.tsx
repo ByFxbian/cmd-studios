@@ -24,11 +24,11 @@ export function CustomCursor() {
 
         const getAccentColor = () => getComputedStyle(document.body)
                                 .getPropertyValue(CSS_VAR_CURSOR_BORDER)
-                                .trim() || '#14b8a6'; // Fallback
+                                .trim() || '#14b8a6';
                                 
         const getBgColor = () => getComputedStyle(document.body)
                               .getPropertyValue(CSS_VAR_CURSOR_BG)
-                              .trim() || '#14b8a6'; // Fallback
+                              .trim() || '#14b8a6';
 
 
         gsap.set(cursorRef.current, { 

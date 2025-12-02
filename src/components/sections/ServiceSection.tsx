@@ -74,7 +74,7 @@ export function ServiceSection() {
 
                     <motion.div
                         className="bg-white p-8 rounded-lg shadow-lg border border-zinc-200 flex flex-col"
-                        custom={1} // Index 1 für die Animation
+                        custom={1}
                         variants={cardVariants}
                         initial="hidden"
                         whileInView="visible"

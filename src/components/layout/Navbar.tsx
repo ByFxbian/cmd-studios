@@ -25,8 +25,7 @@ export function Navbar() {
                     <Link href="/" className="text-xl font-bold tracking-tight text-transparent bg-clip-text bg-linear-to-r from-accent to-blue-500 transition-colors duration-300 ease-in-out z-[100]">
                     CMD<span className='text-[var(--color-text-muted)] transition-colors duration-300 ease-in-out'> Studios</span>
                     </Link>
-                    
-                    {/* Desktop Links (unverändert) */}
+
                     <div className='hidden md:flex gap-6 items-center'>
                         <HoverStaggeredLink 
                             href="/services" 
@@ -55,7 +54,6 @@ export function Navbar() {
                 </nav>
             </header>
 
-            {/* 6. Mobile Toggle Button */}
             <motion.div 
                 className="md:hidden fixed top-0 right-0 z-[100] m-4 mt-4"
                 initial="closed" 
@@ -63,8 +61,7 @@ export function Navbar() {
             >
                 <MenuToggle toggle={toggleMenu} isOpen={isOpen}/>
             </motion.div>
-            
-            {/* 7. Das Menü selbst (außerhalb des headers) */}
+
             <MobileMenu isOpen={isOpen} toggle={toggleMenu} />
         </>
     );

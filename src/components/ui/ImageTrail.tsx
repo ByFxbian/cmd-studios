@@ -82,21 +82,19 @@ export function ImageTrail({containerRef}: ImageTrailProps) {
                 {images.map((img) => (
                 <motion.div
                     key={img.id}
-                    className="absolute" // Positioniert durch style
+                    className="absolute"
                     style={{
                         top: 0,
                         left: 0,
                         x: img.x,
                         y: img.y,
-                        translateX: '-50%', // Zentriert auf dem Cursor
+                        translateX: '-50%',
                         translateY: '-50%',
                     }}
-                    // Framer Motion Animationen
                     initial={{ scale: 0.5, opacity: 0, rotate: img.rotation }}
                     animate={{ scale: 1, opacity: 1, transition: { duration: 0.3, ease: 'easeOut' } }}
                     exit={{ scale: 0.2, opacity: 0, transition: { duration: 1.5, ease: 'easeOut' } }}
                 >
-                    {/* Das Bild selbst */}
                     <div className="w-32 h-32 md:w-40 md:h-40 relative rounded-lg overflow-hidden shadow-xl opacity-50">
                     <Image
                         src={img.src}

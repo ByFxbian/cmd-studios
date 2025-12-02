@@ -28,7 +28,6 @@ export default function PortfolioDetailPage() {
 
   return (
     <>
-      {/* 1. Hero der Detailseite */}
       <section className="relative w-full h-[70vh] min-h-[500px]">
         <motion.div 
           className="relative w-full h-full"
@@ -41,12 +40,11 @@ export default function PortfolioDetailPage() {
             alt={project.title}
             fill
             className="object-cover"
-            priority // Wichtig für LCP
+            priority
           />
           <div className="absolute inset-0 bg-black/50" />
         </motion.div>
 
-        {/* Titel-Overlay */}
         <motion.div 
           className="absolute inset-0 flex flex-col justify-end z-10"
           initial={{ opacity: 0, y: 30 }}
@@ -70,7 +68,6 @@ export default function PortfolioDetailPage() {
         </motion.div>
       </section>
 
-      {/* 2. Content-Sektion */}
       <section className="w-full py-20 md:py-32 bg-white">
         <div className="container mx-auto max-w-3xl px-6">
           <motion.div

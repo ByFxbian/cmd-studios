@@ -69,9 +69,9 @@ export function PortfolioCard({ title, category, imageUrl, href }: PortfolioCard
         <motion.div 
             className="absolute inset-0"
             style={{
-              x: translateX, // Wendet Parallax an
+              x: translateX,
               y: translateY,
-              scale: 1.15, // Startet leicht eingezoomt, damit Ränder nie sichtbar werden
+              scale: 1.15,
             }}
           >
             <Image
@@ -86,7 +86,6 @@ export function PortfolioCard({ title, category, imageUrl, href }: PortfolioCard
           <motion.div
             className="absolute inset-0"
             style={{
-              // 8. Wir animieren die CSS-Variablen für 'background'
               '--x': spotlightX,
               '--y': spotlightY,
               background: 'radial-gradient(circle at var(--x) var(--y), rgba(255,255,255,0.15) 0%, rgba(0,0,0,0.5) 70%)',
@@ -98,32 +97,6 @@ export function PortfolioCard({ title, category, imageUrl, href }: PortfolioCard
             transition={{ duration: 0.3 }}
           />
       </div>
-        {/*<div className="relative overflow-hidden rounded-lg bg-white border border-zinc-200 shadow-lg">
-          <div className="relative w-full aspect-[4/3] overflow-hidden">
-            <Image
-              src={imageUrl}
-              alt={`Vorschaubild für das Projekt ${title}`}
-              fill
-              sizes="(max-width: 768px) 100vw, 50vw"
-              className="object-cover transition-transform duration-500 ease-in-out group-hover:scale-110"
-            />
-          </div>
-          
-          <div className="p-5">
-            <span 
-              className={`inline-block text-xs font-semibold px-2 py-0.5 rounded mb-2 ${
-                isVideo 
-                ? 'bg-blue-100 text-blue-800' 
-                : 'bg-accent-light/30 text-accent-dark'
-              }`}
-            >
-              {category}
-            </span>
-            <h3 className="text-xl font-bold text-zinc-900 group-hover:text-accent transition-colors">
-              {title}
-            </h3>
-          </div>
-        </div>*/}
       </Link>
 
       <div className="pt-4">

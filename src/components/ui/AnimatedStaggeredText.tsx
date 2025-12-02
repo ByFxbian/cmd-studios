@@ -26,7 +26,6 @@ export function AnimatedStaggeredText({ text, isHovering }: AnimatedStaggeredTex
       className="relative overflow-hidden"
       style={{ lineHeight: '1.3em' }}
     >
-      {/* OBEN: Text (Initial sichtbar, bei Hover versteckt) */}
       <span className="flex">
         {text.split('').map((letter, i) => (
           <motion.span
@@ -44,7 +43,6 @@ export function AnimatedStaggeredText({ text, isHovering }: AnimatedStaggeredTex
         ))}
       </span>
 
-      {/* UNTEN: Text (Initial versteckt, bei Hover sichtbar) */}
       <span className="absolute top-0 left-0 flex">
         {text.split('').map((letter, i) => (
           <motion.span

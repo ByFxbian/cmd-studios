@@ -6,15 +6,6 @@ const text = "CMD STUDIOS";
 
 const letters = Array.from(text);
 
-/*const containerVariants: Variants = {
-  animate: {
-    transition: {
-      staggerChildren: 0.08,
-      repeat: Infinity,
-      repeatDelay: 1.0, 
-    },
-  },
-};*/
 const desktopContainerVariants: Variants = {
   initial: { opacity: 1 },
   animate: { opacity: 1 },
@@ -62,22 +53,6 @@ const mobileLetterVariants:Variants = {
     },
   },
 };
-
-/*const letterVariants: Variants = {
-  initial: {
-    y: "100%",
-    opacity: 0,
-  },
-  animate: {
-    y: "0%",
-    opacity: 1,
-    transition: {
-      type: "spring",
-      damping: 12,
-      stiffness: 200,
-    },
-  },
-};*/
 
 export function LoaderLogo({ isDesktop }: { isDesktop: boolean }) {
     const containerVariants = isDesktop ? desktopContainerVariants : mobileContainerVariants;

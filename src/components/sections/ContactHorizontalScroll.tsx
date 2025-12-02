@@ -255,7 +255,7 @@ export function ContactHorizontalScroll({ initialPackage }: { initialPackage?: s
     <section ref={sectionRef} className="overflow-hidden">
         <div 
             ref={panelsRef}
-            className="flex w-full flex-col md:w-[300vw] md:flex-row" // 3 Panels * 100vw = 300vw
+            className="flex w-full flex-col md:w-[300vw] md:flex-row"
         >
             <motion.div 
                 className="panel flex h-auto min-h-screen w-full items-center justify-center p-8 bg-zinc-100 md:h-screen md:w-screen"

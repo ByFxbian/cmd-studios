@@ -13,7 +13,6 @@ export default function AboutPage() {
   const sectionRef = useRef<HTMLElement>(null);
   return (
     <>
-      {/* 1. Hero-Sektion */}
       <section ref={sectionRef} className="relative flex h-[70vh] min-h-[500px] w-full items-center justify-center pt-20 text-center">
         <HeroCanvas />
         <ImageTrail containerRef={sectionRef as RefObject<HTMLElement>} />
@@ -33,14 +32,11 @@ export default function AboutPage() {
           </p>
         </motion.div>
       </section>
-      
-      {/* 2. Die existierende AboutSection */}
+
       <AboutSection />
 
-      {/* 3. Die neue Bento-Grid Sektion */}
       <ValuesBentoSection />
 
-      {/* 4. Der abschließende CTA */}
       <ContactSection />
     </>
   );

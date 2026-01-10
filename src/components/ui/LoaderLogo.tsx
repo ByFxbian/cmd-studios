@@ -60,7 +60,7 @@ export function LoaderLogo({ isDesktop }: { isDesktop: boolean }) {
 
     return (
         <motion.div 
-            className="text-4xl font-bold tracking-tight text-white flex"
+            className="font-heading text-5xl tracking-tight text-white flex"
             variants={containerVariants}
             initial="initial"
             animate="animate"

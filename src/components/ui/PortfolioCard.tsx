@@ -100,9 +100,9 @@ export function PortfolioCard({ title, category, imageUrl, href }: PortfolioCard
       </Link>
 
       <div className="pt-4">
-        <h3 className="text-xl font-bold text-[var(--color-heading)]">{title}</h3>
+        <h3 className="text-xl tracking-wide text-[var(--color-heading)]">{title}</h3>
         <span 
-              className={`inline-block text-xs font-semibold px-2 py-0.5 rounded mb-2 ${
+              className={`inline-block text-sm tracking-wide font-accent px-2 py-0.5 rounded mb-2 ${
                 isVideo 
                 ? 'bg-blue-100 text-blue-800' 
                 : 'bg-accent-light/30 text-accent-dark'

@@ -2,67 +2,69 @@
 @plugin "@tailwindcss/typography";
 
 @theme {
-  --font-heading: 'Clash Display', sans-serif;
-  --font-body: 'Satoshi', sans-serif;
+  --font-heading: var(--font-heading);
+  --font-body: var(--font-body);
+  --font-accent: var(--font-accent);
 
-  --color-accent-light: #2dd4bf;
-  --color-accent: #14b8a6;
-  --color-accent-dark: #0d9488;
+  /* Warm Creative Palette */
+  --color-accent-light: #FF8552;
+  --color-accent: #FF4D00; /* Vibrant Orange */
+  --color-accent-dark: #cc3d00;
 
-  --color-page-bg: #fafafa;
-  --color-heading: #18181b;
-  --color-text: #3f3f46;
-  --color-text-muted: #71717b;
-  --color-navbar-border: rgba(24,24,27,0.1);
+  --color-page-bg: #F9F8F4; /* Warm Cream Light Mode */
+  --color-heading: #1C1B1A; /* Warm Black */
+  --color-text: #4A4846;    /* Warm Grey */
+  --color-text-muted: #8C8884;
+  --color-navbar-border: rgba(28, 27, 26, 0.08);
 
-  --color-button-bg: var(--color-accent);
-  --color-button-text: white;
-  --color-button-hover-bg: var(--color-accent-dark);
+  --color-button-bg: var(--color-heading);
+  --color-button-text: var(--color-page-bg);
+  --color-button-hover-bg: var(--color-accent);
 
-  --color-scroll-button-bg: white;
-  --color-scroll-button-text: #18181b;
-  --color-scroll-button-hover-bg: #f4f4f5;
+  --color-scroll-button-bg: #EAE8E0; 
+  --color-scroll-button-text: #1C1B1A;
+  --color-scroll-button-hover-bg: #DCD9D0;
 }
 
-body.on-dark-panel {
-  --color-heading: white;
-  --color-text: #d4d4d8; /* theme('colors.zinc.300') */
-  --color-text-muted: #a1a1aa; /* theme('colors.zinc.400') */
-  --color-navbar-border: rgba(255, 255, 255, 0.1); /* theme('colors.white/0.1') */
+/* Dark Mode Panels (Footer, Mobile Menu, Transitions) */
+body.on-dark-panel, 
+.dark-panel {
+  --color-page-bg: #1C1B1A;
+  --color-heading: #F9F8F4;
+  --color-text: #DCD9D0;
+  --color-text-muted: #8C8884;
+  --color-navbar-border: rgba(249, 248, 244, 0.1); 
 
-  --color-button-bg: white;
-  --color-button-text: black;
-  --color-button-hover-bg: #e4e4e7; /* theme('colors.zinc.200') */
+  --color-button-bg: #F9F8F4;
+  --color-button-text: #1C1B1A;
+  --color-button-hover-bg: #EAE8E0;
+}
 
-  --color-scroll-button-bg: #27272a; /* theme('colors.zinc.800') */
-  --color-scroll-button-text: white;
-  --color-scroll-button-hover-bg: #3f3f46; /* theme('colors.zinc.700') */
+/* Base Styles */
+@layer base {
+  body {
+    background-color: var(--color-page-bg);
+    color: var(--color-heading);
+    font-family: var(--font-body);
+    @apply antialiased transition-colors duration-500 tracking-wide;
+  }
 
-  .custom-cursor-ring {
-    --cursor-border-color: white;
-    --cursor-bg-color: white;
+  /* Fix for tight buttons */
+  button, a, [role="button"], .font-bold {
+    @apply tracking-wider; 
+  }
+
+  h1, h2, h3, h4, h5, h6, .font-heading {
+    font-family: var(--font-heading);
+    @apply tracking-tight;
+  }
+
+  .font-accent {
+      font-family: var(--font-accent);
   }
 }
 
-a, button, [role="button"], .cursor-pointer {
-  cursor: pointer;
-}
-
-@media (min-width: 1024px) {
-  html, body, a, button, [role="button"], .cursor-pointer {
-    cursor: none;
-  }
-}
-
-.no-hscroll-on-form {
-  overscroll-behavior: contain;
-}
-
-.no-hscroll-on-form,
-.no-hscroll-on-form * {
-  touch-action: pan-y;
-}
-
+/* Utility Classes */
 @layer utilities {
   .mask-wave {
     mask-image: url('/mask.svg');
@@ -71,39 +73,28 @@ a, button, [role="button"], .cursor-pointer {
     mask-position: center;
   }
 
-  .heading-fill { will-change: clip-path; }
-
   .text-outline {
     -webkit-text-stroke: 1px var(--color-text-muted);
-    -webkit-text-fill-color: transparent; /* Safari */
+    -webkit-text-fill-color: transparent; 
     color: transparent;
+  }
+  
+  /* Warm Glass Effect */
+  .glass-panel {
+      background: rgba(249, 248, 244, 0.6);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid var(--color-navbar-border);
   }
 }
 
-@layer base {
-  html, body, * {
-    font-family: var(--font-body);
-  }
-  body {
-    user-select: none;
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-  }
+/* Cursor & Interaction */
+a, button, [role="button"], .cursor-pointer {
+  cursor: pointer;
+}
 
-  h1, h2, h3, h4, h5, h6, 
-  .font-heading {
-    font-family: var(--font-heading);
-  }
-
-  body {
-    @apply bg-[var(--color-page-bg)] text-[var(--color-heading)] antialiased;
-  }
-
-  input, textarea, select, .prose {
-    user-select: auto;
-    -webkit-user-select: auto;
-    -moz-user-select: auto;
-    -ms-user-select: auto;
+@media (min-width: 1024px) {
+  html, body, a, button, [role="button"], .cursor-pointer {
+    cursor: none;
   }
 }

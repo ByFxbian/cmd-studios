@@ -11,32 +11,6 @@ const LINKS = [
   { href: "/contact", label: "Kontakt" },
 ];
 
-const curtainVariants1: Variants = {
-  open: (originY: 'top' | 'bottom') => ({
-    scaleY: 0,
-    originY,
-    transition: { duration: 0.7, ease: [0.22, 1, 0.36, 1], delay: 0 }
-  }),
-  closed: (originY: 'top' | 'bottom') => ({
-    scaleY: 1,
-    originY,
-    transition: { duration: 0.7, ease: [0.22, 1, 0.36, 1], delay: 0.1 }
-  })
-};
-
-const curtainVariants2: Variants = {
-  open: (originY: 'top' | 'bottom') => ({
-    scaleY: 0,
-    originY,
-    transition: { duration: 0.7, ease: [0.22, 1, 0.36, 1], delay: 0.1 }
-  }),
-  closed: (originY: 'top' | 'bottom') => ({
-    scaleY: 1,
-    originY,
-    transition: { duration: 0.7, ease: [0.22, 1, 0.36, 1], delay: 0 }
-  })
-};
-
 const linkListVariants: Variants = {
     open: { transition: { staggerChildren: 0.1, delayChildren: 0.3 } },
     closed: { transition: { staggerChildren: 0.05, staggerDirection: -1 } }
@@ -73,7 +47,7 @@ export const MobileMenu: FC<MobileMenuProps> = ({ isOpen, toggle }) => {
               />
               
               <motion.div
-                className="fixed top-0 left-0 w-full h-screen bg-zinc-950 z-[191] flex items-center justify-center"
+                className="fixed top-0 left-0 w-full h-screen bg-zinc-950 z-[191] flex items-center justify-center p-4 overflow-hidden" 
                 initial={{ scaleY: 0, originY: 'top' }}
                 animate={{ 
                     scaleY: 1, 
@@ -86,19 +60,22 @@ export const MobileMenu: FC<MobileMenuProps> = ({ isOpen, toggle }) => {
                     transition: { duration: 0.7, ease: [0.22, 1, 0.36, 1], delay: 0 }
                 }}
               >
+                <div className="absolute top-4 right-4 z-[203] md:hidden">
+                </div>
+
                 <motion.ul
-                  className="flex flex-col items-center gap-8"
+                  className="flex flex-col items-center gap-6 md:gap-8 w-full max-w-sm"
                   variants={linkListVariants}
                   initial="closed"
                   animate="open"
                   exit="closed" 
                 >
                   {LINKS.map((link) => (
-                    <motion.li key={link.href} variants={linkItemVariants} className="overflow-hidden">
+                    <motion.li key={link.href} variants={linkItemVariants} className="w-full text-center py-2">
                       <Link
                         href={link.href}
                         onClick={toggle} 
-                        className="text-5xl md:text-7xl font-bold text-white tracking-normal hover:text-accent transition-colors"
+                        className="block text-5xl md:text-7xl font-bold text-white tracking-normal hover:text-accent transition-colors pb-2 leading-tight" 
                       >
                         {link.label}
                       </Link>

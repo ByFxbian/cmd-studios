@@ -43,7 +43,7 @@ export function ServiceHeroSection({title}: { title?: string }) {
                 animate="visible"
             >
                 <motion.h1
-                    className="text-5xl md:text-7xl font-bold tracking-normal mb-6 text-[var(--color-heading)]"
+                    className="text-6xl md:text-8xl font-bold tracking-normal mb-8 text-[var(--color-heading)]"
                     variants={itemVariants}
                 >
                     {title || "Unsere Leistungen" }
@@ -51,7 +51,7 @@ export function ServiceHeroSection({title}: { title?: string }) {
 
                 {!title && (
                 <motion.p
-                    className="max-w-2xl text-lg md:text-xl text-[var(--color-text)]"
+                    className="max-w-3xl text-xl md:text-3xl text-[var(--color-text)] tracking-wide"
                     variants={itemVariants}
                 >
                     Technisches Know-how trifft auf kreative Umsetzung.

@@ -32,10 +32,10 @@ export function ValuesBentoSection() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 0.5 }}
         >
-          <h2 className="text-4xl md:text-5xl font-bold tracking-normal text-white">
+          <h2 className="text-6xl md:text-7xl font-normal tracking-normal text-white">
             Unsere Prinzipien
           </h2>
-          <p className="mt-4 max-w-2xl mx-auto text-lg text-zinc-400">
+          <p className="mt-6 max-w-3xl mx-auto text-3xl text-zinc-400">
             Wir arbeiten nicht einfach ab. Wir denken mit, fordern heraus und liefern Qualität.
           </p>
         </motion.div>
@@ -49,13 +49,13 @@ export function ValuesBentoSection() {
         >
           <motion.div 
             variants={bentoVariants}
-            className="md:col-span-2 row-span-1 p-8 rounded-3xl bg-zinc-900/50 border border-zinc-800 backdrop-blur-sm relative overflow-hidden group"
+            className="md:col-span-2 row-span-1 p-10 rounded-3xl bg-zinc-900/50 border border-zinc-800 backdrop-blur-sm relative overflow-hidden group"
           >
             <div className="relative z-10 h-full flex flex-col justify-between">
-                <HiOutlineLightningBolt className="w-12 h-12 text-accent mb-4" />
+                <HiOutlineLightningBolt className="w-16 h-16 text-accent mb-6" />
                 <div>
-                    <h3 className="text-3xl font-bold mb-2 text-white">Performance First</h3>
-                    <p className="text-zinc-400 max-w-md">
+                    <h3 className="text-4xl font-bold mb-4 text-white">Performance First</h3>
+                    <p className="text-2xl text-zinc-400 max-w-2xl leading-relaxed">
                     Keine Ladebalken. Wir optimieren jedes Byte, damit deine Seite schneller ist als die Konkurrenz.
                     </p>
                 </div>
@@ -75,9 +75,9 @@ export function ValuesBentoSection() {
             />
             <div className="absolute inset-0 bg-gradient-to-t from-zinc-950 via-zinc-950/20 to-transparent" />
             <div className="absolute bottom-0 left-0 p-8">
-                <HiOutlineChatAlt2 className="w-10 h-10 text-white mb-3" />
-                <h3 className="text-2xl font-bold mb-2 text-white">Direkter Draht</h3>
-                <p className="text-zinc-300 text-sm">
+                <HiOutlineChatAlt2 className="w-12 h-12 text-white mb-4" />
+                <h3 className="text-3xl font-bold mb-3 text-white">Direkter Draht</h3>
+                <p className="text-zinc-300 text-2xl leading-relaxed">
                     Du sprichst direkt mit den Entwicklern, nicht mit Sales-Managern.
                 </p>
             </div>
@@ -87,10 +87,10 @@ export function ValuesBentoSection() {
             variants={bentoVariants}
             className="md:col-span-1 row-span-1 p-8 rounded-3xl bg-zinc-900/50 border border-zinc-800 backdrop-blur-sm flex flex-col justify-between group"
           >
-            <HiOutlineEye className="w-10 h-10 text-accent" />
+            <HiOutlineEye className="w-12 h-12 text-accent" />
             <div>
-                <h3 className="text-2xl font-bold mb-2 text-white">Visuelle Präzision</h3>
-                <p className="text-zinc-400 text-sm">
+                <h3 className="text-3xl font-bold mb-3 text-white">Visuelle Präzision</h3>
+                <p className="text-zinc-400 text-2xl">
                 Pixel-Perfect ist bei uns kein Buzzword, sondern Standard.
                 </p>
             </div>
@@ -101,10 +101,10 @@ export function ValuesBentoSection() {
             className="md:col-span-1 row-span-1 p-8 rounded-3xl bg-zinc-950 border border-zinc-800 flex flex-col justify-between group relative overflow-hidden"
           >
              <div className="absolute inset-0 bg-[url('/grid.svg')] opacity-10" />
-            <HiOutlineCode className="w-10 h-10 text-accent relative z-10" />
+            <HiOutlineCode className="w-12 h-12 text-accent relative z-10" />
             <div className="relative z-10">
-                <h3 className="text-2xl font-bold mb-2 text-white">Clean Code</h3>
-                <p className="text-zinc-400 text-sm">
+                <h3 className="text-3xl font-bold mb-3 text-white">Clean Code</h3>
+                <p className="text-zinc-400 text-2xl">
                  Wartbar und skalierbar. Schönheit kommt auch von innen.
                 </p>
             </div>

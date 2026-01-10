@@ -30,7 +30,7 @@ export function ContactSection() {
         <h2 className="text-4xl md:text-5xl font-bold tracking-normal text-[var(--color-heading)]">
           Lassen Sie uns Ihr Projekt starten.
         </h2>
-        <p className="mt-4 max-w-xl mx-auto text-lg text-[var(--color-text)]">
+        <p className="mt-4 max-w-xl mx-auto text-3xl tracking-wide text-[var(--color-text)]">
           Egal ob Sie eine neue Website, ein beeindruckendes Video oder 
           ein komplettes Rebranding benötigen – wir sind bereit, 
           Ihre Vision Realität werden zu lassen.
@@ -39,8 +39,8 @@ export function ContactSection() {
         <MagneticLink
           href="/contact" 
           className="group inline-flex items-center justify-center gap-2 
-                     bg-accent text-white font-semibold 
-                     px-8 py-4 rounded-full text-lg 
+                     bg-accent text-white 
+                     px-8 py-4 rounded-full text-2xl
                      mt-10 transition-all hover:bg-accent-dark shadow-xl shadow-accent/20"
         >
           Projekt anfragen <HiArrowRight className="transition-transform duration-300 group-hover:translate-x-1" />

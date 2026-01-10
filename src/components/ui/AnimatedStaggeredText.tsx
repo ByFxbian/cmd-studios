@@ -23,7 +23,7 @@ const initialTransition = (i: number):Transition => ({
 export function AnimatedStaggeredText({ text, isHovering }: AnimatedStaggeredTextProps) {
   return (
     <div 
-      className="relative overflow-hidden"
+      className="relative overflow-hidden text-2xl"
       style={{ lineHeight: '1.3em' }}
     >
       <span className="flex">

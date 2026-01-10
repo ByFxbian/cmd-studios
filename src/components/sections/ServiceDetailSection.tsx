@@ -104,33 +104,33 @@ export function ServiceDetailSection({
       whileInView="visible"
       viewport={{ once: true, amount: 0.3 }}
     >
-      <motion.div variants={itemVariants} className="flex items-center gap-3 mb-4">
-        <TitleIcon className="w-8 h-8 text-accent" />
-        <span className="text-2xl font-bold text-accent">{title}</span>
+      <motion.div variants={itemVariants} className="flex items-center gap-3 mb-6">
+        <TitleIcon className="w-10 h-10 text-accent" />
+        <span className="text-3xl font-bold text-accent">{title}</span>
       </motion.div>
       <motion.h2 
-        className={`text-4xl md:text-5xl font-bold tracking-normal ${headingColor} mb-6`}
+        className={`text-5xl md:text-6xl font-bold tracking-normal ${headingColor} mb-8`}
         variants={itemVariants}
       >
         {subtitle}
       </motion.h2>
       <motion.p 
-        className={`text-lg ${textColor} mb-10`}
+        className={`text-xl md:text-2xl ${textColor} mb-12 leading-relaxed tracking-wide`}
         variants={itemVariants}
       >
         {description}
       </motion.p>
       
-      <motion.div className="space-y-4" variants={itemVariants}>
+      <motion.div className="space-y-6" variants={itemVariants}>
         {services.map((service) => (
           <div 
             key={service.name} 
-            className={`flex items-start gap-4 p-4 rounded-lg border ${cardBg}`}
+            className={`flex items-start gap-4 p-6 rounded-xl border ${cardBg}`}
           >
-            <service.icon className="w-6 h-6 text-accent shrink-0 mt-1" />
+            <service.icon className="w-8 h-8 text-accent shrink-0 mt-1" />
             <div>
-              <h4 className={`font-semibold ${headingColor}`}>{service.name}</h4>
-              <p className={`text-sm ${textColor}`}>{service.description}</p>
+              <h4 className={`text-xl font-bold mb-2 ${headingColor}`}>{service.name}</h4>
+              <p className={`text-lg ${textColor} leading-relaxed`}>{service.description}</p>
             </div>
           </div>
         ))}

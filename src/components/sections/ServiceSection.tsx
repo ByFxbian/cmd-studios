@@ -1,14 +1,9 @@
 'use client';
 
 import { motion, type Variants } from "framer-motion";
-import { HiCode, HiCamera } from "react-icons/hi";
-import Link from "next/link";
-import { HoverStaggeredLink } from "../ui/HoverStaggeredLink";
-import { ArrowRight } from "lucide-react";
-import { AnimatedStaggeredText } from "../ui/AnimatedStaggeredText";
+import { Code, Video, ArrowRight } from "lucide-react";
 import { useState } from "react";
 import { AnimatedIconLink } from "../ui/AnimatedIconLink";
-import { SectionMask } from "../ui/SectionMask";
 
 const cardVariants: Variants = {
     hidden: { opacity: 0, y: 50},
@@ -24,24 +19,24 @@ const cardVariants: Variants = {
 };
 
 export function ServiceSection() {
-    const [isServiceLinkHovering, setIsServiceLinkHovering] = useState(false);
+    // const [isServiceLinkHovering, setIsServiceLinkHovering] = useState(false);
 
     return (
         <section 
-            className="w-full py-20 md:py-32 bg-zinc-50"
+            className="w-full py-20 md:py-32 bg-[var(--color-page-bg)]"
         >
             <div className="container mx-auto max-w-7xl px-6">
                 <motion.div
                     className="text-center mb-12"
                     initial={{ opacity: 0, y: 20 }}
                     whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true, amount: 0.5 }}
+                    viewport={{ once: true, amount: 0.3 }}
                     transition={{ duration: 0.6, ease: "easeOut" }}
                 >
                     <h2 className="text-4xl md:text-5xl font-bold tracking-normal text-[var(--color-heading)]">
                         Was wir tun
                     </h2>
-                    <p className="mt-4 max-w-2xl mx-auto text-lg text-lg text-[var(--color-text)]">
+                    <p className="mt-6 max-w-3xl mx-auto text-2xl md:text-3xl text-[var(--color-text)] tracking-wide">
                         Wir kombinieren technische Präzision mit kreativer Vision, um 
                         digitale Erlebnisse zu schaffen, die im Gedächtnis bleiben.
                     </p>
@@ -49,16 +44,16 @@ export function ServiceSection() {
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                     <motion.div
-                        className="bg-white p-8 rounded-lg shadow-lg border border-zinc-200 flex flex-col"
+                        className="bg-white/50 backdrop-blur-sm p-8 rounded-lg shadow-lg border border-[var(--color-navbar-border)] flex flex-col transition-colors hover:border-accent/50"
                         custom={0}
                         variants={cardVariants}
                         initial="hidden"
                         whileInView="visible"
-                        viewport={{ once: true, amount: 0.5 }}
+                        viewport={{ once: true, amount: 0.2 }}
                     >
-                        <HiCode className="w-12 h-12 text-accent mb-4" />
-                        <h3 className="text-2xl font-bold mb-3 text-[var(--color-heading)]">Web-Entwicklung</h3>
-                        <p className="text-[var(--color-text)] mb-6 grow">
+                        <Code className="w-12 h-12 text-accent mb-4 stroke-1" />
+                        <h3 className="text-3xl font-bold mb-4 text-[var(--color-heading)]">Web-Entwicklung</h3>
+                        <p className="text-xl md:text-2xl text-[var(--color-text)] mb-6 grow tracking-wide">
                         Von ultraschnellen Landing Pages mit Next.js bis hin zu komplexen 
                         Web-Applikationen. Wir bauen performante, SEO-optimierte und 
                         responsive Websites für KMUs.
@@ -73,16 +68,16 @@ export function ServiceSection() {
                     </motion.div>
 
                     <motion.div
-                        className="bg-white p-8 rounded-lg shadow-lg border border-zinc-200 flex flex-col"
+                        className="bg-white/50 backdrop-blur-sm p-8 rounded-lg shadow-lg border border-[var(--color-navbar-border)] flex flex-col transition-colors hover:border-accent/50"
                         custom={1}
                         variants={cardVariants}
                         initial="hidden"
                         whileInView="visible"
-                        viewport={{ once: true, amount: 0.5 }}
+                        viewport={{ once: true, amount: 0.2 }}
                     >
-                        <HiCamera className="w-12 h-12 text-accent mb-4" />
-                        <h3 className="text-2xl font-bold mb-3 text-[var(--color-heading)]">Content Creation</h3>
-                        <p className="text-[var(--color-text)] mb-6 grow">
+                        <Video className="w-12 h-12 text-accent mb-4 stroke-1" />
+                        <h3 className="text-3xl font-bold mb-4 text-[var(--color-heading)]">Content Creation</h3>
+                        <p className="text-xl md:text-2xl text-[var(--color-text)] mb-6 grow tracking-wide">
                         Professionelle Videoproduktion, Social-Media-Content und 
                         Branding. Wir erzählen Ihre Geschichte visuell und sorgen dafür, 
                         dass Ihre Botschaft ankommt.

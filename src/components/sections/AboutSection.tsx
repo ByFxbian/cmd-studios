@@ -4,7 +4,6 @@ import Image from 'next/image';
 import { motion, type Variants } from 'framer-motion';
 import { HiArrowRight } from 'react-icons/hi';
 import { AnimatedIconLink } from '../ui/AnimatedIconLink';
-import { SectionMask } from '../ui/SectionMask';
 
 const containerVariants: Variants = {
   hidden: { opacity: 0 },
@@ -28,11 +27,13 @@ const imageVariants: Variants = {
   visible: {
     opacity: 1,
     scale: 1,
-    transition: { duration: 0.7, ease: [0.22, 1, 0.36, 1] }, // Eine "Pop-Out"-Ease
+    transition: { duration: 0.7, ease: [0.22, 1, 0.36, 1] },
   },
 };
 
 export function AboutSection() {
+  const SIZES = "(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw";
+
   return (
     <section className="w-full py-20 md:py-32 bg-[var(--color-page-bg)]">
       <div className="container mx-auto max-w-7xl px-6">
@@ -41,18 +42,18 @@ export function AboutSection() {
           className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center"
           variants={containerVariants}
           initial="hidden"
-          animate="visible"
+          whileInView="visible"
           viewport={{ once: true, amount: 0.2 }}
         >
           
           <motion.div variants={itemVariants}>
-            <span className="text-accent font-semibold uppercase tracking-wider">
+            <span className="tracking-widest text-lg font-accent text-accent uppercase">
               Das Team
             </span>
             <h2 className="text-4xl md:text-5xl font-bold tracking-normal text-[var(--color-heading)] mt-3 mb-6">
               Ein Entwickler. Ein Kreativer.
             </h2>
-            <div className="space-y-4 text-lg text-[var(--color-text)]">
+            <div className="space-y-4 text-xl md:text-3xl text-[var(--color-text)] tracking-wide">
               <p>
                 Wir sind Fabian und Antonio. Was als 
                 gemeinsame Leidenschaft für digitale Medien begann, ist heute 
@@ -68,7 +69,7 @@ export function AboutSection() {
             <AnimatedIconLink 
               href="/about"
               title="Mehr über uns erfahren"
-              className="mt-8 bg-transparent text-accent font-semibold transition-colors"
+              className="mt-8 bg-transparent text-accent font-semibold tracking-wide transition-colors text-2xl"
             >
               <HiArrowRight className="transition-transform duration-300 group-hover:translate-x-1" />
             </AnimatedIconLink>
@@ -86,7 +87,7 @@ export function AboutSection() {
                 src="https://placehold.co/600x600.png?text=Fabian"
                 alt="Foto von Fabian"
                 fill
-                sizes="(max-width: 1024px) 50vw, 25vw"
+                sizes={SIZES}
                 className="object-cover"
               />
             </motion.div>
@@ -99,7 +100,7 @@ export function AboutSection() {
                 src="https://placehold.co/600x600.png?text=Antonio"
                 alt="Foto von Antonio"
                 fill
-                sizes="(max-width: 1024px) 50vw, 25vw"
+                sizes={SIZES}
                 className="object-cover"
               />
             </motion.div>

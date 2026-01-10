@@ -69,14 +69,14 @@ export function ContactSuccessAnimation() {
       </motion.div>
 
       <motion.h3
-        className="text-2xl font-bold text-[var(--color-heading)] mt-8"
+        className="text-5xl text-[var(--color-heading)] mt-8"
         initial={{ y: 20, opacity: 0 }}
         animate={{ y: 0, opacity: 1, transition: { delay: 1.8 } }}
       >
         Nachricht gesendet!
       </motion.h3>
       <motion.p
-        className="text-lg text-[var(--color-text)]"
+        className="text-2xl text-[var(--color-text)] mt-2"
         initial={{ y: 20, opacity: 0 }}
         animate={{ y: 0, opacity: 1, transition: { delay: 1.9 } }}
       >

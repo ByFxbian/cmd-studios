@@ -32,10 +32,10 @@ export default function PortfolioPage() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7, ease: "easeInOut" }}
         >
-          <h1 className="text-5xl md:text-7xl font-bold tracking-normal mb-6 text-[var(--color-heading)]">
+          <h1 className="text-5xl md:text-8xl font-bold tracking-normal mb-6 text-[var(--color-heading)]">
             Unsere Arbeiten
           </h1>
-          <p className="max-w-2xl mx-auto text-lg md:text-xl text-[var(--color-text)]">
+          <p className="max-w-2xl mx-auto text-xl md:text-3xl text-[var(--color-text)] tracking-wide">
             Jedes Projekt ist eine Partnerschaft. Hier ist eine Auswahl
             unserer jüngsten Arbeiten im Bereich Web & Video.
           </p>
@@ -55,7 +55,7 @@ export default function PortfolioPage() {
               <button
                 key={category}
                 onClick={() => setActiveCategory(category)}
-                className={`font-semibold px-5 py-2 rounded-md transition-colors
+                className={`font-semibold font-accent px-5 py-2 rounded-md transition-colors
                   ${activeCategory === category
                     ? 'bg-accent text-white'
                     : 'bg-white text-zinc-700 hover:bg-zinc-100'

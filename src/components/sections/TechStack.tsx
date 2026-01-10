@@ -1,7 +1,6 @@
 'use client';
 
-import { useEffect, useRef, useState } from 'react';
-import { motion, useScroll, useTransform, useSpring, MotionValue, AnimatePresence } from 'framer-motion';
+import { motion, useScroll, useTransform, useSpring, type MotionValue, AnimatePresence } from 'framer-motion';
 import { 
   SiNextdotjs, SiReact, SiTypescript, SiTailwindcss, 
   SiGreensock, SiNodedotjs, SiFigma, 
@@ -13,8 +12,8 @@ import {
 import { TbBrandFramerMotion } from 'react-icons/tb';
 import { FaJava, FaCamera } from 'react-icons/fa';
 import { HiOutlineArrowsExpand, HiX } from 'react-icons/hi';
-import { useMediaQuery } from '@/hooks/useMediaQuery';
 import { createPortal } from 'react-dom';
+import { useRef, useState, useEffect } from 'react';
 
 const techStack = [
   { name: "Next.js", icon: SiNextdotjs, color: "#ffffff" },
@@ -52,6 +51,17 @@ export function TechStack() {
   const containerRef = useRef<HTMLDivElement>(null);
   const [isOpen, setIsOpen] = useState(false);
 
+  useEffect(() => {
+    if (isOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [isOpen]);
+
   const { scrollYProgress } = useScroll({
     target: containerRef,
     offset: ["start end", "end start"]
@@ -70,13 +80,13 @@ export function TechStack() {
 
           <div className="container mx-auto max-w-7xl px-6 relative z-10 flex flex-col md:flex-row items-center gap-12 md:gap-24">
               <div className="w-full md:w-1/3 text-center md:text-left">
-                  <h2 className="text-5xl md:text-7xl font-bold text-white mb-6 tracking-tight leading-[0.9]">
+                  <h2 className="text-6xl md:text-8xl text-white mb-6 tracking-tight leading-[0.9]">
                       Unser <br/>
                       <span className="text-transparent bg-clip-text bg-gradient-to-br from-zinc-100 to-zinc-600">
                           Tech Stack.
                       </span>
                   </h2>
-                  <p className="text-zinc-400 text-lg leading-relaxed mb-8">
+                  <p className="text-zinc-400 text-xl md:text-3xl mb-8">
                       Ein Arsenal aus modernen Tools. Von Frontend-Zauberei bis Backend-Architektur.
                   </p>
                   
@@ -84,7 +94,7 @@ export function TechStack() {
                     <button
                         onClick={() => setIsOpen(true)}
                         className="group flex items-center justify-center w-16 h-16 rounded-full bg-zinc-900 border border-zinc-800 text-white 
-                                   hover:bg-accent hover:border-accent hover:scale-110 transition-all duration-300 shadow-xl"
+                                   hover:bg-accent hover:border-accent hover:scale-110 transition-all duration-300 shadow-xl cursor-none"
                         aria-label="Alle Technologien anzeigen"
                     >
                         <HiOutlineArrowsExpand className="w-6 h-6 group-hover:rotate-90 transition-transform duration-300" />
@@ -109,20 +119,20 @@ export function TechStack() {
                   animate={{ opacity: 1 }}
                   exit={{ opacity: 0 }}
               >
-                  <div className="absolute inset-0 bg-zinc-950/90 backdrop-blur-xl" onClick={() => setIsOpen(false)} />
+                  <div className="absolute inset-0 bg-black/90 backdrop-blur-xl" onClick={() => setIsOpen(false)} />
 
                   <motion.div 
-                      className="relative w-full max-w-6xl max-h-[85vh] overflow-y-auto bg-zinc-900 border border-zinc-800 rounded-3xl p-6 md:p-12 shadow-2xl no-scrollbar"
+                      className="relative w-full max-w-6xl max-h-[85vh] overflow-y-auto bg-zinc-900/90 border border-zinc-700/50 rounded-3xl p-6 md:p-12 shadow-2xl no-scrollbar"
                       initial={{ scale: 0.9, y: 20 }}
                       animate={{ scale: 1, y: 0 }}
                       exit={{ scale: 0.9, y: 20 }}
                       transition={{ type: "spring", damping: 25, stiffness: 300 }}
                   >
-                      <div className="flex justify-between items-center mb-8 sticky -top-6 md:-top-12 bg-zinc-900 z-50 py-4 border-b border-zinc-800/50">
-                          <h3 className="text-3xl md:text-4xl font-bold text-white">Full Stack Arsenal</h3>
+                      <div className="flex justify-between items-center mb-8 sticky -top-6 md:-top-12 bg-zinc-900/95 z-50 py-4 border-b border-zinc-800/50 backdrop-blur-md">
+                          <h3 className="text-3xl md:text-4xl text-white">Full Stack Arsenal</h3>
                           <button 
                               onClick={() => setIsOpen(false)}
-                              className="p-3 rounded-full bg-zinc-800 hover:bg-zinc-700 text-white transition-colors"
+                              className="p-3 rounded-full bg-zinc-800 hover:bg-zinc-700 text-white transition-colors cursor-none"
                           >
                               <HiX className="w-6 h-6" />
                           </button>
@@ -135,8 +145,8 @@ export function TechStack() {
                                   initial={{ opacity: 0, y: 20 }}
                                   animate={{ opacity: 1, y: 0 }}
                                   transition={{ delay: i * 0.02 }}
-                                  className="flex flex-col items-center justify-center gap-4 p-6 rounded-2xl bg-zinc-950 border border-zinc-800 
-                                             hover:border-zinc-600 hover:bg-zinc-800 transition-all duration-300 group cursor-default"
+                                  className="flex flex-col items-center justify-center gap-4 p-6 rounded-2xl bg-zinc-950/50 border border-zinc-800 
+                                             hover:border-zinc-600 hover:bg-zinc-800 transition-all duration-300 group cursor-none"
                               >
                                   <div 
                                       className="p-4 rounded-full bg-zinc-900 group-hover:bg-zinc-950 transition-colors"
@@ -144,7 +154,7 @@ export function TechStack() {
                                   >
                                       <tech.icon className="w-8 h-8 md:w-10 md:h-10 transition-transform duration-300 group-hover:scale-110" />
                                   </div>
-                                  <span className="text-sm md:text-base font-medium text-zinc-400 group-hover:text-white text-center">
+                                  <span className="text-sm md:text-xl tracking-wide font-medium text-zinc-400 group-hover:text-white text-center">
                                       {tech.name}
                                   </span>
                               </motion.div>
@@ -164,14 +174,14 @@ function Column({ items, y, className = "" }: { items: typeof techStack, y: Moti
     return (
         <motion.div 
             style={{ y }}
-            className={`flex flex-col gap-4 md:gap-6 min-w-[120px] md:min-w-[160px] ${className}`}
+            className={`flex flex-col gap-4 md:gap-6 min-w-[120px] md:min-w-[160px] ${className} will-change-transform`}
         >
             {items.map((tech, i) => (
                 <div 
                     key={i} 
                     className="group relative flex flex-col items-center justify-center gap-3 p-4 md:p-6 
                                bg-zinc-900/40 border border-zinc-800/50 rounded-2xl backdrop-blur-sm
-                               hover:bg-zinc-800/60 hover:border-zinc-700 transition-all duration-300"
+                               hover:bg-zinc-800/60 hover:border-zinc-700 transition-all duration-300 cursor-none"
                 >
                     <div 
                         className="p-2 md:p-3 rounded-full bg-zinc-950 border border-zinc-800 group-hover:border-zinc-600 transition-colors"

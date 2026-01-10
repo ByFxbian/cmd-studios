@@ -1,7 +1,6 @@
 'use client';
 
-import { pointerRef } from "@/lib/three-store";
-import { motion, useMotionValue, useSpring } from "framer-motion";
+import { motion } from "framer-motion";
 import gsap from "gsap";
 import { useEffect, useRef, useState } from "react";
 
@@ -22,59 +21,46 @@ export function CustomCursor() {
     useEffect(() => {
         if (!isDesktop || !cursorRef.current) return;
 
-        const getAccentColor = () => getComputedStyle(document.body)
-                                .getPropertyValue(CSS_VAR_CURSOR_BORDER)
-                                .trim() || '#14b8a6';
-                                
-        const getBgColor = () => getComputedStyle(document.body)
-                              .getPropertyValue(CSS_VAR_CURSOR_BG)
-                              .trim() || '#14b8a6';
-
+        const styles = getComputedStyle(document.body);
+        const getAccentColor = () => styles.getPropertyValue(CSS_VAR_CURSOR_BORDER).trim() || '#14b8a6';
+        const getBgColor = () => styles.getPropertyValue(CSS_VAR_CURSOR_BG).trim() || '#14b8a6';
 
         gsap.set(cursorRef.current, { 
-            x: -100, 
-            y: -100, 
-            translateX: '-50%', 
-            translateY: '-50%',
+            xPercent: -50, 
+            yPercent: -50,
             opacity: 1,
             borderColor: getAccentColor()
         });
 
-        const quickSetX = gsap.quickTo(cursorRef.current, "x", { 
-            duration: 0.1,
-            ease: "power3"
-        });
-            const quickSetY = gsap.quickTo(cursorRef.current, "y", { 
-            duration: 0.1, 
-            ease: "power3" 
-        });
+        const quickSetX = gsap.quickTo(cursorRef.current, "x", { duration: 0.1, ease: "power3" });
+        const quickSetY = gsap.quickTo(cursorRef.current, "y", { duration: 0.1, ease: "power3" });
 
         const onMouseMove = (event: PointerEvent) => {
             const { clientX, clientY, target } = event;
-
             quickSetX(clientX);
             quickSetY(clientY);
 
             const targetEl = target as HTMLElement;
-            const isCurrentlyHovering = !!targetEl.closest('a, button, [role="button"], .cursor-pointer');
-            if (isCurrentlyHovering && !isHoveringRef.current) {
+            const clickable = targetEl.closest('a, button, input, textarea, select, [role="button"], .cursor-pointer, .group');
+            
+            if (clickable && !isHoveringRef.current) {
                 isHoveringRef.current = true;
-
                 gsap.to(cursorRef.current, { 
-                    scale: 1.3, 
+                    scale: 1.5, 
                     backgroundColor: getBgColor(),
-                    borderCOlor: getBgColor(),
-                    duration: 0.2, 
+                    borderColor: 'transparent',
+                    mixBlendMode: 'normal', 
+                    duration: 0.3, 
                     ease: 'power3.out' 
                 });
-            } else if (!isCurrentlyHovering && isHoveringRef.current) {
+            } else if (!clickable && isHoveringRef.current) {
                 isHoveringRef.current = false;
-
                 gsap.to(cursorRef.current, { 
                     scale: 1, 
                     backgroundColor: 'transparent',
                     borderColor: getAccentColor(),
-                    duration: 0.2, 
+                    mixBlendMode: 'normal',
+                    duration: 0.3, 
                     ease: 'power3.out' 
                 });
             }
@@ -86,6 +72,9 @@ export function CustomCursor() {
         return () => {
             window.removeEventListener('pointermove', onMouseMove);
             document.body.style.cursor = 'auto';
+            if (cursorRef.current) {
+                gsap.killTweensOf(cursorRef.current);
+            }
         };
     }, [isDesktop]);
 
@@ -96,11 +85,9 @@ export function CustomCursor() {
     return (
         <div
             ref={cursorRef}
-            className="custom-cursor-ring fixed top-0 left-0 w-6 h-6 rounded-full border-2 pointer-events-none bg-transparent"
+            className="custom-cursor-ring fixed top-0 left-0 w-6 h-6 rounded-full border-2 pointer-events-none z-[9999]"
             style={{
-                zIndex: 9999,
-                opacity: 0,
-                borderColor: 'var(--cursor-border-color, var(--color-accent))',
+                opacity: 0, 
             }}
         />
     )

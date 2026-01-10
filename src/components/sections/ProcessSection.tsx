@@ -73,17 +73,17 @@ export function ProcessSection() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
             >
-                <h2 className="text-7xl font-bold mb-6 tracking-tight">
+                <h2 className="text-7xl md:text-8xl font-bold mb-6 tracking-tight">
                     Unser <br/>
                     <span className="text-transparent bg-clip-text bg-gradient-to-r from-accent to-blue-500">
                         Prozess.
                     </span>
                 </h2>
-                <p className="text-xl text-zinc-400 max-w-md leading-relaxed">
+                <p className="text-2xl text-zinc-400 max-w-2xl leading-relaxed">
                     Kein Chaos, keine Überraschungen. Wir führen dich strukturiert von der ersten Idee bis zum fertigen Produkt.
                 </p>
 
-                <div className="mt-12 flex items-center gap-4 text-sm uppercase tracking-widest text-zinc-500">
+                <div className="mt-12 flex items-center gap-4 text-lg uppercase tracking-widest text-zinc-500">
                     <span className="w-12 h-px bg-zinc-700"></span>
                     Scroll to explore
                     <HiArrowDown className="animate-bounce" />
@@ -102,23 +102,23 @@ export function ProcessSection() {
                     className="process-card absolute inset-0 w-full h-full flex items-center justify-center p-12"
                     style={{ zIndex: index + 1 }}
                 >
-                    <div className="w-full max-w-lg bg-zinc-900 backdrop-blur-xl border border-zinc-800 p-10 rounded-3xl shadow-2xl relative">
+                    <div className="w-full max-w-2xl bg-zinc-900 backdrop-blur-xl border border-zinc-800 p-12 rounded-3xl shadow-2xl relative">
                         <div className="flex justify-between items-start mb-8">
-                            <span className="text-6xl font-bold text-zinc-800">{`0${index + 1}`}</span>
-                            <div className="px-4 py-1 rounded-full border border-accent/30 text-accent text-xs uppercase tracking-widest">
+                            <span className="text-7xl md:text-8xl font-bold text-zinc-800">{`0${index + 1}`}</span>
+                            <div className="px-5 py-1.5 rounded-full border border-accent/30 text-accent text-lg uppercase tracking-widest">
                                 Phase {index + 1}
                             </div>
                         </div>
                         
-                        <h3 className="text-4xl font-bold mb-4 text-white">{step.title}</h3>
-                        <p className="text-lg text-zinc-400 mb-8 leading-relaxed">
+                        <h3 className="text-4xl md:text-5xl font-bold mb-6 text-white">{step.title}</h3>
+                        <p className="text-xl md:text-2xl text-zinc-400 mb-8 leading-relaxed">
                             {step.description}
                         </p>
 
-                        <ul className="space-y-3">
+                        <ul className="space-y-4">
                             {step.details.map((detail, i) => (
-                                <li key={i} className="flex items-center gap-3 text-zinc-300">
-                                    <div className="w-1.5 h-1.5 rounded-full bg-accent" />
+                                <li key={i} className="flex items-center gap-4 text-xl text-zinc-300">
+                                    <div className="w-2 h-2 rounded-full bg-accent" />
                                     {detail}
                                 </li>
                             ))}
@@ -152,13 +152,13 @@ export function ProcessSection() {
                     </div>
 
                     <div className="bg-zinc-900/50 border border-zinc-800 p-6 rounded-2xl">
-                        <div className="text-accent text-xs font-bold uppercase tracking-wider mb-2">Phase 0{index + 1}</div>
-                        <h3 className="text-2xl font-bold mb-3 text-white">{step.title}</h3>
-                        <p className="text-zinc-400 text-sm mb-4">{step.description}</p>
+                        <div className="text-accent text-sm font-bold uppercase tracking-wider mb-2">Phase 0{index + 1}</div>
+                        <h3 className="text-3xl font-bold mb-3 text-white">{step.title}</h3>
+                        <p className="text-zinc-400 text-lg mb-4">{step.description}</p>
                         <ul className="space-y-2">
                             {step.details.slice(0,3).map((d, i) => (
-                                <li key={i} className="flex items-start gap-2 text-sm text-zinc-500">
-                                    <span className="mt-1.5 w-1 h-1 rounded-full bg-zinc-700 shrink-0" />
+                                <li key={i} className="flex items-start gap-2 text-base text-zinc-500">
+                                    <span className="mt-2 w-1.5 h-1.5 rounded-full bg-zinc-700 shrink-0" />
                                     {d}
                                 </li>
                             ))}

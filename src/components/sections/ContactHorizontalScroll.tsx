@@ -264,15 +264,15 @@ export function ContactHorizontalScroll({ initialPackage }: { initialPackage?: s
                 whileInView="visible"
                 viewport={{ once: true, amount: 0.3 }}
             >
-                <div className="text-center max-w-2xl">
-                    <h1 className="text-6xl md:text-8xl font-bold tracking-normal text-zinc-900">
+                <div className="text-center max-w-4xl">
+                    <h1 className="text-7xl md:text-9xl font-bold tracking-tight text-zinc-900 leading-none mb-6">
                     Bereit, etwas
                     <br />
                     <span className="text-transparent bg-clip-text bg-gradient-to-r from-accent to-blue-500">
                         Neues zu starten?
                     </span>
                     </h1>
-                    <p className="text-2xl text-zinc-700 mt-6">
+                    <p className="text-3xl text-zinc-700 mt-8 tracking-wide">
                     Scrollen Sie weiter, um mit uns in Kontakt zu treten.
                     </p>
                 </div>
@@ -293,38 +293,38 @@ export function ContactHorizontalScroll({ initialPackage }: { initialPackage?: s
                                 exit={{ opacity: 0, y: -20 }}
                                 transition={{ duration: 0.2 }}
                             >
-                                <h2 className="text-4xl md:text-5xl font-bold tracking-normal text-[var(--color-heading)] mb-4">
+                                <h2 className="text-4xl md:text-5xl font-bold tracking-normal text-[var(--color-heading)] mb-6">
                                     Schreiben Sie uns.
                                 </h2>
-                                <p className="text-lg text-[var(--color-text)] mb-8">
+                                <p className="text-2xl text-[var(--color-text)] mb-4">
                                     Wir freuen uns darauf, von Ihrer Idee zu hören und 
                                     sie gemeinsam umzusetzen.
                                 </p>
 
-                                <form className="space-y-4" onSubmit={handleSubmit}>
+                                <form className="space-y-6" onSubmit={handleSubmit}>
                                     <div>
-                                        <label htmlFor="name" className="block text-sm font-medium text-[var(--color-text)] mb-1">Name</label>
+                                        <label htmlFor="name" className="block text-2xl font-medium text-[var(--color-text)] mb-2">Name</label>
                                         <input type="text" id="name" name="name" required 
-                                            className="w-full px-4 py-3 bg-zinc-50 border border-zinc-200 rounded-md 
-                                                    text-[var(--color-heading)] focus:ring-2 focus:ring-accent focus:outline-none"/>
+                                            className="w-full px-6 py-4 bg-zinc-50 border border-zinc-200 rounded-xl text-xl
+                                                    text-[var(--color-heading)] focus:ring-2 focus:ring-accent focus:outline-none transition-shadow"/>
                                     </div>
                                     <div>
-                                        <label htmlFor="email" className="block text-sm font-medium text-[var(--color-text)] mb-1">E-Mail</label>
+                                        <label htmlFor="email" className="block text-2xl font-medium text-[var(--color-text)] mb-2">E-Mail</label>
                                         <input type="email" id="email" name="email" required 
-                                            className="w-full px-4 py-3 bg-zinc-50 border border-zinc-200 rounded-md 
-                                                        text-[var(--color-heading)] focus:ring-2 focus:ring-accent focus:outline-none"/>
+                                            className="w-full px-6 py-4 bg-zinc-50 border border-zinc-200 rounded-xl text-xl
+                                                        text-[var(--color-heading)] focus:ring-2 focus:ring-accent focus:outline-none transition-shadow"/>
                                     </div>
                                     <div>
-                                        <label htmlFor="package" className="block text-sm font-medium text-[var(--color-text)] mb-1">
+                                        <label htmlFor="package" className="block text-2xl font-medium text-[var(--color-text)] mb-2">
                                             Interessiert an
                                         </label>
                                         <select
                                             id="package"
                                             name="package"
                                             required
-                                            className="w-full px-4 py-3 bg-zinc-50 border border-zinc-200 rounded-md 
+                                            className="w-full px-6 py-4 bg-zinc-50 border border-zinc-200 rounded-xl text-xl
                                                     text-[var(--color-heading)] focus:ring-2 focus:ring-accent focus:outline-none
-                                                    appearance-none"
+                                                    appearance-none transition-shadow"
                                         >
                                             <option value="Kein bestimmtes Paket">Bitte auswählen...</option>
                                             <option value="Launchpad">Launchpad-Paket</option>
@@ -334,17 +334,17 @@ export function ContactHorizontalScroll({ initialPackage }: { initialPackage?: s
                                         </select>
                                     </div>
                                     <div>
-                                        <label htmlFor="message" className="block text-sm font-medium text-[var(--color-text)] mb-1">Deine Nachricht</label>
+                                        <label htmlFor="message" className="block text-2xl font-medium text-[var(--color-text)] mb-2">Deine Nachricht</label>
                                         <textarea id="message" name="message" rows={5} required 
-                                                className="w-full px-4 py-3 bg-zinc-50 border border-zinc-200 rounded-md 
-                                                            text-[var(--color-heading)] focus:ring-2 focus:ring-accent focus:outline-none resize-y max-h-[200px] min-h-[128px]"/>
+                                                className="w-full px-6 py-4 bg-zinc-50 border border-zinc-200 rounded-xl text-xl
+                                                            text-[var(--color-heading)] focus:ring-2 focus:ring-accent focus:outline-none resize-y max-h-[200px] min-h-[128px] transition-shadow"/>
                                     </div>
                                     <MagneticButton
                                         type="submit"
                                         className="group inline-flex items-center justify-center gap-2 
                                                     bg-accent text-white font-semibold 
-                                                    px-8 py-3 rounded-full text-lg 
-                                                    mt-6 transition-all hover:bg-accent-dark shadow-xl shadow-accent/20"
+                                                    px-10 py-4 rounded-full text-2xl 
+                                                    mt-4 transition-all hover:bg-accent-dark shadow-xl shadow-accent/20"
                                         disabled={status === 'submitting'}
                                         >
                                         {status === 'submitting' ? 'Sende...' : 'Anfrage senden'}
@@ -379,16 +379,16 @@ export function ContactHorizontalScroll({ initialPackage }: { initialPackage?: s
                 viewport={{ once: true, amount: 0.3 }}
             >
                 <div className="text-left max-w-lg">
-                    <h2 className="text-4xl font-bold mb-8">
+                    <h2 className="text-5xl md:text-6xl font-bold mb-10">
                     Oder treffen wir uns.
                     </h2>
-                    <div className="space-y-4 text-xl">
+                    <div className="space-y-6 text-2xl tracking-wide">
                     <p>
-                        <strong className="text-accent">E-Mail:</strong><br/>
+                        <strong className="text-accent block mb-1">E-Mail:</strong>
                         <a href="mailto:hallo@cmdstudios.de" className="hover:underline">hallo@cmdstudios.de</a>
                     </p>
                     <p>
-                        <strong className="text-accent">Standort:</strong><br/>
+                        <strong className="text-accent block mb-1">Standort:</strong>
                         Ein Co-Working Space in deiner Nähe
                     </p>
                     </div>

@@ -40,7 +40,7 @@ export function PackageSection() {
           <h2 className="text-4xl md:text-5xl font-bold tracking-tight text-[var(--color-heading)]">
             Das passende Paket für dich
           </h2>
-          <p className="mt-4 max-w-2xl mx-auto text-lg text-[var(--color-text)]">
+          <p className="mt-4 max-w-2xl mx-auto text-2xl text-[var(--color-text)] tracking-wide">
             Transparente Lösungen, die mit dir wachsen. 
             Keine versteckten Kosten, kein Stunden-Raten.
           </p>

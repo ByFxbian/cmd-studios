@@ -1,5 +1,4 @@
 /* eslint-disable prefer-const */
-/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
 import { motion, type Variants } from 'framer-motion';
@@ -7,11 +6,13 @@ import { PortfolioCard } from '../ui/PortfolioCard';
 import { useLayoutEffect, useRef } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { featuredProjects, type Project } from '@/lib/portfolio-data';
-import Link from 'next/link';
+import { featuredProjects } from '@/lib/portfolio-data';
 import { MagneticLink } from '../ui/MagneticLink';
 import { useLoading } from '@/context/LoadingContext';
-import { SectionMask } from '../ui/SectionMask';
+
+interface GSAPContext extends gsap.Context {
+  revert(): void;
+}
 
 export function PortfolioSection() {
     const sectionRef = useRef<HTMLDivElement>(null);
@@ -24,7 +25,9 @@ export function PortfolioSection() {
         if(!isLoaded) return;
         gsap.registerPlugin(ScrollTrigger);
 
-        const cards = gsap.utils.toArray(gridRef.current?.children || []);
+        if (!gridRef.current || !sectionRef.current) return;
+
+        const cards = gsap.utils.toArray<HTMLElement>(gridRef.current.children);
 
         let mm = gsap.matchMedia();
 
@@ -33,8 +36,8 @@ export function PortfolioSection() {
           let skewSetter = gsap.quickSetter(cards, "skewY", "deg");
           let clamp = gsap.utils.clamp(-8, 8);
 
-          let ctx = gsap.context(() => {
-              cards.forEach((card: any, i) => {
+          let ctx: GSAPContext = gsap.context(() => {
+              cards.forEach((card, i) => {
                   const yPercent = i === 1 ? 8 : -8;
                   gsap.fromTo(card,
                       {
@@ -81,20 +84,18 @@ export function PortfolioSection() {
                     }
                   }
               });
-          });
+          }, sectionRef);
 
           return () => {
             ctx.revert();
           }
         });
 
-        
-
         return () => mm.revert();
     }, [isLoaded]);
 
   return (
-    <section ref={sectionRef} className="w-full py-20 md:py-32 bg-white border-y border-zinc-200">
+    <section ref={sectionRef} className="w-full py-20 md:py-32 bg-[var(--color-page-bg)] border-y border-[var(--color-navbar-border)] overflow-hidden">
 
       <div ref={triggerRef} className="container mx-auto max-w-7xl px-6">
 
@@ -105,10 +106,10 @@ export function PortfolioSection() {
           viewport={{ once: true, amount: 0.5 }}
           transition={{ duration: 0.6, ease: "easeOut" }}
         >
-          <h2 className="text-4xl md:text-5xl font-bold tracking-normal text-zinc-900">
+          <h2 className="text-4xl md:text-5xl font-bold tracking-normal text-[var(--color-heading)]">
             Ausgewählte Arbeiten
           </h2>
-          <p className="mt-4 max-w-2xl mx-auto text-lg text-zinc-600">
+          <p className="mt-6 max-w-3xl mx-auto text-xl md:text-2xl text-[var(--color-text)] tracking-wide">
             Ein Einblick in unsere Projekte. Hier trifft Strategie auf 
             Umsetzung – von Code bis Content.
           </p>

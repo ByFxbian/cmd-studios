@@ -25,7 +25,7 @@ export function TestimonialsSection() {
                 
                 <div className="mb-12 flex items-center gap-4">
                     <div className="h-px w-12 bg-accent" />
-                    <span className="uppercase tracking-widest text-sm font-bold text-accent">Client Stories</span>
+                    <span className="uppercase tracking-widest text-lg font-accent text-accent">Client Stories</span>
                 </div>
 
                 <div className="relative min-h-[400px] flex flex-col justify-center">
@@ -44,8 +44,8 @@ export function TestimonialsSection() {
                                 </h2>
                                 
                                 <div className="flex flex-col gap-1">
-                                    <span className="text-xl font-bold text-[var(--color-heading)]">{currentTestimonial.name}</span>
-                                    <span className="text-lg text-[var(--color-text-muted)]">{currentTestimonial.company}</span>
+                                    <span className="text-3xl font-bold text-[var(--color-heading)]">{currentTestimonial.name}</span>
+                                    <span className="text-2xl tracking-wider text-[var(--color-text-muted)]">{currentTestimonial.company}</span>
                                 </div>
                             </div>
 

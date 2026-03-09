@@ -1,7 +1,7 @@
 /* eslint-disable prefer-const */
 "use client";
 
-import { motion, type Variants } from 'framer-motion';
+import { motion } from 'framer-motion';
 import { PortfolioCard } from '../ui/PortfolioCard';
 import { useLayoutEffect, useRef } from 'react';
 import gsap from 'gsap';
@@ -109,7 +109,7 @@ export function PortfolioSection() {
           <h2 className="text-4xl md:text-5xl font-bold tracking-normal text-[var(--color-heading)]">
             Ausgewählte Arbeiten
           </h2>
-          <p className="mt-6 max-w-3xl mx-auto text-xl md:text-2xl text-[var(--color-text)] tracking-wide">
+          <p className="mt-6 max-w-3xl mx-auto text-lg md:text-xl text-[var(--color-text)] tracking-wide">
             Ein Einblick in unsere Projekte. Hier trifft Strategie auf 
             Umsetzung – von Code bis Content.
           </p>

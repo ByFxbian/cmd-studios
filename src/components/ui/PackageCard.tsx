@@ -3,7 +3,6 @@
 import type { PackageData } from '@/lib/package-data';
 import { MagneticLink } from './MagneticLink';
 import { HiCheck, HiMinus } from 'react-icons/hi';
-import { motion } from 'framer-motion';
 
 interface PackageCardProps {
   pkg: PackageData;
@@ -22,7 +21,7 @@ export function PackageCard({ pkg }: PackageCardProps) {
     `}>
       {isPopular && (
         <div className='absolute -top-4 left-6 md:left-8'>
-          <span className='px-4 py-1.5 text-[22px] tracking-wider uppercase text-zinc-900 bg-accent rounded-full'>
+          <span className='px-4 py-1.5 text-xs md:text-sm tracking-widest uppercase font-bold text-zinc-900 bg-accent rounded-full'>
             Am Beliebtesten
           </span>
         </div>
@@ -32,7 +31,7 @@ export function PackageCard({ pkg }: PackageCardProps) {
         <h3 className={`text-3xl md:text-4xl tracking-wider mb-3 ${isPopular ? 'text-white' : 'text-zinc-900'}`}>
             {pkg.title}
         </h3>
-        <p className={`text-[25px] uppercase tracking-wide ${isPopular ? 'text-zinc-400' : 'text-zinc-500'}`}>
+        <p className={`text-sm md:text-base uppercase tracking-wide font-semibold ${isPopular ? 'text-zinc-400' : 'text-zinc-500'}`}>
             {pkg.description}
         </p>
       </div>
@@ -51,7 +50,7 @@ export function PackageCard({ pkg }: PackageCardProps) {
             <div className={`mt-1.5 p-0.5 rounded-full ${feature.included ? (isPopular ? 'bg-accent text-zinc-900' : 'bg-zinc-900 text-white') : 'bg-transparent'}`}>
                 {feature.included ? <HiCheck className="w-4 h-4" /> : <HiMinus className="w-4 h-4 text-zinc-400" />}
             </div>
-            <span className={`text-[22px] leading-snug ${
+            <span className={`text-base md:text-lg leading-snug ${
                 !feature.included 
                 ? 'text-zinc-400 line-through decoration-zinc-400/50' 
                 : (isPopular ? 'text-zinc-300' : 'text-zinc-700')
@@ -64,7 +63,7 @@ export function PackageCard({ pkg }: PackageCardProps) {
 
       <MagneticLink
         href={`/contact?package=${pkg.title}`}
-        className={`w-full py-4 md:py-5 rounded-xl font-bold text-xl text-center transition-all duration-300
+        className={`w-full py-4 md:py-5 rounded-xl font-bold text-lg text-center transition-all duration-300
           ${isPopular
             ? 'bg-white text-black hover:bg-accent hover:scale-[1.02]'
             : 'bg-zinc-900 text-white hover:bg-black hover:scale-[1.02]'

@@ -13,37 +13,37 @@ export function Footer() {
       <div className="container mx-auto max-w-7xl flex flex-col md:flex-row justify-between items-start gap-12 pt-20">
         <div className="flex flex-col gap-6 max-w-md">
           <h3 className="text-3xl md:text-4xl font-bold text-white">Lust auf ein Projekt?</h3>
-          <p className="text-zinc-400 text-2xl md:text-2xl">
+          <p className="text-zinc-400 text-lg md:text-xl leading-relaxed">
             Wir suchen immer nach Partnern, die den Status Quo herausfordern wollen. 
             Lass uns etwas Großartiges bauen.
           </p>
           <MagneticLink 
             href="/contact"
-            className="inline-block text-2xl md:text-3xl font-bold text-white underline decoration-zinc-600 underline-offset-8 hover:decoration-accent hover:text-accent transition-all"
+            className="inline-block text-xl md:text-2xl font-bold text-white underline decoration-zinc-600 underline-offset-8 hover:decoration-accent hover:text-accent transition-all"
           >
             hallo@cmdstudios.at
           </MagneticLink>
         </div>
 
-        <div className="grid grid-cols-2 md:grid-cols-3 gap-12 text-lg uppercase tracking-wider text-zinc-500">
-          <div className="flex flex-col gap-4 text-2xl tracking-wider">
-            <span className="text-white font-bold">Sitemap</span>
+        <div className="grid grid-cols-2 md:grid-cols-3 gap-12 text-sm uppercase tracking-wider text-zinc-500 mt-12 md:mt-0">
+          <div className="flex flex-col gap-4 text-base tracking-wide capitalize">
+            <span className="text-white font-bold uppercase tracking-wider text-sm mb-2">Sitemap</span>
             <Link href="/portfolio" className="hover:text-white transition-colors">Arbeiten</Link>
             <Link href="/services" className="hover:text-white transition-colors">Leistungen</Link>
             <Link href="/about" className="hover:text-white transition-colors">Über uns</Link>
             <Link href="/contact" className="hover:text-white transition-colors">Kontakt</Link>
           </div>
-          <div className="flex flex-col gap-4 text-2xl tracking-wider">
-            <span className="text-white font-bold">Legal</span>
+          <div className="flex flex-col gap-4 text-base tracking-wide capitalize">
+            <span className="text-white font-bold uppercase tracking-wider text-sm mb-2">Legal</span>
             <Link href="/impressum" className="hover:text-white transition-colors">Impressum</Link>
             <Link href="/datenschutz" className="hover:text-white transition-colors">Datenschutz</Link>
             <Link href="#" className="hover:text-white transition-colors">AGB</Link>
           </div>
           <div className="flex flex-col gap-4">
-            <span className="text-white font-bold text-2xl tracking-wider">Socials</span>
-            <a href="#" className="hover:text-white transition-colors flex items-center gap-2"><FaInstagram /> Instagram</a>
-            <a href="#" className="hover:text-white transition-colors flex items-center gap-2"><FaLinkedin /> LinkedIn</a>
-            <a href="#" className="hover:text-white transition-colors flex items-center gap-2"><FaGithub /> GitHub</a>
+            <span className="text-white font-bold uppercase tracking-wider text-sm mb-2">Socials</span>
+            <a href="#" className="hover:text-white transition-colors flex items-center gap-2 text-base tracking-wide capitalize"><FaInstagram /> Instagram</a>
+            <a href="#" className="hover:text-white transition-colors flex items-center gap-2 text-base tracking-wide capitalize"><FaLinkedin /> LinkedIn</a>
+            <a href="#" className="hover:text-white transition-colors flex items-center gap-2 text-base tracking-wide capitalize"><FaGithub /> GitHub</a>
           </div>
         </div>
       </div>
@@ -60,7 +60,7 @@ export function Footer() {
         </motion.h1>
       </div>
 
-      <div className="absolute bottom-4 left-0 w-full text-center text-lg text-zinc-600 uppercase tracking-widest">
+      <div className="absolute bottom-4 left-0 w-full text-center text-sm text-zinc-600 uppercase tracking-widest">
         &copy; {currentYear} CMD Studios. All rights reserved.
       </div>
     </footer>

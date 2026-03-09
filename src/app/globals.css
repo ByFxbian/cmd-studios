@@ -5,6 +5,7 @@
   --font-heading: var(--font-heading);
   --font-body: var(--font-body);
   --font-accent: var(--font-accent);
+  --font-sans: var(--font-sans);
 
   /* Warm Creative Palette */
   --color-accent-light: #FF8552;
@@ -45,18 +46,22 @@ body.on-dark-panel,
   body {
     background-color: var(--color-page-bg);
     color: var(--color-heading);
-    font-family: var(--font-body);
+    font-family: var(--font-sans); /* Use Quicksand for highly legible, rounded typography */
     @apply antialiased transition-colors duration-500 tracking-wide;
   }
 
-  /* Fix for tight buttons */
-  button, a, [role="button"], .font-bold {
-    @apply tracking-wider; 
+  /* Keep slight tracking for buttons */
+  button, a, [role="button"] {
+    @apply tracking-wider;
   }
 
   h1, h2, h3, h4, h5, h6, .font-heading {
     font-family: var(--font-heading);
-    @apply tracking-tight;
+    @apply tracking-tight; 
+  }
+
+  .font-body {
+      font-family: var(--font-body);
   }
 
   .font-accent {

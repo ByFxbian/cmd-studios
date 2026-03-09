@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { useEffect, useState, useRef } from 'react';
+import { useState, useRef } from 'react';
 import { motion, AnimatePresence, useScroll, useMotionValueEvent,  type Variants } from 'framer-motion';
 import { MagneticLink } from '../ui/MagneticLink';
 import { MenuToggle } from './MenuToggle';
@@ -39,13 +39,16 @@ export function Navbar() {
 
     const toggleMenu = () => setIsOpen(!isOpen);
 
-    useEffect(() => {
+    const [prevPathname, setPrevPathname] = useState(pathname);
+
+    if (pathname !== prevPathname) {
+        setPrevPathname(pathname);
         setIsOpen(false);
-    }, [pathname]);
+    }
 
     const containerVariants: Variants = {
         idle: {
-            width: "120px",
+            width: "170px",
             height: "50px",
             borderRadius: "9999px",
             backgroundColor: "rgba(249, 248, 244, 0.6)",
@@ -54,7 +57,7 @@ export function Navbar() {
             transition: { duration: 0.5, type: "spring", stiffness: 200, damping: 20 }
         },
         expanded: {
-            width: "500px", 
+            width: "610px", 
             height: "58px",
             borderRadius: "9999px",
             backgroundColor: "rgba(255, 255, 255, 0.8)",
@@ -100,7 +103,7 @@ export function Navbar() {
                 <nav className="flex items-center justify-between w-full px-2 h-full gap-2 whitespace-nowrap">
                     
                     <div className="flex-shrink-0 pl-4 pr-2">
-                        <Link href="/" className="font-bold text-[var(--color-heading)] tracking-normal text-2xl flex items-center gap-1">
+                        <Link href="/" className="font-bold text-[var(--color-heading)] tracking-normal text-xl md:text-2xl flex items-center gap-1">
                             CMD<span className={`${isScrolled && !isHovered ? 'hidden' : 'inline-block'} text-[var(--color-text-muted)] font-normal transition-all duration-300`}>Studios</span>
                         </Link>
                     </div>
@@ -119,7 +122,7 @@ export function Navbar() {
                                         <Link 
                                             key={item.path} 
                                             href={item.path}
-                                            className="relative px-4 py-2 text-xl text-[var(--color-text)] hover:text-[var(--color-heading)] transition-colors"
+                                            className="relative px-4 py-2 text-sm md:text-base text-[var(--color-text)] hover:text-[var(--color-heading)] transition-colors"
                                         >
                                             {item.name}
                                             {pathname === item.path && (
@@ -140,8 +143,7 @@ export function Navbar() {
                         <MagneticLink
                             href="/contact"
                             className={`flex items-center justify-center rounded-full transition-all duration-300
-                                ${(!isScrolled || isHovered) 
-                                    ? 'bg-[var(--color-heading)] text-[var(--color-page-bg)] px-6 py-2.5 font-medium text-xl hover:opacity-90' 
+                                    ? 'bg-[var(--color-heading)] text-[var(--color-page-bg)] px-6 py-2.5 font-medium text-sm md:text-base hover:opacity-90' 
                                     : 'w-10 h-10 bg-[var(--color-heading)] text-[var(--color-page-bg)] p-0 hover:scale-110'} 
                             `}
                         >

@@ -51,7 +51,7 @@ export function ServiceHeroSection({title}: { title?: string }) {
 
                 {!title && (
                 <motion.p
-                    className="max-w-3xl text-xl md:text-3xl text-[var(--color-text)] tracking-wide"
+                    className="max-w-3xl text-lg md:text-xl text-[var(--color-text)] tracking-wide"
                     variants={itemVariants}
                 >
                     Technisches Know-how trifft auf kreative Umsetzung.

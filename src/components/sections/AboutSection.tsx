@@ -53,7 +53,7 @@ export function AboutSection() {
             <h2 className="text-4xl md:text-5xl font-bold tracking-normal text-[var(--color-heading)] mt-3 mb-6">
               Ein Entwickler. Ein Kreativer.
             </h2>
-            <div className="space-y-4 text-xl md:text-3xl text-[var(--color-text)] tracking-wide">
+            <div className="space-y-4 text-base md:text-xl text-[var(--color-text)] leading-relaxed">
               <p>
                 Wir sind Fabian und Antonio. Was als 
                 gemeinsame Leidenschaft für digitale Medien begann, ist heute 
@@ -69,7 +69,7 @@ export function AboutSection() {
             <AnimatedIconLink 
               href="/about"
               title="Mehr über uns erfahren"
-              className="mt-8 bg-transparent text-accent font-semibold tracking-wide transition-colors text-2xl"
+              className="mt-8 bg-transparent text-accent font-semibold tracking-wide transition-colors text-lg"
             >
               <HiArrowRight className="transition-transform duration-300 group-hover:translate-x-1" />
             </AnimatedIconLink>

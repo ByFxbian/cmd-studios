@@ -1,19 +1,32 @@
 'use client';
 
-import { RefObject, useRef } from 'react';
+import { RefObject, useRef, useState, useEffect } from 'react';
 import { motion } from "framer-motion";
-import { HeroCanvas } from '../ui/HeroCanvas';
+import dynamic from 'next/dynamic';
+
+const HeroCanvas = dynamic(() => import('../ui/HeroCanvas').then(mod => mod.HeroCanvas), { ssr: false });
+
 import { ImageTrail } from '../ui/ImageTrail';
 import { MagneticLink } from '../ui/MagneticLink';
 import { ExpandableButton } from '../ui/ExpandableButton';
 
 export function HeroSection() {
     const sectionRef = useRef<HTMLElement>(null);
+    const [isTransitioning, setIsTransitioning] = useState(true);
+
+    useEffect(() => {
+        console.log("[HeroSection Debug] Component mounted, waiting 800ms before rendering HeroCanvas...");
+        const timer = setTimeout(() => {
+            console.log("[HeroSection Debug] 800ms passed, rendering HeroCanvas now!");
+            setIsTransitioning(false);
+        }, 800);
+        return () => clearTimeout(timer);
+    }, []);
 
     return (
         <section ref={sectionRef} className='relative h-[100dvh] w-full overflow-hidden bg-[var(--color-page-bg)] bg-[var(--color-page-bg)]'>
             <div className="absolute inset-0 z-0 select-none pointer-events-none">
-                <HeroCanvas />
+                {!isTransitioning && <HeroCanvas />}
                 <ImageTrail containerRef={sectionRef as RefObject<HTMLElement>} />
             </div>
             
@@ -51,16 +64,16 @@ export function HeroSection() {
                     animate={{ opacity: 1 }}
                     transition={{ duration: 1, delay: 0.4 }}
                 >
-                    <p className="text-2xl md:text-3xl text-[var(--color-text)] mb-8 leading-relaxed tracking-wide pointer-events-auto text-left drop-shadow-sm">
+                    <p className="text-lg md:text-xl text-[var(--color-text)] mb-8 leading-relaxed tracking-wide pointer-events-auto text-left drop-shadow-sm">
                         Wir bauen digitale Produkte, die nicht nur funktionieren, <br className="xs:block sm:hidden" /> sondern anfühlen. 
-                        <span className="block mt-2 text-[var(--color-heading)] font-accent text-3xl md:text-4xl italic">Web-Entwicklung & <br className="xs:block sm:hidden" /> High-End Videoproduktion.</span>
+                        <span className="block mt-2 text-[var(--color-heading)] font-accent text-2xl md:text-3xl italic">Web-Entwicklung & <br className="xs:block sm:hidden" /> High-End Videoproduktion.</span>
                     </p>
                     
                     <div className="flex flex-wrap gap-4 justify-start pointer-events-auto items-center">
                         <ExpandableButton />
                         <MagneticLink 
                             href="/contact"
-                            className="px-8 py-4 border border-[var(--color-text-muted)] rounded-full hover:bg-[var(--color-heading)] hover:text-[var(--color-page-bg)] transition-all duration-300 font-bold h-14 flex items-center font-accent text-2xl"
+                            className="px-8 py-4 border border-[var(--color-text-muted)] rounded-full hover:bg-[var(--color-heading)] hover:text-[var(--color-page-bg)] transition-all duration-300 font-bold h-14 flex items-center font-accent text-xl"
                         >
                             Kontakt
                         </MagneticLink>

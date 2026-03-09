@@ -105,8 +105,8 @@ export function ServiceDetailSection({
       viewport={{ once: true, amount: 0.3 }}
     >
       <motion.div variants={itemVariants} className="flex items-center gap-3 mb-6">
-        <TitleIcon className="w-10 h-10 text-accent" />
-        <span className="text-3xl font-bold text-accent">{title}</span>
+        <TitleIcon className="w-8 h-8 md:w-10 md:h-10 text-accent" />
+        <span className="text-xl md:text-2xl font-bold text-accent">{title}</span>
       </motion.div>
       <motion.h2 
         className={`text-5xl md:text-6xl font-bold tracking-normal ${headingColor} mb-8`}
@@ -115,7 +115,7 @@ export function ServiceDetailSection({
         {subtitle}
       </motion.h2>
       <motion.p 
-        className={`text-xl md:text-2xl ${textColor} mb-12 leading-relaxed tracking-wide`}
+        className={`text-lg md:text-xl ${textColor} mb-12 leading-relaxed tracking-wide`}
         variants={itemVariants}
       >
         {description}
@@ -129,8 +129,8 @@ export function ServiceDetailSection({
           >
             <service.icon className="w-8 h-8 text-accent shrink-0 mt-1" />
             <div>
-              <h4 className={`text-xl font-bold mb-2 ${headingColor}`}>{service.name}</h4>
-              <p className={`text-lg ${textColor} leading-relaxed`}>{service.description}</p>
+              <h4 className={`text-lg font-bold mb-2 ${headingColor}`}>{service.name}</h4>
+              <p className={`text-base ${textColor} leading-relaxed`}>{service.description}</p>
             </div>
           </div>
         ))}

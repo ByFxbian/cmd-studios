@@ -1,4 +1,4 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
+
 'use client';
 
 import { useLayoutEffect, useRef } from 'react';
@@ -79,11 +79,11 @@ export function ProcessSection() {
                         Prozess.
                     </span>
                 </h2>
-                <p className="text-2xl text-zinc-400 max-w-2xl leading-relaxed">
+                <p className="text-xl text-zinc-400 max-w-2xl leading-relaxed">
                     Kein Chaos, keine Überraschungen. Wir führen dich strukturiert von der ersten Idee bis zum fertigen Produkt.
                 </p>
 
-                <div className="mt-12 flex items-center gap-4 text-lg uppercase tracking-widest text-zinc-500">
+                <div className="mt-12 flex items-center gap-4 text-base uppercase tracking-widest text-zinc-500">
                     <span className="w-12 h-px bg-zinc-700"></span>
                     Scroll to explore
                     <HiArrowDown className="animate-bounce" />
@@ -111,13 +111,13 @@ export function ProcessSection() {
                         </div>
                         
                         <h3 className="text-4xl md:text-5xl font-bold mb-6 text-white">{step.title}</h3>
-                        <p className="text-xl md:text-2xl text-zinc-400 mb-8 leading-relaxed">
+                        <p className="text-lg md:text-xl text-zinc-400 mb-8 leading-relaxed">
                             {step.description}
                         </p>
 
                         <ul className="space-y-4">
                             {step.details.map((detail, i) => (
-                                <li key={i} className="flex items-center gap-4 text-xl text-zinc-300">
+                                <li key={i} className="flex items-center gap-4 text-lg text-zinc-300">
                                     <div className="w-2 h-2 rounded-full bg-accent" />
                                     {detail}
                                 </li>
@@ -154,10 +154,10 @@ export function ProcessSection() {
                     <div className="bg-zinc-900/50 border border-zinc-800 p-6 rounded-2xl">
                         <div className="text-accent text-sm font-bold uppercase tracking-wider mb-2">Phase 0{index + 1}</div>
                         <h3 className="text-3xl font-bold mb-3 text-white">{step.title}</h3>
-                        <p className="text-zinc-400 text-lg mb-4">{step.description}</p>
+                        <p className="text-zinc-400 text-base mb-4">{step.description}</p>
                         <ul className="space-y-2">
                             {step.details.slice(0,3).map((d, i) => (
-                                <li key={i} className="flex items-start gap-2 text-base text-zinc-500">
+                                <li key={i} className="flex items-start gap-2 text-sm text-zinc-500">
                                     <span className="mt-2 w-1.5 h-1.5 rounded-full bg-zinc-700 shrink-0" />
                                     {d}
                                 </li>

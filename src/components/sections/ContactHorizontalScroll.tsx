@@ -7,7 +7,7 @@ import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { ScrollToPlugin } from 'gsap/ScrollToPlugin';
 import { HiArrowLeft, HiArrowRight, HiOutlineArrowRight } from 'react-icons/hi';
-import { usePathname, useRouter, useSearchParams } from 'next/navigation';
+import { usePathname } from 'next/navigation';
 import { AnimatePresence, motion, type Variants } from 'framer-motion';
 import { MagneticButton } from '../ui/MagneticButton';
 import { ContactSuccessAnimation } from '../ui/ContactSuccessAnimation';
@@ -216,7 +216,7 @@ export function ContactHorizontalScroll({ initialPackage }: { initialPackage?: s
     return () => {
         mm.revert();
     }
-  }, [pathname, isLoaded, initialPackage]);
+  }, [pathname, isLoaded, initialPackage]); // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
     const onLoad = () => ScrollTrigger.refresh();
@@ -272,7 +272,7 @@ export function ContactHorizontalScroll({ initialPackage }: { initialPackage?: s
                         Neues zu starten?
                     </span>
                     </h1>
-                    <p className="text-3xl text-zinc-700 mt-8 tracking-wide">
+                    <p className="text-xl md:text-2xl text-zinc-700 mt-8 tracking-wide">
                     Scrollen Sie weiter, um mit uns in Kontakt zu treten.
                     </p>
                 </div>
@@ -296,33 +296,33 @@ export function ContactHorizontalScroll({ initialPackage }: { initialPackage?: s
                                 <h2 className="text-4xl md:text-5xl font-bold tracking-normal text-[var(--color-heading)] mb-6">
                                     Schreiben Sie uns.
                                 </h2>
-                                <p className="text-2xl text-[var(--color-text)] mb-4">
+                                <p className="text-lg md:text-xl text-[var(--color-text)] mb-4">
                                     Wir freuen uns darauf, von Ihrer Idee zu hören und 
                                     sie gemeinsam umzusetzen.
                                 </p>
 
                                 <form className="space-y-6" onSubmit={handleSubmit}>
                                     <div>
-                                        <label htmlFor="name" className="block text-2xl font-medium text-[var(--color-text)] mb-2">Name</label>
+                                        <label htmlFor="name" className="block text-lg font-medium text-[var(--color-text)] mb-2">Name</label>
                                         <input type="text" id="name" name="name" required 
-                                            className="w-full px-6 py-4 bg-zinc-50 border border-zinc-200 rounded-xl text-xl
+                                            className="w-full px-6 py-4 bg-zinc-50 border border-zinc-200 rounded-xl text-base md:text-lg
                                                     text-[var(--color-heading)] focus:ring-2 focus:ring-accent focus:outline-none transition-shadow"/>
                                     </div>
                                     <div>
-                                        <label htmlFor="email" className="block text-2xl font-medium text-[var(--color-text)] mb-2">E-Mail</label>
+                                        <label htmlFor="email" className="block text-lg font-medium text-[var(--color-text)] mb-2">E-Mail</label>
                                         <input type="email" id="email" name="email" required 
-                                            className="w-full px-6 py-4 bg-zinc-50 border border-zinc-200 rounded-xl text-xl
+                                            className="w-full px-6 py-4 bg-zinc-50 border border-zinc-200 rounded-xl text-base md:text-lg
                                                         text-[var(--color-heading)] focus:ring-2 focus:ring-accent focus:outline-none transition-shadow"/>
                                     </div>
                                     <div>
-                                        <label htmlFor="package" className="block text-2xl font-medium text-[var(--color-text)] mb-2">
+                                        <label htmlFor="package" className="block text-lg font-medium text-[var(--color-text)] mb-2">
                                             Interessiert an
                                         </label>
                                         <select
                                             id="package"
                                             name="package"
                                             required
-                                            className="w-full px-6 py-4 bg-zinc-50 border border-zinc-200 rounded-xl text-xl
+                                            className="w-full px-6 py-4 bg-zinc-50 border border-zinc-200 rounded-xl text-base md:text-lg
                                                     text-[var(--color-heading)] focus:ring-2 focus:ring-accent focus:outline-none
                                                     appearance-none transition-shadow"
                                         >
@@ -334,16 +334,16 @@ export function ContactHorizontalScroll({ initialPackage }: { initialPackage?: s
                                         </select>
                                     </div>
                                     <div>
-                                        <label htmlFor="message" className="block text-2xl font-medium text-[var(--color-text)] mb-2">Deine Nachricht</label>
+                                        <label htmlFor="message" className="block text-lg font-medium text-[var(--color-text)] mb-2">Deine Nachricht</label>
                                         <textarea id="message" name="message" rows={5} required 
-                                                className="w-full px-6 py-4 bg-zinc-50 border border-zinc-200 rounded-xl text-xl
+                                                className="w-full px-6 py-4 bg-zinc-50 border border-zinc-200 rounded-xl text-base md:text-lg
                                                             text-[var(--color-heading)] focus:ring-2 focus:ring-accent focus:outline-none resize-y max-h-[200px] min-h-[128px] transition-shadow"/>
                                     </div>
                                     <MagneticButton
                                         type="submit"
                                         className="group inline-flex items-center justify-center gap-2 
                                                     bg-accent text-white font-semibold 
-                                                    px-10 py-4 rounded-full text-2xl 
+                                                    px-10 py-4 rounded-full text-lg md:text-xl 
                                                     mt-4 transition-all hover:bg-accent-dark shadow-xl shadow-accent/20"
                                         disabled={status === 'submitting'}
                                         >
@@ -382,7 +382,7 @@ export function ContactHorizontalScroll({ initialPackage }: { initialPackage?: s
                     <h2 className="text-5xl md:text-6xl font-bold mb-10">
                     Oder treffen wir uns.
                     </h2>
-                    <div className="space-y-6 text-2xl tracking-wide">
+                    <div className="space-y-6 text-lg md:text-xl tracking-wide">
                     <p>
                         <strong className="text-accent block mb-1">E-Mail:</strong>
                         <a href="mailto:hallo@cmdstudios.de" className="hover:underline">hallo@cmdstudios.de</a>

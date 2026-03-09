@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { Quicksand } from "next/font/google";
 import localFont from "next/font/local";
 import "./globals.css";
 import { Navbar } from "@/components/layout/Navbar";
@@ -8,6 +9,12 @@ import { LoadingProvider } from "@/context/LoadingContext";
 import { ClientLoader } from "@/components/layout/ClientLoader";
 import { CustomCursor } from "@/components/ui/CustomCursor";
 import { SmoothScroll } from "@/components/layout/SmoothScroll";
+
+const quicksand = Quicksand({
+  subsets: ["latin"],
+  variable: "--font-sans",
+  display: 'swap',
+});
 
 const krimside = localFont({
   src: '../fonts/krimside.otf',
@@ -52,7 +59,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="de" className="antialiased">
-      <body className={`${krimside.variable} ${pramukh.variable} ${gellis.variable} bg-[var(--color-page-bg)] text-[var(--color-heading)] overflow-x-hidden`}>
+      <body className={`${quicksand.variable} ${krimside.variable} ${pramukh.variable} ${gellis.variable} bg-[var(--color-page-bg)] text-[var(--color-heading)] overflow-x-hidden`}>
         <LoadingProvider>
           <SmoothScroll>
             <CustomCursor />

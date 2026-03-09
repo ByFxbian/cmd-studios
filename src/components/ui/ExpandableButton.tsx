@@ -27,7 +27,7 @@ export function ExpandableButton() {
             layout="position" 
             className="flex items-center gap-3 flex-shrink-0"
         >
-            <span className="font-bold text-2xl text-[var(--color-page-bg)]">
+            <span className="font-bold text-lg md:text-xl text-[var(--color-page-bg)] tracking-wide">
                 Portfolio
             </span>
             <motion.div
@@ -73,7 +73,7 @@ export function ExpandableButton() {
                 initial={{ opacity: 0, x: 10 }}
                 animate={{ opacity: isHovered ? 1 : 0, x: isHovered ? 0 : 10 }}
                 transition={{ duration: 0.3, delay: 0.2 }}
-                className="whitespace-nowrap text-xl font-medium text-[var(--color-text-muted)] pl-4 pr-2 hidden sm:inline-block"
+                className="whitespace-nowrap text-base font-medium text-[var(--color-text-muted)] pl-4 pr-2 hidden sm:inline-block"
             >
                 Latest Work
             </motion.span>

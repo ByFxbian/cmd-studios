@@ -2,7 +2,6 @@
 
 import { motion, type Variants } from "framer-motion";
 import { Code, Video, ArrowRight } from "lucide-react";
-import { useState } from "react";
 import { AnimatedIconLink } from "../ui/AnimatedIconLink";
 
 const cardVariants: Variants = {
@@ -36,7 +35,7 @@ export function ServiceSection() {
                     <h2 className="text-4xl md:text-5xl font-bold tracking-normal text-[var(--color-heading)]">
                         Was wir tun
                     </h2>
-                    <p className="mt-6 max-w-3xl mx-auto text-2xl md:text-3xl text-[var(--color-text)] tracking-wide">
+                    <p className="mt-6 max-w-3xl mx-auto text-lg md:text-xl text-[var(--color-text)]">
                         Wir kombinieren technische Präzision mit kreativer Vision, um 
                         digitale Erlebnisse zu schaffen, die im Gedächtnis bleiben.
                     </p>
@@ -52,8 +51,8 @@ export function ServiceSection() {
                         viewport={{ once: true, amount: 0.2 }}
                     >
                         <Code className="w-12 h-12 text-accent mb-4 stroke-1" />
-                        <h3 className="text-3xl font-bold mb-4 text-[var(--color-heading)]">Web-Entwicklung</h3>
-                        <p className="text-xl md:text-2xl text-[var(--color-text)] mb-6 grow tracking-wide">
+                        <h3 className="text-2xl font-bold mb-4 text-[var(--color-heading)]">Web-Entwicklung</h3>
+                        <p className="text-base md:text-lg text-[var(--color-text)] mb-6 grow">
                         Von ultraschnellen Landing Pages mit Next.js bis hin zu komplexen 
                         Web-Applikationen. Wir bauen performante, SEO-optimierte und 
                         responsive Websites für KMUs.
@@ -76,8 +75,8 @@ export function ServiceSection() {
                         viewport={{ once: true, amount: 0.2 }}
                     >
                         <Video className="w-12 h-12 text-accent mb-4 stroke-1" />
-                        <h3 className="text-3xl font-bold mb-4 text-[var(--color-heading)]">Content Creation</h3>
-                        <p className="text-xl md:text-2xl text-[var(--color-text)] mb-6 grow tracking-wide">
+                        <h3 className="text-2xl font-bold mb-4 text-[var(--color-heading)]">Content Creation</h3>
+                        <p className="text-base md:text-lg text-[var(--color-text)] mb-6 grow">
                         Professionelle Videoproduktion, Social-Media-Content und 
                         Branding. Wir erzählen Ihre Geschichte visuell und sorgen dafür, 
                         dass Ihre Botschaft ankommt.

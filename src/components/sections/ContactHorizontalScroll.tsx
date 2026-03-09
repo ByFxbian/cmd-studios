@@ -89,6 +89,9 @@ export function ContactHorizontalScroll({ initialPackage }: { initialPackage?: s
     if (!isLoaded) return;
     if (typeof window === 'undefined') return;
 
+    // Hide global scrollbar to avoid vertical scrollbar confusion on a horizontal scroll page
+    document.documentElement.classList.add('hide-global-scrollbar');
+
     let mm = gsap.matchMedia();
 
     mm.add("(min-width: 768px)", () => {
@@ -215,6 +218,7 @@ export function ContactHorizontalScroll({ initialPackage }: { initialPackage?: s
 
     return () => {
         mm.revert();
+        document.documentElement.classList.remove('hide-global-scrollbar');
     }
   }, [pathname, isLoaded, initialPackage]); // eslint-disable-line react-hooks/exhaustive-deps
 

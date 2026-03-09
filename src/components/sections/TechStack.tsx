@@ -119,16 +119,17 @@ export function TechStack() {
                   animate={{ opacity: 1 }}
                   exit={{ opacity: 0 }}
               >
-                  <div className="absolute inset-0 bg-black/90 backdrop-blur-xl" onClick={() => setIsOpen(false)} />
+                  <div className="absolute inset-0 bg-black/95" onClick={() => setIsOpen(false)} />
 
                   <motion.div 
-                      className="relative w-full max-w-6xl max-h-[85vh] overflow-y-auto bg-zinc-900/90 border border-zinc-700/50 rounded-3xl p-6 md:p-12 shadow-2xl no-scrollbar"
+                      className="relative w-full max-w-6xl max-h-[85vh] overflow-y-auto overscroll-contain bg-zinc-900 border border-zinc-700/50 rounded-3xl p-6 md:p-12 shadow-2xl custom-scrollbar pointer-events-auto"
+                      data-lenis-prevent
                       initial={{ scale: 0.9, y: 20 }}
                       animate={{ scale: 1, y: 0 }}
                       exit={{ scale: 0.9, y: 20 }}
                       transition={{ type: "spring", damping: 25, stiffness: 300 }}
                   >
-                      <div className="flex justify-between items-center mb-8 sticky -top-6 md:-top-12 bg-zinc-900/95 z-50 py-4 border-b border-zinc-800/50 backdrop-blur-md">
+                      <div className="flex justify-between items-center mb-8 sticky -top-6 md:-top-12 bg-zinc-900 z-50 py-4 border-b border-zinc-800/50">
                           <h3 className="text-3xl md:text-4xl text-white">Full Stack Arsenal</h3>
                           <button 
                               onClick={() => setIsOpen(false)}
@@ -180,7 +181,7 @@ function Column({ items, y, className = "" }: { items: typeof techStack, y: Moti
                 <div 
                     key={i} 
                     className="group relative flex flex-col items-center justify-center gap-3 p-4 md:p-6 
-                               bg-zinc-900/40 border border-zinc-800/50 rounded-2xl backdrop-blur-sm
+                               bg-zinc-900/60 border border-zinc-800/50 rounded-2xl
                                hover:bg-zinc-800/60 hover:border-zinc-700 transition-all duration-300 cursor-none"
                 >
                     <div 

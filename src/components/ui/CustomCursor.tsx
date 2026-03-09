@@ -1,6 +1,5 @@
 'use client';
 
-import { motion } from "framer-motion";
 import gsap from "gsap";
 import { useEffect, useRef, useState } from "react";
 
@@ -19,11 +18,12 @@ export function CustomCursor() {
     const isHoveringRef = useRef(false);
 
     useEffect(() => {
-        if (!isDesktop || !cursorRef.current) return;
+        const cursorEl = cursorRef.current;
+        if (!isDesktop || !cursorEl) return;
 
         const styles = getComputedStyle(document.body);
-        const getAccentColor = () => styles.getPropertyValue(CSS_VAR_CURSOR_BORDER).trim() || '#14b8a6';
-        const getBgColor = () => styles.getPropertyValue(CSS_VAR_CURSOR_BG).trim() || '#14b8a6';
+        const getAccentColor = () => styles.getPropertyValue(CSS_VAR_CURSOR_BORDER).trim() || '#FF4D00';
+        const getBgColor = () => styles.getPropertyValue(CSS_VAR_CURSOR_BG).trim() || '#FF4D00';
 
         gsap.set(cursorRef.current, { 
             xPercent: -50, 
@@ -72,8 +72,8 @@ export function CustomCursor() {
         return () => {
             window.removeEventListener('pointermove', onMouseMove);
             document.body.style.cursor = 'auto';
-            if (cursorRef.current) {
-                gsap.killTweensOf(cursorRef.current);
+            if (cursorEl) {
+                gsap.killTweensOf(cursorEl);
             }
         };
     }, [isDesktop]);

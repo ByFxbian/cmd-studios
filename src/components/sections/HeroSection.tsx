@@ -69,7 +69,7 @@ export function HeroSection() {
                         <span className="block mt-2 text-[var(--color-heading)] font-accent text-2xl md:text-3xl italic">Web-Entwicklung & <br className="xs:block sm:hidden" /> High-End Videoproduktion.</span>
                     </p>
                     
-                    <div className="flex flex-wrap gap-4 justify-start pointer-events-auto items-center">
+                    <div className="flex flex-nowrap gap-4 justify-start pointer-events-auto items-center">
                         <ExpandableButton />
                         <MagneticLink 
                             href="/contact"

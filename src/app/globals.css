@@ -91,6 +91,54 @@ body.on-dark-panel,
       -webkit-backdrop-filter: blur(16px);
       border: 1px solid var(--color-navbar-border);
   }
+
+  /* Global Sleek Scrollbar */
+  html, body {
+    scrollbar-width: thin;
+    scrollbar-color: var(--color-text-muted) transparent;
+  }
+  ::-webkit-scrollbar {
+    width: 8px;
+  }
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  ::-webkit-scrollbar-thumb {
+    background-color: var(--color-text-muted);
+    border-radius: 8px;
+    border: 2px solid var(--color-page-bg); /* Padding trick */
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background-color: var(--color-text);
+  }
+
+  /* Utility to hide the main scrollbar entirely */
+  .hide-global-scrollbar, .hide-global-scrollbar body {
+    scrollbar-width: none !important;
+  }
+  .hide-global-scrollbar::-webkit-scrollbar, .hide-global-scrollbar body::-webkit-scrollbar {
+    display: none !important;
+  }
+
+  /* Custom Sleek Scrollbar for forced dark overlays (e.g., Tech Stack) */
+  .custom-scrollbar {
+    scrollbar-width: thin;
+    scrollbar-color: rgba(255, 255, 255, 0.15) transparent;
+  }
+  .custom-scrollbar::-webkit-scrollbar {
+    width: 6px;
+  }
+  .custom-scrollbar::-webkit-scrollbar-track {
+    background: transparent;
+    border-radius: 8px;
+  }
+  .custom-scrollbar::-webkit-scrollbar-thumb {
+    background-color: rgba(255, 255, 255, 0.15);
+    border-radius: 8px;
+  }
+  .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+    background-color: rgba(255, 255, 255, 0.3);
+  }
 }
 
 /* Cursor & Interaction */

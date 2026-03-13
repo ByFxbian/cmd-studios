@@ -4,7 +4,7 @@ import { RefObject, useRef, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { PortfolioCard } from '@/components/ui/PortfolioCard';
 import { ContactSection } from '@/components/sections/ContactSection';
-import { allProjects, type Project } from '@/lib/portfolio-data'
+import { allProjects } from '@/lib/portfolio-data'
 import { HeroCanvas } from '@/components/ui/HeroCanvas';
 import { ImageTrail } from '@/components/ui/ImageTrail';
 
@@ -53,6 +53,7 @@ export default function PortfolioPage() {
           >
             {categories.map((category) => (
               <button
+                type="button"
                 key={category}
                 onClick={() => setActiveCategory(category)}
                 className={`font-semibold font-accent px-5 py-2 rounded-md transition-colors
@@ -60,6 +61,7 @@ export default function PortfolioPage() {
                     ? 'bg-accent text-white'
                     : 'bg-white text-zinc-700 hover:bg-zinc-100'
                   }`}
+                aria-pressed={activeCategory === category}
               >
                 {category}
               </button>

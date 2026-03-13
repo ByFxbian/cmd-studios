@@ -65,20 +65,22 @@ export function TestimonialsSection() {
                     <div className="flex gap-2">
                         {testimonials.map((_, idx) => (
                             <button 
+                                type="button"
                                 key={idx}
                                 onClick={() => setCurrentIndex(idx)}
                                 className={`h-1 transition-all duration-300 rounded-full ${idx === currentIndex ? 'w-12 bg-accent' : 'w-4 bg-zinc-300 hover:bg-zinc-400'}`}
                                 aria-label={`Gehe zu Testimonial ${idx + 1}`}
+                                aria-current={idx === currentIndex ? 'true' : undefined}
                             />
                         ))}
                     </div>
 
                     <div className="flex gap-4">
-                        <button onClick={handlePrev} className="p-4 rounded-full border border-zinc-200 hover:bg-zinc-100 hover:scale-110 transition-all active:scale-95">
-                            <HiArrowLeft className="w-6 h-6 text-[var(--color-heading)]" />
+                        <button type="button" onClick={handlePrev} aria-label="Vorheriges Testimonial" className="p-4 rounded-full border border-zinc-200 hover:bg-zinc-100 hover:scale-110 transition-all active:scale-95">
+                            <HiArrowLeft aria-hidden="true" className="w-6 h-6 text-[var(--color-heading)]" />
                         </button>
-                        <button onClick={handleNext} className="p-4 rounded-full bg-[var(--color-heading)] text-[var(--color-page-bg)] hover:scale-110 transition-all active:scale-95 shadow-lg">
-                            <HiArrowRight className="w-6 h-6" />
+                        <button type="button" onClick={handleNext} aria-label="Nächstes Testimonial" className="p-4 rounded-full bg-[var(--color-heading)] text-[var(--color-page-bg)] hover:scale-110 transition-all active:scale-95 shadow-lg">
+                            <HiArrowRight aria-hidden="true" className="w-6 h-6" />
                         </button>
                     </div>
                 </div>

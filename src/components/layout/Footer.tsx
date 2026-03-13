@@ -41,15 +41,16 @@ export function Footer() {
           </div>
           <div className="flex flex-col gap-4">
             <span className="text-white font-bold uppercase tracking-wider text-sm mb-2">Socials</span>
-            <a href="#" className="hover:text-white transition-colors flex items-center gap-2 text-base tracking-wide capitalize"><FaInstagram /> Instagram</a>
-            <a href="#" className="hover:text-white transition-colors flex items-center gap-2 text-base tracking-wide capitalize"><FaLinkedin /> LinkedIn</a>
-            <a href="#" className="hover:text-white transition-colors flex items-center gap-2 text-base tracking-wide capitalize"><FaGithub /> GitHub</a>
+            <a href="#" className="hover:text-white transition-colors flex items-center gap-2 text-base tracking-wide capitalize"><FaInstagram aria-hidden="true" /> Instagram</a>
+            <a href="#" className="hover:text-white transition-colors flex items-center gap-2 text-base tracking-wide capitalize"><FaLinkedin aria-hidden="true" /> LinkedIn</a>
+            <a href="#" className="hover:text-white transition-colors flex items-center gap-2 text-base tracking-wide capitalize"><FaGithub aria-hidden="true" /> GitHub</a>
           </div>
         </div>
       </div>
 
       <div className="w-full overflow-hidden mt-auto pt-24">
         <motion.h1 
+          aria-hidden="true"
           className="text-[12vw] leading-[0.8] font-bold text-center text-zinc-900 select-none whitespace-nowrap"
           initial={{ y: 100 }}
           whileInView={{ y: 0 }}

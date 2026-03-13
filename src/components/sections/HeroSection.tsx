@@ -33,15 +33,16 @@ export function HeroSection() {
             <div className="absolute bottom-0 left-0 w-full h-[30vh] bg-gradient-to-t from-[var(--color-page-bg)] to-transparent z-[1] pointer-events-none" />
 
             <div className="relative z-10 h-full w-full container mx-auto px-6 flex flex-col justify-center pointer-events-none">
-                
+                 
                 <div className="flex flex-col relative z-20 -mt-20 md:-mt-0">
+                    <h1 className="sr-only">Digitale Exzellenz</h1>
                     <motion.div 
                         className="flex items-end overflow-hidden"
                         initial={{ opacity: 0, y: 100 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
                     >
-                        <h1 className="text-[13vw] md:text-[10vw] leading-[0.8] tracking-tighter text-[var(--color-heading)] pointer-events-auto">
+                        <h1 aria-hidden="true" className="block text-[13vw] md:text-[10vw] leading-[0.8] tracking-tighter text-[var(--color-heading)] pointer-events-auto">
                             DIGITALE
                         </h1>
                     </motion.div>
@@ -52,7 +53,7 @@ export function HeroSection() {
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 1, ease: [0.16, 1, 0.3, 1], delay: 0.1 }}
                     >
-                        <h1 className="text-[13vw] md:text-[11vw] leading-[0.8] tracking-tighter text-transparent bg-clip-text bg-gradient-to-br from-accent-light via-accent to-accent-dark pointer-events-auto text-right pr-2 md:pr-0">
+                        <h1 aria-hidden="true" className="block text-[13vw] md:text-[11vw] leading-[0.8] tracking-tighter text-transparent bg-clip-text bg-gradient-to-br from-accent-light via-accent to-accent-dark pointer-events-auto text-right pr-2 md:pr-0">
                             EXZELLENZ
                         </h1>
                     </motion.div>

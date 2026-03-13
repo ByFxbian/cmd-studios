@@ -60,12 +60,18 @@ export default function RootLayout({
   return (
     <html lang="de" className="antialiased">
       <body className={`${quicksand.variable} ${krimside.variable} ${pramukh.variable} ${gellis.variable} bg-[var(--color-page-bg)] text-[var(--color-heading)] overflow-x-hidden`}>
+        <a
+          href="#main-content"
+          className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[9999] focus:rounded-md focus:bg-[var(--color-heading)] focus:px-4 focus:py-2 focus:text-[var(--color-page-bg)]"
+        >
+          Zum Inhalt springen
+        </a>
         <LoadingProvider>
           <SmoothScroll>
             <CustomCursor />
             <ClientLoader />
               <Navbar />
-              <main className="flex flex-col min-h-screen relative z-10 bg-[var(--color-page-bg)] shadow-2xl transition-colors duration-500">
+              <main id="main-content" className="flex flex-col min-h-screen relative z-10 bg-[var(--color-page-bg)] shadow-2xl transition-colors duration-500">
                 <div className="flex-grow relative z-10 bg-transparent">
                   <PageTransition>
                     {children}

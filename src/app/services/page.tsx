@@ -4,7 +4,6 @@
 import { ContactSection } from '@/components/sections/ContactSection';
 import { PackageSection } from '@/components/sections/PackageSection';
 import { ProcessSection } from '@/components/sections/ProcessSection';
-import { ServiceDetailSection } from '@/components/sections/ServiceDetailSection';
 import { ServiceHeroSection } from '@/components/sections/ServiceHeroSection';
 import { HiCode, HiCamera, HiOutlineSparkles, HiOutlineDatabase, HiOutlineChartSquareBar, HiOutlineFilm } from 'react-icons/hi';
 

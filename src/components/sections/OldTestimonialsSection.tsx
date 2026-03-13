@@ -116,20 +116,22 @@ export function OldTestimonialsSection() {
 
                 <div className="flex justify-center gap-4 mt-16">
                     <button
+                        type="button"
                         onClick={showPrev}
                         aria-label="Vorheriges Testimonial"
                         className="bg-white rounded-full p-3 shadow-lg border border-zinc-200 text-zinc-600
                                 hover:bg-zinc-100 transition-colors disabled:opacity-50" 
                     >
-                        <HiArrowLeft className="w-6 h-6" />
+                        <HiArrowLeft aria-hidden="true" className="w-6 h-6" />
                     </button>
                     <button
+                        type="button"
                         onClick={showNext}
                         aria-label="Nächstes Testimonial"
                         className="bg-white rounded-full p-3 shadow-lg border border-zinc-200 text-zinc-600
                                 hover:bg-zinc-100 transition-colors disabled:opacity-50"
                     >
-                        <HiArrowRight className="w-6 h-6" />
+                        <HiArrowRight aria-hidden="true" className="w-6 h-6" />
                     </button>
                 </div>
             </div>
@@ -150,7 +152,7 @@ function CardContent({ testimonial }: { testimonial: Testimonial }) {
         />
       </div>
       <div className="relative text-center md:text-left">
-        <FaQuoteLeft className="absolute -top-4 left-0 text-3xl text-accent/20 hidden md:block" />
+        <FaQuoteLeft aria-hidden="true" className="absolute -top-4 left-0 text-3xl text-accent/20 hidden md:block" />
         <p className="text-lg md:text-xl font-medium text-[var(--color-text)] mb-4">
           &quot;{testimonial.quote}&quot;
         </p>

@@ -31,6 +31,7 @@ const panelVariants: Variants = {
 export function ContactHorizontalScroll({ initialPackage }: { initialPackage?: string}) {
   const sectionRef = useRef<HTMLDivElement>(null);
   const panelsRef = useRef<HTMLDivElement>(null);
+  const errorRef = useRef<HTMLParagraphElement>(null);
   const [activePanel, setActivePanel] = useState(0);
 
   const [status, setStatus] = useState<Status>('idle');
@@ -228,6 +229,12 @@ export function ContactHorizontalScroll({ initialPackage }: { initialPackage?: s
     return () => window.removeEventListener('load', onLoad);
   }, []);
 
+  useEffect(() => {
+    if (status === 'error') {
+      errorRef.current?.focus();
+    }
+  }, [status]);
+
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setStatus('submitting');
@@ -254,6 +261,15 @@ export function ContactHorizontalScroll({ initialPackage }: { initialPackage?: s
         setErrorMessage(error.message);
     }
   };
+
+  const statusAnnouncement =
+    status === 'submitting'
+      ? 'Anfrage wird gesendet…'
+      : status === 'success'
+      ? 'Anfrage erfolgreich gesendet.'
+      : status === 'error'
+      ? `Fehler beim Senden: ${errorMessage}`
+      : '';
 
   return (
     <section ref={sectionRef} className="overflow-hidden">
@@ -290,6 +306,9 @@ export function ContactHorizontalScroll({ initialPackage }: { initialPackage?: s
                 viewport={{ once: true, amount: 0.3 }}
             >
                 <div className="w-full max-w-lg no-hscroll-on-form">
+                    <p className="sr-only" aria-live="polite">
+                        {statusAnnouncement}
+                    </p>
                     <AnimatePresence mode="wait">
                         {status !== 'success' && (
                             <motion.div
@@ -308,13 +327,13 @@ export function ContactHorizontalScroll({ initialPackage }: { initialPackage?: s
                                 <form className="space-y-6" onSubmit={handleSubmit}>
                                     <div>
                                         <label htmlFor="name" className="block text-lg font-medium text-[var(--color-text)] mb-2">Name</label>
-                                        <input type="text" id="name" name="name" required 
+                                        <input type="text" id="name" name="name" autoComplete="name" required 
                                             className="w-full px-6 py-4 bg-zinc-50 border border-zinc-200 rounded-xl text-base md:text-lg
                                                     text-[var(--color-heading)] focus:ring-2 focus:ring-accent focus:outline-none transition-shadow"/>
                                     </div>
                                     <div>
                                         <label htmlFor="email" className="block text-lg font-medium text-[var(--color-text)] mb-2">E-Mail</label>
-                                        <input type="email" id="email" name="email" required 
+                                        <input type="email" id="email" name="email" autoComplete="email" inputMode="email" spellCheck={false} required 
                                             className="w-full px-6 py-4 bg-zinc-50 border border-zinc-200 rounded-xl text-base md:text-lg
                                                         text-[var(--color-heading)] focus:ring-2 focus:ring-accent focus:outline-none transition-shadow"/>
                                     </div>
@@ -325,12 +344,13 @@ export function ContactHorizontalScroll({ initialPackage }: { initialPackage?: s
                                         <select
                                             id="package"
                                             name="package"
+                                            autoComplete="off"
                                             required
                                             className="w-full px-6 py-4 bg-zinc-50 border border-zinc-200 rounded-xl text-base md:text-lg
                                                     text-[var(--color-heading)] focus:ring-2 focus:ring-accent focus:outline-none
                                                     appearance-none transition-shadow"
                                         >
-                                            <option value="Kein bestimmtes Paket">Bitte auswählen...</option>
+                                            <option value="Kein bestimmtes Paket">Bitte auswählen…</option>
                                             <option value="Launchpad">Launchpad-Paket</option>
                                             <option value="Accelerator">Accelerator-Paket</option>
                                             <option value="Partner">Partner-Paket</option>
@@ -339,7 +359,8 @@ export function ContactHorizontalScroll({ initialPackage }: { initialPackage?: s
                                     </div>
                                     <div>
                                         <label htmlFor="message" className="block text-lg font-medium text-[var(--color-text)] mb-2">Deine Nachricht</label>
-                                        <textarea id="message" name="message" rows={5} required 
+                                        <textarea id="message" name="message" autoComplete="off" rows={5} required 
+                                                placeholder="Worum geht es in Ihrem Projekt…"
                                                 className="w-full px-6 py-4 bg-zinc-50 border border-zinc-200 rounded-xl text-base md:text-lg
                                                             text-[var(--color-heading)] focus:ring-2 focus:ring-accent focus:outline-none resize-y max-h-[200px] min-h-[128px] transition-shadow"/>
                                     </div>
@@ -351,12 +372,12 @@ export function ContactHorizontalScroll({ initialPackage }: { initialPackage?: s
                                                     mt-4 transition-all hover:bg-accent-dark shadow-xl shadow-accent/20"
                                         disabled={status === 'submitting'}
                                         >
-                                        {status === 'submitting' ? 'Sende...' : 'Anfrage senden'}
-                                        <HiOutlineArrowRight className="transition-transform duration-300 group-hover:translate-x-1" />
+                                        {status === 'submitting' ? 'Sende…' : 'Anfrage senden'}
+                                        <HiOutlineArrowRight aria-hidden="true" className="transition-transform duration-300 group-hover:translate-x-1" />
                                     </MagneticButton>
 
                                     {status === 'error' && (
-                                        <p className="text-red-600 mt-4">
+                                        <p ref={errorRef} tabIndex={-1} role="alert" className="text-red-600 mt-4">
                                             Fehler: {errorMessage}
                                         </p>
                                     )}
@@ -402,6 +423,7 @@ export function ContactHorizontalScroll({ initialPackage }: { initialPackage?: s
 
         <div className="fixed bottom-10 right-10 z-50 gap-3 md:flex hidden">
             <button
+                type="button"
                 onClick={() => goPrev()}
                 disabled={activePanel === 0}
                 className="bg-[var(--color-scroll-button-bg)] rounded-full p-3 shadow-lg text-[var(--color-scroll-button-text)]
@@ -409,9 +431,10 @@ export function ContactHorizontalScroll({ initialPackage }: { initialPackage?: s
                             transition-opacity"
                 aria-label="Vorheriges Panel"
             >
-            <HiArrowLeft className="w-6 h-6" />
+            <HiArrowLeft aria-hidden="true" className="w-6 h-6" />
             </button>
             <button
+                type="button"
                 onClick={() => goNext()}
                 disabled={activePanel === (TOTAL_PANELS - 1)}
                 className="bg-[var(--color-scroll-button-bg)] text-[var(--color-scroll-button-text)] rounded-full p-3 shadow-lg
@@ -419,7 +442,7 @@ export function ContactHorizontalScroll({ initialPackage }: { initialPackage?: s
                             transition-opacity"
                 aria-label="Nächstes Panel"
             >
-            <HiArrowRight className="w-6 h-6" />
+            <HiArrowRight aria-hidden="true" className="w-6 h-6" />
             </button>
         </div>
     </section>

@@ -165,7 +165,7 @@ export function ServiceDetailSection({
     <section 
         ref={sectionRef} 
         id={id} 
-        className={`w-full py-20 md:py-32 ${bgColor}`}
+        className={`w-full py-20 md:py-32 scroll-mt-32 ${bgColor}`}
     >
       <div className="container mx-auto max-w-7xl px-6">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-24 min-h-[70vh] items-center">

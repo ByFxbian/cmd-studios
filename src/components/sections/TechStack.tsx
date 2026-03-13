@@ -13,7 +13,7 @@ import { TbBrandFramerMotion } from 'react-icons/tb';
 import { FaJava, FaCamera } from 'react-icons/fa';
 import { HiOutlineArrowsExpand, HiX } from 'react-icons/hi';
 import { createPortal } from 'react-dom';
-import { useRef, useState, useEffect } from 'react';
+import { useRef, useState, useEffect, useId } from 'react';
 
 const techStack = [
   { name: "Next.js", icon: SiNextdotjs, color: "#ffffff" },
@@ -49,7 +49,22 @@ const col3 = techStack.slice(16, 25);
 
 export function TechStack() {
   const containerRef = useRef<HTMLDivElement>(null);
+  const dialogRef = useRef<HTMLDivElement>(null);
+  const openButtonRef = useRef<HTMLButtonElement>(null);
+  const closeButtonRef = useRef<HTMLButtonElement>(null);
+  const lastFocusedElementRef = useRef<HTMLElement | null>(null);
+  const dialogTitleId = useId();
   const [isOpen, setIsOpen] = useState(false);
+
+  const openModal = () => {
+    const activeElement = document.activeElement;
+    lastFocusedElementRef.current = activeElement instanceof HTMLElement ? activeElement : null;
+    setIsOpen(true);
+  };
+
+  const closeModal = () => {
+    setIsOpen(false);
+  };
 
   useEffect(() => {
     if (isOpen) {
@@ -59,6 +74,51 @@ export function TechStack() {
     }
     return () => {
       document.body.style.overflow = '';
+    };
+  }, [isOpen]);
+
+  useEffect(() => {
+    if (!isOpen) {
+      lastFocusedElementRef.current?.focus();
+      return;
+    }
+
+    closeButtonRef.current?.focus();
+
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') {
+        event.preventDefault();
+        setIsOpen(false);
+        return;
+      }
+
+      if (event.key !== 'Tab') {
+        return;
+      }
+
+      const focusableElements = dialogRef.current?.querySelectorAll<HTMLElement>(
+        'a[href], button:not([disabled]), textarea:not([disabled]), input:not([disabled]), select:not([disabled]), [tabindex]:not([tabindex="-1"])'
+      );
+
+      if (!focusableElements || focusableElements.length === 0) {
+        return;
+      }
+
+      const firstElement = focusableElements[0];
+      const lastElement = focusableElements[focusableElements.length - 1];
+
+      if (event.shiftKey && document.activeElement === firstElement) {
+        event.preventDefault();
+        lastElement.focus();
+      } else if (!event.shiftKey && document.activeElement === lastElement) {
+        event.preventDefault();
+        firstElement.focus();
+      }
+    };
+
+    document.addEventListener('keydown', onKeyDown);
+    return () => {
+      document.removeEventListener('keydown', onKeyDown);
     };
   }, [isOpen]);
 
@@ -92,12 +152,14 @@ export function TechStack() {
                   
                   <div className="flex justify-center md:justify-start">
                     <button
-                        onClick={() => setIsOpen(true)}
+                        ref={openButtonRef}
+                        type="button"
+                        onClick={openModal}
                         className="group flex items-center justify-center w-16 h-16 rounded-full bg-zinc-900 border border-zinc-800 text-white 
                                    hover:bg-accent hover:border-accent hover:scale-110 transition-all duration-300 shadow-xl cursor-none"
                         aria-label="Alle Technologien anzeigen"
                     >
-                        <HiOutlineArrowsExpand className="w-6 h-6 group-hover:rotate-90 transition-transform duration-300" />
+                        <HiOutlineArrowsExpand aria-hidden="true" className="w-6 h-6 group-hover:rotate-90 transition-transform duration-300" />
                     </button>
                   </div>
               </div>
@@ -119,9 +181,18 @@ export function TechStack() {
                   animate={{ opacity: 1 }}
                   exit={{ opacity: 0 }}
               >
-                  <div className="absolute inset-0 bg-black/95" onClick={() => setIsOpen(false)} />
+                  <button
+                      type="button"
+                      className="absolute inset-0 bg-black/95"
+                      onClick={closeModal}
+                      aria-label="Tech-Stack-Dialog schließen"
+                  />
 
                   <motion.div 
+                      ref={dialogRef}
+                      role="dialog"
+                      aria-modal="true"
+                      aria-labelledby={dialogTitleId}
                       className="relative w-full max-w-6xl max-h-[85vh] overflow-y-auto overscroll-contain bg-zinc-900 border border-zinc-700/50 rounded-3xl p-6 md:p-12 shadow-2xl custom-scrollbar pointer-events-auto"
                       data-lenis-prevent
                       initial={{ scale: 0.9, y: 20 }}
@@ -130,12 +201,15 @@ export function TechStack() {
                       transition={{ type: "spring", damping: 25, stiffness: 300 }}
                   >
                       <div className="flex justify-between items-center mb-8 sticky -top-6 md:-top-12 bg-zinc-900 z-50 py-4 border-b border-zinc-800/50">
-                          <h3 className="text-3xl md:text-4xl text-white">Full Stack Arsenal</h3>
+                          <h3 id={dialogTitleId} className="text-3xl md:text-4xl text-white">Full Stack Arsenal</h3>
                           <button 
-                              onClick={() => setIsOpen(false)}
+                              ref={closeButtonRef}
+                              type="button"
+                              onClick={closeModal}
                               className="p-3 rounded-full bg-zinc-800 hover:bg-zinc-700 text-white transition-colors cursor-none"
+                              aria-label="Tech-Stack-Dialog schließen"
                           >
-                              <HiX className="w-6 h-6" />
+                              <HiX aria-hidden="true" className="w-6 h-6" />
                           </button>
                       </div>
 
@@ -149,14 +223,14 @@ export function TechStack() {
                                   className="flex flex-col items-center justify-center gap-4 p-6 rounded-2xl bg-zinc-950/50 border border-zinc-800 
                                              hover:border-zinc-600 hover:bg-zinc-800 transition-all duration-300 group cursor-none"
                               >
-                                  <div 
-                                      className="p-4 rounded-full bg-zinc-900 group-hover:bg-zinc-950 transition-colors"
-                                      style={{ color: tech.color }}
-                                  >
-                                      <tech.icon className="w-8 h-8 md:w-10 md:h-10 transition-transform duration-300 group-hover:scale-110" />
-                                  </div>
-                                  <span className="text-sm md:text-xl tracking-wide font-medium text-zinc-400 group-hover:text-white text-center">
-                                      {tech.name}
+                                   <div 
+                                       className="p-4 rounded-full bg-zinc-900 group-hover:bg-zinc-950 transition-colors"
+                                       style={{ color: tech.color }}
+                                   >
+                                       <tech.icon aria-hidden="true" className="w-8 h-8 md:w-10 md:h-10 transition-transform duration-300 group-hover:scale-110" />
+                                   </div>
+                                   <span className="text-sm md:text-xl tracking-wide font-medium text-zinc-400 group-hover:text-white text-center">
+                                       {tech.name}
                                   </span>
                               </motion.div>
                           ))}
@@ -188,7 +262,7 @@ function Column({ items, y, className = "" }: { items: typeof techStack, y: Moti
                         className="p-2 md:p-3 rounded-full bg-zinc-950 border border-zinc-800 group-hover:border-zinc-600 transition-colors"
                         style={{ color: tech.color }}
                     >
-                        <tech.icon className="w-5 h-5 md:w-6 md:h-6" />
+                        <tech.icon aria-hidden="true" className="w-5 h-5 md:w-6 md:h-6" />
                     </div>
                 </div>
             ))}

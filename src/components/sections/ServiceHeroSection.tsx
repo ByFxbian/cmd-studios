@@ -30,7 +30,7 @@ const itemVariants: Variants = {
 export function ServiceHeroSection({title}: { title?: string }) {
     const sectionRef = useRef<HTMLElement>(null);
     return (
-        <section className="relative flex h-[70vh] min-h-[500px] w-full items-center justify-center pt-20">
+        <section ref={sectionRef} className="relative flex h-[70vh] min-h-[500px] w-full items-center justify-center pt-20">
             <HeroCanvas />
             <ImageTrail containerRef={sectionRef as RefObject<HTMLElement>} />
             <div className="absolute bottom-0 left-0 w-full h-32 bg-gradient-to-t from-[var(--color-page-bg)] to-transparent z-[1]" />

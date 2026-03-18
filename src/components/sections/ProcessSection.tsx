@@ -80,12 +80,12 @@ export function ProcessSection() {
                     </span>
                 </h2>
                 <p className="text-xl text-zinc-400 max-w-2xl leading-relaxed">
-                    Kein Chaos, keine Überraschungen. Wir führen dich strukturiert von der ersten Idee bis zum fertigen Produkt.
+                    Kein Durcheinander, keine unnötigen Schleifen. Wir führen Sie strukturiert von der ersten Idee bis zur fertigen Umsetzung.
                 </p>
 
                 <div className="mt-12 flex items-center gap-4 text-base uppercase tracking-widest text-zinc-500">
                     <span className="w-12 h-px bg-zinc-700"></span>
-                    Scroll to explore
+                    Prozess entdecken
                     <HiArrowDown className="animate-bounce" />
                 </div>
             </motion.div>

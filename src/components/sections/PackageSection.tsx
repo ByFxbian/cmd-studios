@@ -38,11 +38,10 @@ export function PackageSection() {
           transition={{ duration: 0.6, ease: "easeOut" }}
         >
           <h2 className="text-4xl md:text-5xl font-bold tracking-tight text-[var(--color-heading)]">
-            Das passende Paket für dich
+            Das passende Paket für Sie
           </h2>
           <p className="mt-4 max-w-2xl mx-auto text-2xl text-[var(--color-text)] tracking-wide">
-            Transparente Lösungen, die mit dir wachsen. 
-            Keine versteckten Kosten, kein Stunden-Raten.
+            Klare Pakete, transparente Leistungen und ein umfang, der zu Ihrem Vorhaben passt. Ohne versteckte Kosten und ohne laufende Stundenabrechnung.
           </p>
         </motion.div>
 

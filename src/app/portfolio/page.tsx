@@ -33,11 +33,10 @@ export default function PortfolioPage() {
           transition={{ duration: 0.7, ease: "easeInOut" }}
         >
           <h1 className="text-5xl md:text-8xl font-bold tracking-normal mb-6 text-[var(--color-heading)]">
-            Unsere Arbeiten
+            Ausgewählte Projekte
           </h1>
           <p className="max-w-2xl mx-auto text-xl md:text-3xl text-[var(--color-text)] tracking-wide">
-            Jedes Projekt ist eine Partnerschaft. Hier ist eine Auswahl
-            unserer jüngsten Arbeiten im Bereich Web & Video.
+            Eine Auswahl an Arbeiten aus Webentwicklung und Videoproduktion - entstanden in enger Zusammenarbeit mit unseren Kunden.
           </p>
         </motion.div>
       </section>

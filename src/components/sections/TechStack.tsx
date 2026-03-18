@@ -141,13 +141,12 @@ export function TechStack() {
           <div className="container mx-auto max-w-7xl px-6 relative z-10 flex flex-col md:flex-row items-center gap-12 md:gap-24">
               <div className="w-full md:w-1/3 text-center md:text-left">
                   <h2 className="text-6xl md:text-8xl text-white mb-6 tracking-tight leading-[0.9]">
-                      Unser <br/>
                       <span className="text-transparent bg-clip-text bg-gradient-to-br from-zinc-100 to-zinc-600">
-                          Tech Stack.
+                           Unser Tech Stack.
                       </span>
                   </h2>
                   <p className="text-zinc-400 text-xl md:text-3xl mb-8">
-                      Ein Arsenal aus modernen Tools. Von Frontend-Zauberei bis Backend-Architektur.
+                    Die Tools hinter unseren Projekten. Modern, erprobt und so gewählt, dass Design, Performance und Skalierbarkeit zusammenpassen.
                   </p>
                   
                   <div className="flex justify-center md:justify-start">
@@ -201,7 +200,7 @@ export function TechStack() {
                       transition={{ type: "spring", damping: 25, stiffness: 300 }}
                   >
                       <div className="flex justify-between items-center mb-8 sticky -top-6 md:-top-12 bg-zinc-900 z-50 py-4 border-b border-zinc-800/50">
-                          <h3 id={dialogTitleId} className="text-3xl md:text-4xl text-white">Full Stack Arsenal</h3>
+                          <h3 id={dialogTitleId} className="text-3xl md:text-4xl text-white">Unser Stack</h3>
                           <button 
                               ref={closeButtonRef}
                               type="button"

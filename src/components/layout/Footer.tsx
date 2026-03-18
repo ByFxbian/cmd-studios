@@ -14,8 +14,7 @@ export function Footer() {
         <div className="flex flex-col gap-6 max-w-md">
           <h3 className="text-3xl md:text-4xl font-bold text-white">Lust auf ein Projekt?</h3>
           <p className="text-zinc-400 text-lg md:text-xl leading-relaxed">
-            Wir suchen immer nach Partnern, die den Status Quo herausfordern wollen. 
-            Lass uns etwas Großartiges bauen.
+            Sie haben eine Idee, ein konkretes Vorhaben oder einfach das Gefühl, dass ihr Auftritt besser sein könnte? Dann schreiben Sie uns.
           </p>
           <MagneticLink 
             href="/contact"
@@ -27,14 +26,14 @@ export function Footer() {
 
         <div className="grid grid-cols-2 md:grid-cols-3 gap-12 text-sm uppercase tracking-wider text-zinc-500 mt-12 md:mt-0">
           <div className="flex flex-col gap-4 text-base tracking-wide capitalize">
-            <span className="text-white font-bold uppercase tracking-wider text-sm mb-2">Sitemap</span>
+            <span className="text-white font-bold uppercase tracking-wider text-sm mb-2">Navigation</span>
             <Link href="/portfolio" className="hover:text-white transition-colors">Arbeiten</Link>
             <Link href="/services" className="hover:text-white transition-colors">Leistungen</Link>
             <Link href="/about" className="hover:text-white transition-colors">Über uns</Link>
             <Link href="/contact" className="hover:text-white transition-colors">Kontakt</Link>
           </div>
           <div className="flex flex-col gap-4 text-base tracking-wide capitalize">
-            <span className="text-white font-bold uppercase tracking-wider text-sm mb-2">Legal</span>
+            <span className="text-white font-bold uppercase tracking-wider text-sm mb-2">Rechtliches</span>
             <Link href="/impressum" className="hover:text-white transition-colors">Impressum</Link>
             <Link href="/datenschutz" className="hover:text-white transition-colors">Datenschutz</Link>
             <Link href="#" className="hover:text-white transition-colors">AGB</Link>

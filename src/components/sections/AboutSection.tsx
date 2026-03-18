@@ -51,19 +51,14 @@ export function AboutSection() {
               Das Team
             </span>
             <h2 className="text-4xl md:text-5xl font-bold tracking-normal text-[var(--color-heading)] mt-3 mb-6">
-              Ein Entwickler. Ein Kreativer.
+              Ein Entwickler. <br />Ein Kreativer.
             </h2>
             <div className="space-y-4 text-base md:text-xl text-[var(--color-text)] leading-relaxed">
               <p>
-                Wir sind Fabian und Antonio. Was als 
-                gemeinsame Leidenschaft für digitale Medien begann, ist heute 
-                CMD Studios – eine agile Agentur für Web & Video.
+                Wir sind Fabian und Antonio. Was mit einer gemeinsamen Leidenschaft für digitale Medien begonnen hat, ist heute CMD Studios - Webentwicklung und Videorproduktion aus einer Hand.
               </p>
               <p>
-                Fabians Part ist der Code: Er baut performante, moderne Websites, 
-                die technisch überzeugen. Antonios Part ist die Story: Er fängt 
-                Momente ein und verwandelt Ideen in fesselnde Videos und starkes 
-                Branding.
+                Fabian entwickelt Websites, die schnell, durchdacht und technisch sauber umgesetzt sind. Antonio kümmert sich um Bild, Story und Schnitt - und macht aus Ideen Inhalte mit Wirkung.
               </p>
             </div>
             <AnimatedIconLink 

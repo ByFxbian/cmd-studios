@@ -36,7 +36,7 @@ export function ValuesBentoSection() {
             Unsere Prinzipien
           </h2>
           <p className="mt-6 max-w-3xl mx-auto text-xl md:text-2xl text-zinc-400">
-            Wir arbeiten nicht einfach ab. Wir denken mit, fordern heraus und liefern Qualität.
+            Wir arbeiten nicht einfach nur ab. Wir denken mit, hinterfragen, was sinnvoll ist, und legen Wert auf Ergebnisse, die langfristig überzeugen.
           </p>
         </motion.div>
 
@@ -54,9 +54,9 @@ export function ValuesBentoSection() {
             <div className="relative z-10 h-full flex flex-col justify-between">
                 <HiOutlineLightningBolt className="w-16 h-16 text-accent mb-6" />
                 <div>
-                    <h3 className="text-4xl font-bold mb-4 text-white">Performance First</h3>
-                    <p className="text-lg md:text-xl text-zinc-400 max-w-2xl leading-relaxed">
-                    Keine Ladebalken. Wir optimieren jedes Byte, damit deine Seite schneller ist als die Konkurrenz.
+                    <h3 className="text-3xl font-bold mb-4 text-white">Performance First</h3>
+                    <p className="text-md md:text-lg text-zinc-400 max-w-2xl leading-relaxed">
+                    Performance ist kein Extra, sondern Grundlage. Wir achten auf schnelle Ladezeiten, flüssige Abläufe und eine technische Basis, die von Anfang an durchdacht ist.
                     </p>
                 </div>
             </div>
@@ -77,8 +77,8 @@ export function ValuesBentoSection() {
             <div className="absolute bottom-0 left-0 p-8">
                 <HiOutlineChatAlt2 className="w-12 h-12 text-white mb-4" />
                 <h3 className="text-3xl font-bold mb-3 text-white">Direkter Draht</h3>
-                <p className="text-zinc-300 text-lg md:text-xl leading-relaxed">
-                    Du sprichst direkt mit den Entwicklern, nicht mit Sales-Managern.
+                <p className="text-zinc-300 text-md md:text-lg leading-relaxed">
+                  Bei uns sprechen Sie direkt mit den Menschen, die gestalten und umsetzen. Ohne Umwege, ohne Vertriebsschicht dazwischen.
                 </p>
             </div>
           </motion.div>
@@ -90,8 +90,8 @@ export function ValuesBentoSection() {
             <HiOutlineEye className="w-12 h-12 text-accent" />
             <div>
                 <h3 className="text-3xl font-bold mb-3 text-white">Visuelle Präzision</h3>
-                <p className="text-zinc-400 text-lg md:text-xl">
-                Pixel-Perfect ist bei uns kein Buzzword, sondern Standard.
+                <p className="text-zinc-400 text-md md:text-md">
+                Gestaltung endet für uns nicht beim guten Eindruck. Wir achten auf Proportion, Rhythmus, Details und eine visuelle Sprache, die stimmig wirkt.
                 </p>
             </div>
           </motion.div>
@@ -104,8 +104,8 @@ export function ValuesBentoSection() {
             <HiOutlineCode className="w-12 h-12 text-accent relative z-10" />
             <div className="relative z-10">
                 <h3 className="text-3xl font-bold mb-3 text-white">Clean Code</h3>
-                <p className="text-zinc-400 text-lg md:text-xl">
-                 Wartbar und skalierbar. Schönheit kommt auch von innen.
+                <p className="text-zinc-400 text-md md:text-md">
+                  Wir entwicklen so, dass Projekte verständlich, wartbar und erweiterbar bleiben - nicht nur für den Launch, sondern auch für alles danach.
                 </p>
             </div>
           </motion.div>

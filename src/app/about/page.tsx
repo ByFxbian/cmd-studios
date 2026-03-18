@@ -27,8 +27,7 @@ export default function AboutPage() {
             Digitales Handwerk.
           </h1>
           <p className="max-w-2xl mx-auto text-xl md:text-3xl text-[var(--color-text)] tracking-wide">
-            Wir sind Fabian & Antonio. Entwickler und Kreativer.
-            Technik und Storytelling. Code und Content.
+            Hinter CMD Studios stehen Fabian und Antonio - mit unterschiedlichen Perspektiven, aber einem gemeinsamen Blick für starke digitale Auftritte.
           </p>
         </motion.div>
       </section>

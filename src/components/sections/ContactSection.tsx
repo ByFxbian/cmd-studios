@@ -28,12 +28,10 @@ export function ContactSection() {
         viewport={{ once: true, amount: 0.5 }}
       >
         <h2 className="text-4xl md:text-5xl font-bold tracking-normal text-[var(--color-heading)]">
-          Lassen Sie uns Ihr Projekt starten.
+          Bereit, loszulegen?
         </h2>
         <p className="mt-4 max-w-xl mx-auto text-3xl tracking-wide text-[var(--color-text)]">
-          Egal ob Sie eine neue Website, ein beeindruckendes Video oder 
-          ein komplettes Rebranding benötigen – wir sind bereit, 
-          Ihre Vision Realität werden zu lassen.
+          Sie brauchen eine neue Website, starken Content oder beides? Wir bringen Idee, Gestaltung und Umsetzung zusammen.
         </p>
         
         <MagneticLink

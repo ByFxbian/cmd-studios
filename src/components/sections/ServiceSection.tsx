@@ -33,11 +33,10 @@ export function ServiceSection() {
                     transition={{ duration: 0.6, ease: "easeOut" }}
                 >
                     <h2 className="text-4xl md:text-5xl font-bold tracking-normal text-[var(--color-heading)]">
-                        Was wir tun
+                        Was wir machen
                     </h2>
                     <p className="mt-6 max-w-3xl mx-auto text-lg md:text-xl text-[var(--color-text)]">
-                        Wir kombinieren technische Präzision mit kreativer Vision, um 
-                        digitale Erlebnisse zu schaffen, die im Gedächtnis bleiben.
+                        Wir verbinden Entwicklung und Content, damit Unternehmen digital besser auftreten. Klar, modern und mit Wiedererkennungswert.
                     </p>
                 </motion.div>
 
@@ -51,15 +50,13 @@ export function ServiceSection() {
                         viewport={{ once: true, amount: 0.2 }}
                     >
                         <Code className="w-12 h-12 text-accent mb-4 stroke-1" />
-                        <h3 className="text-2xl font-bold mb-4 text-[var(--color-heading)]">Web-Entwicklung</h3>
+                        <h3 className="text-2xl font-bold mb-4 text-[var(--color-heading)]">Webentwicklung</h3>
                         <p className="text-base md:text-lg text-[var(--color-text)] mb-6 grow">
-                        Von ultraschnellen Landing Pages mit Next.js bis hin zu komplexen 
-                        Web-Applikationen. Wir bauen performante, SEO-optimierte und 
-                        responsive Websites für KMUs.
+                        Von schnellen Landingpages bis zu individuellen Webanwendungen: Wir entwickeln Websites, die gut aussehen, sauber funktionieren und auf jedem Gerät überzeugen.
                         </p>
                         <AnimatedIconLink
                             href="/services#web"
-                            title="Mehr über Web Services"
+                            title="Mehr über Webentwicklung"
                             className="text-lg font-medium text-accent"
                         >
                             <ArrowRight className="h-5 w-5 transition-transform group-hover:translate-x-1" />
@@ -75,15 +72,13 @@ export function ServiceSection() {
                         viewport={{ once: true, amount: 0.2 }}
                     >
                         <Video className="w-12 h-12 text-accent mb-4 stroke-1" />
-                        <h3 className="text-2xl font-bold mb-4 text-[var(--color-heading)]">Content Creation</h3>
+                        <h3 className="text-2xl font-bold mb-4 text-[var(--color-heading)]">Videoproduktion & Content</h3>
                         <p className="text-base md:text-lg text-[var(--color-text)] mb-6 grow">
-                        Professionelle Videoproduktion, Social-Media-Content und 
-                        Branding. Wir erzählen Ihre Geschichte visuell und sorgen dafür, 
-                        dass Ihre Botschaft ankommt.
+                        Von Imagefilmen bis Social Media Content: Wir produzieren visuelle Inhalte, die Marken greifbarer machen und Botschaften klar rüberbringen.
                         </p>
                         <AnimatedIconLink
                             href="/services#video"
-                            title="Mehr über Content-Services"
+                            title="Mehr über Content & Video"
                             className="text-lg font-medium text-accent"
                         >
                             <ArrowRight className="h-5 w-5 transition-transform group-hover:translate-x-1" />

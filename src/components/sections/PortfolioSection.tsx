@@ -110,8 +110,7 @@ export function PortfolioSection() {
             Ausgewählte Arbeiten
           </h2>
           <p className="mt-6 max-w-3xl mx-auto text-lg md:text-xl text-[var(--color-text)] tracking-wide">
-            Ein Einblick in unsere Projekte. Hier trifft Strategie auf 
-            Umsetzung – von Code bis Content.
+            Ein Blick auf Projekte, in denen Idee, Design und Umsetzung zusammenkommen.
           </p>
         </motion.div>
 

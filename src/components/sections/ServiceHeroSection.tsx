@@ -54,8 +54,7 @@ export function ServiceHeroSection({title}: { title?: string }) {
                     className="max-w-3xl text-lg md:text-xl text-[var(--color-text)] tracking-wide"
                     variants={itemVariants}
                 >
-                    Technisches Know-how trifft auf kreative Umsetzung.
-                    Wir designen und entwickeln die digitalen Erlebnisse von morgen.
+                    Webentwicklung und Videoproduktion - klar gedacht, sauber umgesetzt und auf das ausgerichtet, was Ihr Unternehmen wirklich braucht.
                 </motion.p>
                 )}
             </motion.div>

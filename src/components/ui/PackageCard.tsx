@@ -70,7 +70,7 @@ export function PackageCard({ pkg }: PackageCardProps) {
           }
         `}
       >
-        Jetzt Starten
+        Paket anfragen
       </MagneticLink>
     </div>
   );

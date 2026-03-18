@@ -410,11 +410,11 @@ export function ContactHorizontalScroll({ initialPackage }: { initialPackage?: s
                     <div className="space-y-6 text-lg md:text-xl tracking-wide">
                     <p>
                         <strong className="text-accent block mb-1">E-Mail:</strong>
-                        <a href="mailto:hallo@cmdstudios.de" className="hover:underline">hallo@cmdstudios.de</a>
+                        <a href="mailto:hallo@cmdstudios.at" className="hover:underline">hallo@cmdstudios.at</a>
                     </p>
                     <p>
                         <strong className="text-accent block mb-1">Standort:</strong>
-                        Ein Co-Working Space in deiner Nähe
+                        Ein Co-Working Space in Ihrer Nähe
                     </p>
                     </div>
                 </div>

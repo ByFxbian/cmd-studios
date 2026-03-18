@@ -35,7 +35,7 @@ export function HeroSection() {
             <div className="relative z-10 h-full w-full container mx-auto px-6 flex flex-col justify-center pointer-events-none">
                  
                 <div className="flex flex-col relative z-20 -mt-20 md:-mt-0">
-                    <h1 className="sr-only">Digitale Exzellenz</h1>
+                    <h1 className="sr-only">Digital mit Charakter</h1>
                     <motion.div 
                         className="flex items-end overflow-hidden"
                         initial={{ opacity: 0, y: 100 }}
@@ -43,7 +43,7 @@ export function HeroSection() {
                         transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
                     >
                         <h1 aria-hidden="true" className="block text-[13vw] md:text-[10vw] leading-[0.8] tracking-tighter text-[var(--color-heading)] pointer-events-auto">
-                            DIGITALE
+                            DIGITAL MIT
                         </h1>
                     </motion.div>
                     
@@ -54,7 +54,7 @@ export function HeroSection() {
                         transition={{ duration: 1, ease: [0.16, 1, 0.3, 1], delay: 0.1 }}
                     >
                         <h1 aria-hidden="true" className="block text-[13vw] md:text-[11vw] leading-[0.8] tracking-tighter text-transparent bg-clip-text bg-gradient-to-br from-accent-light via-accent to-accent-dark pointer-events-auto text-right pr-2 md:pr-0">
-                            EXZELLENZ
+                            CHARAKTER
                         </h1>
                     </motion.div>
                 </div>
@@ -66,8 +66,8 @@ export function HeroSection() {
                     transition={{ duration: 1, delay: 0.4 }}
                 >
                     <p className="text-lg md:text-xl text-[var(--color-text)] mb-8 leading-relaxed tracking-wide pointer-events-auto text-left drop-shadow-sm">
-                        Wir bauen digitale Produkte, die nicht nur funktionieren, <br className="xs:block sm:hidden" /> sondern anfühlen. 
-                        <span className="block mt-2 text-[var(--color-heading)] font-accent text-2xl md:text-3xl italic">Web-Entwicklung & <br className="xs:block sm:hidden" /> High-End Videoproduktion.</span>
+                        Wir gestalten Websites und Inhalte, die nicht austauschbar wirken, <br className="xs:block sm:hidden" /> sondern hängen bleiben. 
+                        <span className="block mt-2 text-[var(--color-heading)] font-accent text-2xl md:text-3xl italic">Webentwicklung & <br className="xs:block sm:hidden" /> Videoproduktion für Unternehmen mit Wiedererkennungswert.</span>
                     </p>
                     
                     <div className="flex flex-nowrap gap-4 justify-start pointer-events-auto items-center">

@@ -4,7 +4,7 @@ import { allProjects } from "@/lib/portfolio-data";
 import { AnimatePresence, motion } from "framer-motion";
 import Image from "next/image";
 import { RefObject, useCallback, useEffect, useRef, useState } from "react";
-import gsap from 'gsap';
+
 
 interface ImageItem {
     id: number;
@@ -19,10 +19,22 @@ interface ImageTrailProps {
 }
 
 export function ImageTrail({containerRef}: ImageTrailProps) {
-    const [isDesktop] = useState(() => {
-        if(typeof window !== 'undefined') return window.innerWidth >= 1024;
-        return false;
-    });
+    const [isMounted, setIsMounted] = useState(false);
+    const [isDesktop, setIsDesktop] = useState(false);
+
+    useEffect(() => {
+        const timer = setTimeout(() => {
+            setIsMounted(true);
+            setIsDesktop(window.innerWidth >= 1024);
+        }, 0);
+
+        const checkDesktop = () => setIsDesktop(window.innerWidth >= 1024);
+        window.addEventListener('resize', checkDesktop);
+        return () => {
+            clearTimeout(timer);
+            window.removeEventListener('resize', checkDesktop);
+        };
+    }, []);
 
     const [images, setImages] = useState<ImageItem[]>([]);
     const [imageIndex, setImageIndex] = useState(0);
@@ -74,7 +86,7 @@ export function ImageTrail({containerRef}: ImageTrailProps) {
         };
     }, [isDesktop, spawnImage, containerRef]);
 
-    if(!isDesktop) return null;
+    if(!isMounted || !isDesktop) return null;
 
     return (
         <div ref={trailContainerRef} className="absolute inset-0 z-[1] pointer-events-none overflow-hidden">

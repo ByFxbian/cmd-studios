@@ -35,6 +35,7 @@ const gellis = localFont({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL('https://cmd-studios.vercel.app'),
   title: "CMD Studios - Web & Video",
   description: "Moderne Websites und professionelle Videoproduktion.",
   openGraph: {

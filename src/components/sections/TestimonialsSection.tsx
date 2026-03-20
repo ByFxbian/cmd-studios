@@ -54,6 +54,7 @@ export function TestimonialsSection() {
                                     src={currentTestimonial.imageUrl} 
                                     alt={currentTestimonial.name}
                                     fill
+                                    sizes="(max-width: 768px) 80px, 160px"
                                     className="object-cover"
                                 />
                             </div>

@@ -53,14 +53,14 @@ export function HeroSection() {
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 1, ease: [0.16, 1, 0.3, 1], delay: 0.1 }}
                     >
-                        <h1 aria-hidden="true" className="block text-[13vw] md:text-[11vw] leading-[0.8] tracking-tighter text-transparent bg-clip-text bg-gradient-to-br from-accent-light via-accent to-accent-dark pointer-events-auto text-right pr-2 md:pr-0">
+                        <h1 aria-hidden="true" className="block text-[13vw] md:text-[11vw] leading-[0.8] tracking-tighter text-transparent bg-clip-text bg-gradient-to-br from-accent-light via-accent to-accent-dark pointer-events-auto text-right pr-2 pr-2">
                             CHARAKTER
                         </h1>
                     </motion.div>
                 </div>
 
                 <motion.div 
-                    className="absolute bottom-12 left-6 md:left-6 max-w-xl w-full"
+                    className="absolute bottom-12 left-6 pr-12 md:left-6 md:pr-0 max-w-xl w-full"
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                     transition={{ duration: 1, delay: 0.4 }}

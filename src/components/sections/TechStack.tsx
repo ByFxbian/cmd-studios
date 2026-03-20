@@ -154,8 +154,7 @@ export function TechStack() {
                         ref={openButtonRef}
                         type="button"
                         onClick={openModal}
-                        className="group flex items-center justify-center w-16 h-16 rounded-full bg-zinc-900 border border-zinc-800 text-white 
-                                   hover:bg-accent hover:border-accent hover:scale-110 transition-all duration-300 shadow-xl cursor-none"
+                        className="group flex items-center justify-center w-16 h-16 rounded-full bg-zinc-900 border border-zinc-800 text-white hover:bg-accent hover:border-accent hover:scale-110 transition-all duration-300 shadow-xl cursor-none"
                         aria-label="Alle Technologien anzeigen"
                     >
                         <HiOutlineArrowsExpand aria-hidden="true" className="w-6 h-6 group-hover:rotate-90 transition-transform duration-300" />
@@ -253,9 +252,7 @@ function Column({ items, y, className = "" }: { items: typeof techStack, y: Moti
             {items.map((tech, i) => (
                 <div 
                     key={i} 
-                    className="group relative flex flex-col items-center justify-center gap-3 p-4 md:p-6 
-                               bg-zinc-900/60 border border-zinc-800/50 rounded-2xl
-                               hover:bg-zinc-800/60 hover:border-zinc-700 transition-all duration-300 cursor-none"
+                    className="group relative flex flex-col items-center justify-center gap-3 p-4 md:p-6 bg-zinc-900/60 border border-zinc-800/50 rounded-2xl hover:bg-zinc-800/60 hover:border-zinc-700 transition-all duration-300 cursor-none"
                 >
                     <div 
                         className="p-2 md:p-3 rounded-full bg-zinc-950 border border-zinc-800 group-hover:border-zinc-600 transition-colors"

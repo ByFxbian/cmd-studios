@@ -7,12 +7,22 @@ const CSS_VAR_CURSOR_BORDER = '--cursor-border-color';
 const CSS_VAR_CURSOR_BG = '--cursor-bg-color';
 
 export function CustomCursor() {
-    const [isDesktop] = useState(() => {
-        if(typeof window !== 'undefined') {
-            return window.innerWidth >= 1024;
-        }
-        return false;
-    });
+    const [isMounted, setIsMounted] = useState(false);
+    const [isDesktop, setIsDesktop] = useState(false);
+
+    useEffect(() => {
+        const timer = setTimeout(() => {
+            setIsMounted(true);
+            setIsDesktop(window.innerWidth >= 1024);
+        }, 0);
+
+        const checkDesktop = () => setIsDesktop(window.innerWidth >= 1024);
+        window.addEventListener('resize', checkDesktop);
+        return () => {
+            clearTimeout(timer);
+            window.removeEventListener('resize', checkDesktop);
+        };
+    }, []);
 
     const cursorRef = useRef<HTMLDivElement>(null);
     const isHoveringRef = useRef(false);
@@ -78,7 +88,7 @@ export function CustomCursor() {
         };
     }, [isDesktop]);
 
-    if (!isDesktop) {
+    if (!isMounted || !isDesktop) {
         return null;
     }
 

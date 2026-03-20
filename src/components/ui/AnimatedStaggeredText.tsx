@@ -6,6 +6,7 @@ import { motion, type Transition } from 'framer-motion';
 interface AnimatedStaggeredTextProps {
   text: string;
   isHovering: boolean;
+  className?: string;
 }
 
 const hoverTransition = (i: number):Transition => ({
@@ -20,10 +21,10 @@ const initialTransition = (i: number):Transition => ({
   delay: i * 0.02,
 });
 
-export function AnimatedStaggeredText({ text, isHovering }: AnimatedStaggeredTextProps) {
+export function AnimatedStaggeredText({ text, isHovering, className }: AnimatedStaggeredTextProps) {
   return (
     <div 
-      className="relative overflow-hidden text-2xl"
+      className={`relative overflow-hidden ${className || 'text-2xl'}`}
       style={{ lineHeight: '1.3em' }}
     >
       <span className="flex">

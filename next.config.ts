@@ -27,7 +27,7 @@ const nextConfig: NextConfig = {
       },
       {
         protocol: 'https',
-        hostname: '*'
+        hostname: '*.public.blob.vercel-storage.com'
       }
     ]
   }

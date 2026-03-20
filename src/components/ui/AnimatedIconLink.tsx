@@ -7,12 +7,14 @@ import { AnimatedStaggeredText } from './AnimatedStaggeredText';
 interface AnimatedIconLinkProps extends LinkProps {
   title: string;
   className?: string;
+  textClassName?: string;
   children: React.ReactNode;
 }
 
 export function AnimatedIconLink({ 
   title, 
   className, 
+  textClassName,
   children, 
   ...props 
 }: AnimatedIconLinkProps) {
@@ -28,10 +30,11 @@ export function AnimatedIconLink({
     >
       <AnimatedStaggeredText 
         text={title} 
-        isHovering={isHovering} 
+        isHovering={isHovering}
+        className={textClassName}
       />
       
       {children}
     </Link>
   );
-}
+}

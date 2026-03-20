@@ -75,29 +75,59 @@ export function AboutSection() {
             variants={containerVariants}
           >
             <motion.div 
-              className="relative aspect-square rounded-lg overflow-hidden"
+              className="group relative aspect-square rounded-2xl overflow-hidden cursor-none"
               variants={imageVariants}
             >
               <Image
-                src="https://placehold.co/600x600.png?text=Fabian"
+                src="https://bz2wjzy3qokef9e7.public.blob.vercel-storage.com/Fabian.jpeg"
                 alt="Foto von Fabian"
                 fill
                 sizes={SIZES}
-                className="object-cover"
+                className="object-cover transition-transform duration-700 ease-out group-hover:scale-105"
               />
+              <motion.div 
+                className="absolute bottom-3 left-3 md:bottom-4 md:left-4"
+                initial={{ opacity: 0, y: 20, scale: 0.8 }}
+                whileInView={{ opacity: 1, y: 0, scale: 1 }}
+                viewport={{ once: true }}
+                transition={{ type: "spring", stiffness: 300, damping: 20, delay: 0.5 }}
+              >
+                <div className="flex items-center gap-2 bg-[var(--color-page-bg)] rounded-full pl-3 pr-4 py-2 shadow-lg group-hover:scale-105 transition-transform duration-300">
+                  <span className="w-2.5 h-2.5 rounded-full bg-accent flex-shrink-0" />
+                  <div className="flex flex-col leading-tight">
+                    <span className="font-heading text-sm md:text-base text-[var(--color-heading)] tracking-tight">Fabian</span>
+                    <span className="font-accent text-[10px] md:text-xs text-accent tracking-wider uppercase">Webentwicklung</span>
+                  </div>
+                </div>
+              </motion.div>
             </motion.div>
             
             <motion.div 
-              className="relative aspect-square rounded-lg overflow-hidden mt-12"
+              className="group relative aspect-square rounded-2xl overflow-hidden mt-12 cursor-none"
               variants={imageVariants}
             >
               <Image
-                src="https://placehold.co/600x600.png?text=Antonio"
+                src="https://bz2wjzy3qokef9e7.public.blob.vercel-storage.com/ANTONIO.png"
                 alt="Foto von Antonio"
                 fill
                 sizes={SIZES}
-                className="object-cover"
+                className="object-cover transition-transform duration-700 ease-out group-hover:scale-105"
               />
+              <motion.div 
+                className="absolute bottom-3 left-3 md:bottom-4 md:left-4"
+                initial={{ opacity: 0, y: 20, scale: 0.8 }}
+                whileInView={{ opacity: 1, y: 0, scale: 1 }}
+                viewport={{ once: true }}
+                transition={{ type: "spring", stiffness: 300, damping: 20, delay: 0.7 }}
+              >
+                <div className="flex items-center gap-2 bg-[var(--color-page-bg)] rounded-full pl-3 pr-4 py-2 shadow-lg group-hover:scale-105 transition-transform duration-300">
+                  <span className="w-2.5 h-2.5 rounded-full bg-accent flex-shrink-0" />
+                  <div className="flex flex-col leading-tight">
+                    <span className="font-heading text-sm md:text-base text-[var(--color-heading)] tracking-tight">Antonio</span>
+                    <span className="font-accent text-[10px] md:text-xs text-accent tracking-wider uppercase">Videoproduktion</span>
+                  </div>
+                </div>
+              </motion.div>
             </motion.div>
           </motion.div>
 

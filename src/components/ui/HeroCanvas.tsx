@@ -1,15 +1,16 @@
 'use client';
 
-import { Suspense, useEffect, useRef, useState, type ReactNode } from 'react';
-import { Canvas, } from '@react-three/fiber';
-import { Environment,Preload, useGLTF } from '@react-three/drei';
-import Lenis from 'lenis';
+import { Suspense, useEffect } from 'react';
+import { Canvas } from '@react-three/fiber';
+import { Environment, Preload } from '@react-three/drei';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { useLoading } from '@/context/LoadingContext';
-import { usePathname } from 'next/navigation';
 
-gsap.registerPlugin(ScrollTrigger);
+if (typeof window !== 'undefined') {
+  gsap.registerPlugin(ScrollTrigger);
+}
+
 
 function ModelLoader() {
   const { setIsLoaded } = useLoading();

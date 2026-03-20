@@ -15,12 +15,22 @@ export function ClientLoader() {
 
     const originalTitleRef = useRef<string>("");
 
-    const [isDesktop] = useState(() => {
-        if(typeof window !== 'undefined') {
-            return window.innerWidth >= 1024;
-        }
-        return false;
-    });
+    const [isMounted, setIsMounted] = useState(false);
+    const [isDesktop, setIsDesktop] = useState(false);
+
+    useEffect(() => {
+        const timer = setTimeout(() => {
+            setIsMounted(true);
+            setIsDesktop(window.innerWidth >= 1024);
+        }, 0);
+
+        const checkDesktop = () => setIsDesktop(window.innerWidth >= 1024);
+        window.addEventListener('resize', checkDesktop);
+        return () => {
+            clearTimeout(timer);
+            window.removeEventListener('resize', checkDesktop);
+        };
+    }, []);
 
     useEffect(() => {
         if(!isLoaded) return;
@@ -105,7 +115,7 @@ export function ClientLoader() {
                 className='fixed top-0 left-0 w-full h-screen bg-transparent z-[111] flex items-center justify-center'
                 {...(!isDesktop && { exit: { opacity: 0, transition: { duration: 0.2 } } })}
                 >
-                    <LoaderLogo isDesktop={isDesktop} />
+                    <LoaderLogo isDesktop={isMounted ? isDesktop : false} />
                 </motion.div>
             )}
             </AnimatePresence>

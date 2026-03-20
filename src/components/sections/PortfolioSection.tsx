@@ -95,7 +95,7 @@ export function PortfolioSection() {
     }, [isLoaded]);
 
   return (
-    <section ref={sectionRef} className="w-full py-20 md:py-32 bg-[var(--color-page-bg)] border-y border-[var(--color-navbar-border)] overflow-hidden">
+    <section ref={sectionRef} className="w-full py-20 md:py-32 bg-[var(--color-page-bg)] border-y border-[var(--color-navbar-border)] overflow-hidden relative">
 
       <div ref={triggerRef} className="container mx-auto max-w-7xl px-6">
 

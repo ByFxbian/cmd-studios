@@ -16,7 +16,7 @@ export type Project = {
 export const allProjects: Project[] = [
   {
     id: 1,
-    slug: "alkos-barber",
+    slug: "alkosbarber-web",
     title: "Alkos Barber Webauftritt",
     category: "Web-Entwicklung",
     imageUrl: "https://bz2wjzy3qokef9e7.public.blob.vercel-storage.com/alkosbarber_img2.png",
@@ -36,8 +36,8 @@ export const allProjects: Project[] = [
   },
   {
     id: 2,
-    slug: "xyz-fitness-imagefilm",
-    title: "Imagefilm für 'XYZ Fitness'",
+    slug: "alkosbarber-content",
+    title: "Social Media Content für 'Alkos Barber'",
     category: "Video-Produktion",
     imageUrl: "https://placehold.co/800x800.png?text=Video+1",
     description: "Dynamischer Imagefilm zur Neukundengewinnung.",

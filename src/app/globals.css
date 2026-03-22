@@ -47,7 +47,7 @@ body.on-dark-panel,
     background-color: var(--color-page-bg);
     color: var(--color-heading);
     font-family: var(--font-sans); /* Use Quicksand for highly legible, rounded typography */
-    @apply antialiased transition-colors duration-500 tracking-wide;
+    @apply antialiased transition-colors duration-500 tracking-wide select-none;
   }
 
   :where(a, button, input, select, textarea, [role="button"]):focus-visible {

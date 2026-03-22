@@ -58,7 +58,7 @@ export function AboutSection() {
                 Wir sind Fabian und Antonio. Was mit einer gemeinsamen Leidenschaft für digitale Medien begonnen hat, ist heute CMD Studios - Webentwicklung und Videorproduktion aus einer Hand.
               </p>
               <p>
-                Fabian entwickelt Websites, die schnell, durchdacht und technisch sauber umgesetzt sind. Antonio kümmert sich um Bild, Story und Schnitt - und macht aus Ideen Inhalte mit Wirkung.
+                Fabian bringt vor allem die technische Seite ein, Antonio vor allem den kreativen Blick auf Bild, Story und Schnitt. Gleichzeitig arbeiten wir eng zusammen und entwickeln jedes Projekt gemeinsam weiter.
               </p>
             </div>
             <AnimatedIconLink 
@@ -96,7 +96,6 @@ export function AboutSection() {
                   <span className="w-2.5 h-2.5 rounded-full bg-accent flex-shrink-0" />
                   <div className="flex flex-col leading-tight">
                     <span className="font-heading text-sm md:text-base text-[var(--color-heading)] tracking-tight">Fabian</span>
-                    <span className="font-accent text-[10px] md:text-xs text-accent tracking-wider uppercase">Webentwicklung</span>
                   </div>
                 </div>
               </motion.div>
@@ -124,7 +123,6 @@ export function AboutSection() {
                   <span className="w-2.5 h-2.5 rounded-full bg-accent flex-shrink-0" />
                   <div className="flex flex-col leading-tight">
                     <span className="font-heading text-sm md:text-base text-[var(--color-heading)] tracking-tight">Antonio</span>
-                    <span className="font-accent text-[10px] md:text-xs text-accent tracking-wider uppercase">Videoproduktion</span>
                   </div>
                 </div>
               </motion.div>

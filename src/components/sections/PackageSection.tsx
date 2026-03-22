@@ -123,7 +123,7 @@ export function PackageSection() {
             Kein passendes Paket dabei?
           </h3>
           <p className="text-xl md:text-2xl text-[var(--color-text)] tracking-wide mb-10 leading-relaxed max-w-3xl mx-auto">
-            Jedes Unternehmen ist einzigartig. Wenn Sie sich unsicher sind, welches Setup das richtige für Sie ist, oder sie spezielle Anforderungen haben: Lassen Sie uns in einem kurzen, kostenlosen Gespräch gemeinsam herausfinden, was Ihr Projekt wirklich braucht.
+            Jedes Unternehmen ist einzigartig. Wenn Sie sich unsicher sind, welches Setup das richtige für Sie ist, oder sie spezielle Anforderungen haben oder einen kreativen Partner für ein Musikvideo, ein Event oder ein privates Projekt suchen: Lassen Sie uns in einem kurzen, kostenlosen Gespräch gemeinsam herausfinden, wie wir Ihre Vision visuell umsetzen können.
           </p>
           <div className="flex justify-center">
             <MagneticLink

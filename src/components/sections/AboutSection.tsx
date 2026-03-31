@@ -83,7 +83,7 @@ export function AboutSection() {
                 alt="Foto von Fabian"
                 fill
                 sizes={SIZES}
-                className="object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+                className="object-cover grayscale hover:grayscale-0 transition-all duration-700 ease-out group-hover:scale-105"
               />
               <motion.div 
                 className="absolute bottom-3 left-3 md:bottom-4 md:left-4"
@@ -110,7 +110,7 @@ export function AboutSection() {
                 alt="Foto von Antonio"
                 fill
                 sizes={SIZES}
-                className="object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+                className="object-cover grayscale hover:grayscale-0 transition-all duration-700 ease-out group-hover:scale-105"
               />
               <motion.div 
                 className="absolute bottom-3 left-3 md:bottom-4 md:left-4"

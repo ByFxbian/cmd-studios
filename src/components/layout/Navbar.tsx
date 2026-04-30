@@ -142,7 +142,9 @@ export function Navbar() {
                     <div className="pr-1 flex-shrink-0">
                         <MagneticLink
                             href="/contact"
-                            className={`flex items-center justify-center rounded-full transition-all duration-300
+                            layout
+                            transition={{ duration: 0.5, type: "spring", stiffness: 200, damping: 20 }}
+                            className={`flex items-center justify-center rounded-full transition-colors duration-300 ${(!isScrolled || isHovered)
                                     ? 'bg-[var(--color-heading)] text-[var(--color-page-bg)] px-6 py-2.5 font-medium text-sm md:text-base hover:opacity-90' 
                                     : 'w-10 h-10 bg-[var(--color-heading)] text-[var(--color-page-bg)] p-0 hover:scale-110'} 
                             `}

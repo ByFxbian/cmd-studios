@@ -9,10 +9,10 @@ export interface Testimonial {
 export const testimonials: Testimonial[] = [
     {
         id: 1,
-        name: "Max Mustermann",
-        company: 'CEO, TechSolutions',
-        quote: 'Die Zusammenarbeit mit CMD Studios war ein Wendepunkt. Ihre Fähigkeit, komplexe Ideen in ein elegantes Web-Erlebnis zu übersetzen, ist unübertroffen.',
-        imageUrl: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=300&auto=format&fit=crop',
+        name: "ALKOS",
+        company: 'CEO, Alkosbarber',
+        quote: 'Die Zusammenarbeit mit CMD Studios war eine der Besten Entscheidungen die ich für Alkosbarber getroffen habe. Ihre Fähigkeit, komplexe Ideen in eine so elegante Webseite und Social-Media Content zu übersetzen, ist unübertroffen.',
+        imageUrl: 'https://srtkhlfsd31dcfzp.public.blob.vercel-storage.com/ALKOS.png',
     },
     {
         id: 2,

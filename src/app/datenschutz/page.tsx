@@ -1,10 +1,14 @@
 import type { Metadata } from "next";
 import { LegalHero } from "@/components/sections/LegalHero";
+import { createSocialMetadata } from "@/lib/seo";
+
+const description = "Datenschutzerklärung von CMD Studios.";
 
 export const metadata: Metadata = {
   title: "Datenschutzerklärung",
-  description: "Datenschutzerklärung von CMD Studios.",
+  description,
   alternates: { canonical: "/datenschutz" },
+  ...createSocialMetadata({ title: "Datenschutzerklärung | CMD Studios", description, url: "/datenschutz" }),
 };
 
 export default function DatenschutzPage() {

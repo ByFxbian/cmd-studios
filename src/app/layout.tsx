@@ -9,6 +9,7 @@ import { LoadingProvider } from "@/context/LoadingContext";
 import { ClientLoader } from "@/components/layout/ClientLoader";
 import { CustomCursor } from "@/components/ui/CustomCursor";
 import { SmoothScroll } from "@/components/layout/SmoothScroll";
+import { TabAttentionTitle } from "@/components/layout/TabAttentionTitle";
 
 const quicksand = Quicksand({
   subsets: ["latin"],
@@ -128,6 +129,7 @@ export default function RootLayout({
         </a>
         <LoadingProvider>
           <SmoothScroll>
+            <TabAttentionTitle />
             <CustomCursor />
             <ClientLoader />
               <Navbar />

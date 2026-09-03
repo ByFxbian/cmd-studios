@@ -5,6 +5,7 @@ import { notFound } from "next/navigation";
 import { HiArrowLeft, HiArrowUpRight } from "react-icons/hi2";
 import { ContactSection } from "@/components/sections/ContactSection";
 import { allProjects } from "@/lib/portfolio-data";
+import { createSocialMetadata } from "@/lib/seo";
 
 type ProjectPageProps = { params: Promise<{ slug: string }> };
 
@@ -17,17 +18,23 @@ export async function generateMetadata({ params }: ProjectPageProps): Promise<Me
   const project = allProjects.find((item) => item.slug === slug);
   if (!project) return {};
 
+  const socialMetadata = createSocialMetadata({
+    title: `${project.title} | CMD Studios`,
+    description: project.description,
+    url: `/portfolio/${project.slug}`,
+    image: project.imageUrl,
+    imageAlt: project.title,
+  });
+
   return {
     title: project.title,
     description: project.description,
     alternates: { canonical: `/portfolio/${project.slug}` },
     openGraph: {
-      title: `${project.title} | CMD Studios`,
-      description: project.description,
-      url: `/portfolio/${project.slug}`,
+      ...socialMetadata.openGraph,
       type: "article",
-      images: [{ url: project.imageUrl, alt: project.title }],
     },
+    twitter: socialMetadata.twitter,
   };
 }
 

@@ -3,16 +3,19 @@ import { ContactSection } from "@/components/sections/ContactSection";
 import { PackageSection } from "@/components/sections/PackageSection";
 import { ProcessSection } from "@/components/sections/ProcessSection";
 import { ServiceHeroSection } from "@/components/sections/ServiceHeroSection";
+import { createSocialMetadata } from "@/lib/seo";
+
+const description = "Webdesign, App Design, Next.js Development, SEO, Videoproduktion und Social-Media-Content von CMD Studios.";
 
 export const metadata: Metadata = {
   title: "Leistungen für Web, App und Content",
-  description: "Webdesign, App Design, Next.js Development, SEO, Videoproduktion und Social-Media-Content von CMD Studios.",
+  description,
   alternates: { canonical: "/services" },
-  openGraph: {
+  ...createSocialMetadata({
     title: "Leistungen für Web, App und Content | CMD Studios",
-    description: "Strategie, Gestaltung, Development und Content für digitale Auftritte mit Charakter.",
+    description,
     url: "/services",
-  },
+  }),
 };
 
 export default function ServicesPage() {

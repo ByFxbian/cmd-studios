@@ -1,10 +1,14 @@
 import type { Metadata } from "next";
 import { LegalHero } from "@/components/sections/LegalHero";
+import { createSocialMetadata } from "@/lib/seo";
+
+const description = "Impressum und Anbieterinformationen von CMD Studios.";
 
 export const metadata: Metadata = {
     title: "Impressum",
-    description: "Impressum und Anbieterinformationen von CMD Studios.",
+    description,
     alternates: { canonical: "/impressum" },
+    ...createSocialMetadata({ title: "Impressum | CMD Studios", description, url: "/impressum" }),
 };
 
 export default function ImpressumPage() {

@@ -1,85 +1,59 @@
-'use client';
+"use client";
 
-import { motion } from 'framer-motion';
-import Link from 'next/link';
-import Image from 'next/image';
-import { useState } from 'react';
-import { featuredProjects } from '@/lib/portfolio-data';
-import { HiArrowRight } from 'react-icons/hi';
+import Image from "next/image";
+import Link from "next/link";
+import { motion, useReducedMotion } from "framer-motion";
+import { useState } from "react";
+import { HiArrowRight } from "react-icons/hi2";
+import { featuredProjects } from "@/lib/portfolio-data";
 
 export function ExpandableButton() {
-  const [isHovered, setIsHovered] = useState(false);
+  const [expanded, setExpanded] = useState(false);
+  const reduceMotion = useReducedMotion();
 
   return (
     <motion.div
-      layout
-      transition={{ layout: { duration: 0.4, type: "spring", stiffness: 200, damping: 25 } }}
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
-      className="relative h-14 rounded-full bg-[var(--color-heading)] text-[var(--color-page-bg)] flex items-center overflow-hidden cursor-pointer group border border-white/10 shadow-lg hover:shadow-xl hover:border-white/20 transition-all duration-300"
-      style={{ borderRadius: "9999px" }} 
+      layout={!reduceMotion}
+      onPointerEnter={(event) => event.pointerType !== "touch" && setExpanded(true)}
+      onPointerLeave={() => setExpanded(false)}
+      onFocusCapture={() => setExpanded(true)}
+      onBlurCapture={() => setExpanded(false)}
+      className="relative flex h-14 items-center overflow-hidden rounded-full border border-white/10 bg-[var(--color-heading)] text-[var(--color-page-bg)] shadow-[0_14px_32px_rgb(28_27_26_/_18%)]"
+      transition={{ layout: { type: "spring", stiffness: 230, damping: 27 } }}
     >
-        <div className="absolute inset-0 rounded-full ring-1 ring-inset ring-white/10 pointer-events-none" />
+      <Link href="/portfolio" className="flex h-full items-center px-6">
+        <span className="flex shrink-0 items-center gap-3 font-accent text-lg">
+          Portfolio
+          <motion.span
+            aria-hidden="true"
+            className="grid h-7 w-7 place-items-center rounded-full bg-white/10"
+            animate={{ rotate: expanded && !reduceMotion ? -38 : 0 }}
+          >
+            <HiArrowRight className="h-4 w-4" />
+          </motion.span>
+        </span>
 
-      <Link href="/portfolio" className="flex items-center h-full px-6 z-10 w-full relative">
-        
-        <motion.div 
-            layout="position" 
-            className="flex items-center gap-3 flex-shrink-0"
+        <motion.span
+          aria-hidden="true"
+          className="hidden items-center overflow-hidden sm:flex"
+          initial={false}
+          animate={{
+            width: expanded ? 116 : 0,
+            marginLeft: expanded ? 18 : 0,
+            opacity: expanded ? 1 : 0,
+          }}
+          transition={{ type: "spring", stiffness: 220, damping: 26 }}
         >
-            <span className="font-bold text-lg md:text-xl text-[var(--color-page-bg)] tracking-wide">
-                Portfolio
+          {featuredProjects.map((project, index) => (
+            <span
+              key={project.id}
+              className="relative h-9 w-9 shrink-0 overflow-hidden rounded-full border-2 border-[var(--color-heading)]"
+              style={{ marginLeft: index === 0 ? 0 : -8 }}
+            >
+              <Image src={project.imageUrl} alt="" fill sizes="36px" className="object-cover" />
             </span>
-            <motion.div
-                animate={{ rotate: isHovered ? -45 : 0, x: isHovered ? 2 : 0 }}
-                transition={{ duration: 0.3 }}
-                className="bg-white/10 rounded-full p-1"
-            >
-                <HiArrowRight className="w-4 h-4 text-[var(--color-page-bg)]" />
-            </motion.div>
-        </motion.div>
-        
-        <motion.div
-            initial={{ opacity: 0, width: 0 }}
-            animate={{ 
-                opacity: isHovered ? 1 : 0, 
-                width: isHovered ? "auto" : 0,
-                marginLeft: isHovered ? 24 : 0
-            }}
-            transition={{ duration: 0.4, ease: "easeOut" }}
-            className="flex items-center overflow-hidden h-full"
-        >
-            <div className="flex pl-2 py-1"> 
-                {featuredProjects.map((project, i) => (
-                    <motion.div
-                        key={project.id}
-                        initial={{ scale: 0, x: -10, opacity: 0 }}
-                        animate={{ scale: isHovered ? 1 : 0, x: isHovered ? 0 : -10, opacity: isHovered ? 1 : 0 }}
-                        transition={{ duration: 0.3, delay: isHovered ? i * 0.08 : 0 }}
-                        className="relative w-10 h-10 rounded-full border-2 border-[var(--color-heading)] overflow-hidden flex-shrink-0 -ml-3 first:ml-0"
-                    >
-                        <Image 
-                            src={project.imageUrl} 
-                            alt={project.title} 
-                            fill 
-                            sizes="40px"
-                            className="object-cover transition-transform duration-500 hover:scale-110"
-                        />
-                    </motion.div>
-                ))}
-            </div>
-            
-            <motion.span 
-                initial={{ opacity: 0, x: 10 }}
-                animate={{ opacity: isHovered ? 1 : 0, x: isHovered ? 0 : 10 }}
-                transition={{ duration: 0.3, delay: 0.2 }}
-                className="whitespace-nowrap text-base font-medium text-[var(--color-text-muted)] pl-4 pr-2 hidden sm:inline-block"
-            >
-                Latest Work
-            </motion.span>
-
-        </motion.div>
-
+          ))}
+        </motion.span>
       </Link>
     </motion.div>
   );

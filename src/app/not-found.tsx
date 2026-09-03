@@ -1,44 +1,43 @@
-'use client';
+"use client";
 
-import { MagneticLink } from '@/components/ui/MagneticLink';
-import { motion } from 'framer-motion';
+import { motion, useReducedMotion } from "framer-motion";
+
+import { MagneticLink } from "@/components/ui/MagneticLink";
 
 export default function NotFound() {
+  const reduceMotion = useReducedMotion();
+
   return (
-    <div className="h-screen w-full bg-zinc-950 flex flex-col items-center justify-center text-center overflow-hidden relative">
-      
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-zinc-900 via-zinc-950 to-zinc-950 opacity-50" />
-      
-      <div className="relative z-10 px-6">
-        <motion.h1 
-          className="text-[15vw] leading-none font-bold text-white mix-blend-difference select-none"
-          initial={{ opacity: 0, scale: 0.8 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
+    <main className="surface-grid relative flex min-h-[100dvh] items-center overflow-hidden bg-[var(--color-page-bg)] px-5 py-28 text-[var(--color-heading)] sm:px-8">
+      <div className="site-container relative z-10 grid items-end gap-10 lg:grid-cols-[minmax(0,1.2fr)_minmax(18rem,0.8fr)]">
+        <motion.p
+          aria-label="Fehler 404"
+          className="select-none font-heading text-[clamp(8rem,25vw,24rem)] font-bold leading-[0.62] tracking-[-0.09em] text-[var(--color-primary)]"
+          initial={reduceMotion ? false : { opacity: 0, y: 50 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.75, ease: [0.16, 1, 0.3, 1] }}
         >
           404
-        </motion.h1>
-        
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.2 }}
-        >
-          <p className="text-xl md:text-2xl text-zinc-400 mb-12 max-w-lg mx-auto">
-            Ups. Du bist im digitalen Nirvana gelandet. Diese Seite existiert nicht (mehr).
-          </p>
+        </motion.p>
 
+        <motion.div
+          className="max-w-lg border-t border-[var(--color-border)] pt-6 lg:pb-3"
+          initial={reduceMotion ? false : { opacity: 0, y: 24 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.65, delay: reduceMotion ? 0 : 0.15 }}
+        >
+          <p className="text-xl leading-relaxed text-[var(--color-text-muted)] sm:text-2xl">
+            Ups. Du bist im digitalen Nirvana gelandet. Diese Seite existiert
+            nicht (mehr).
+          </p>
           <MagneticLink
             href="/"
-            className="inline-block bg-white text-black font-bold px-8 py-4 rounded-full hover:bg-zinc-200 transition-colors"
+            className="mt-8 inline-flex min-h-12 items-center rounded-full bg-[var(--color-heading)] px-7 py-3 font-semibold text-[var(--color-page-bg)] transition-colors hover:bg-[var(--color-primary)] focus-visible:bg-[var(--color-primary)]"
           >
             Zurück zur Homebase
           </MagneticLink>
         </motion.div>
       </div>
-
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[80vw] h-[80vw] border border-zinc-800 rounded-full opacity-20 pointer-events-none animate-[spin_20s_linear_infinite]" />
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[60vw] h-[60vw] border border-zinc-800 rounded-full opacity-20 pointer-events-none animate-[spin_15s_linear_infinite_reverse]" />
-    </div>
+    </main>
   );
 }

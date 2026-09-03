@@ -8,7 +8,6 @@ import Image from "next/image";
 import { useState } from "react";
 import { FaQuoteLeft } from "react-icons/fa";
 import { HiArrowLeft, HiArrowRight } from "react-icons/hi";
-import { SectionMask } from "../ui/SectionMask";
 
 const DRAG_THRESHOLD = 150;
 
@@ -27,7 +26,7 @@ const cardVariants: Variants = {
     opacity: relativePosition > 1 ? 0 : 1,
     zIndex: testimonials.length - relativePosition,
   }),
-  exit: ([relativePosition, exitDirection]: [number, number]) => ({
+  exit: ([, exitDirection]: [number, number]) => ({
     x: exitDirection > 0 ? 300 : -300, 
     opacity: 0,
     transition: { duration: 0.3 }

@@ -1,135 +1,86 @@
 "use client";
 
-import Image from 'next/image';
-import { motion, type Variants } from 'framer-motion';
-import { HiArrowRight } from 'react-icons/hi';
-import { AnimatedIconLink } from '../ui/AnimatedIconLink';
+import Image from "next/image";
+import Link from "next/link";
+import { motion, useReducedMotion } from "framer-motion";
+import { HiArrowUpRight } from "react-icons/hi2";
 
-const containerVariants: Variants = {
-  hidden: { opacity: 0 },
-  visible: {
-    opacity: 1,
-    transition: { staggerChildren: 0.2 },
+const team = [
+  {
+    name: "Fabian",
+    role: "Development & Digital Product",
+    image: "https://bz2wjzy3qokef9e7.public.blob.vercel-storage.com/Fabian.jpeg",
   },
-};
-
-const itemVariants: Variants = {
-  hidden: { opacity: 0, x: -30 },
-  visible: {
-    opacity: 1,
-    x: 0,
-    transition: { duration: 0.7, ease: "easeOut" },
+  {
+    name: "Antonio",
+    role: "Creative Direction & Content",
+    image: "https://bz2wjzy3qokef9e7.public.blob.vercel-storage.com/ANTONIO.png",
   },
-};
+];
 
-const imageVariants: Variants = {
-  hidden: { opacity: 0, scale: 0.8 },
-  visible: {
-    opacity: 1,
-    scale: 1,
-    transition: { duration: 0.7, ease: [0.22, 1, 0.36, 1] },
-  },
-};
-
-export function AboutSection() {
-  const SIZES = "(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw";
+export function AboutSection({ showImages = true }: { showImages?: boolean }) {
+  const reduceMotion = useReducedMotion();
 
   return (
-    <section className="w-full py-20 md:py-32 bg-[var(--color-page-bg)]">
-      <div className="container mx-auto max-w-7xl px-6">
-        
-        <motion.div 
-          className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center"
-          variants={containerVariants}
-          initial="hidden"
-          whileInView="visible"
+    <section className="section-space bg-[var(--color-page-bg)]">
+      <div className={`site-container grid grid-cols-1 gap-12 ${showImages ? "lg:grid-cols-12 lg:gap-10" : "lg:grid-cols-12"}`}>
+        <motion.div
+          className={showImages ? "lg:col-span-5 lg:pt-10" : "lg:col-span-8 lg:col-start-3"}
+          initial={reduceMotion ? false : { opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 0.2 }}
+          transition={{ duration: 0.65, ease: [0.16, 1, 0.3, 1] }}
         >
-          
-          <motion.div variants={itemVariants}>
-            <span className="tracking-widest text-lg font-accent text-accent uppercase">
-              Das Team
-            </span>
-            <h2 className="text-4xl md:text-5xl font-bold tracking-normal text-[var(--color-heading)] mt-3 mb-6">
-              Ein Entwickler. <br />Ein Kreativer.
-            </h2>
-            <div className="space-y-4 text-base md:text-xl text-[var(--color-text)] leading-relaxed">
-              <p>
-                Wir sind Fabian und Antonio. Was mit einer gemeinsamen Leidenschaft für digitale Medien begonnen hat, ist heute CMD Studios - Webentwicklung und Videorproduktion aus einer Hand.
-              </p>
-              <p>
-                Fabian bringt vor allem die technische Seite ein, Antonio vor allem den kreativen Blick auf Bild, Story und Schnitt. Gleichzeitig arbeiten wir eng zusammen und entwickeln jedes Projekt gemeinsam weiter.
-              </p>
-            </div>
-            <AnimatedIconLink 
+          <p className="font-accent text-base text-accent">Das Team</p>
+          <h2 className="mt-4 text-balance text-[clamp(2.8rem,6vw,5.6rem)] leading-[0.94] text-[var(--color-heading)]">
+            Ein Entwickler. Ein Kreativer.
+          </h2>
+          <div className="mt-7 max-w-[60ch] space-y-4 text-base leading-relaxed text-[var(--color-text)] md:text-xl">
+            <p>
+              Wir sind Fabian und Antonio. Was mit einer gemeinsamen Leidenschaft für digitale Medien begonnen hat, ist heute CMD Studios: Webentwicklung und Videoproduktion aus einer Hand.
+            </p>
+            <p>
+              Fabian bringt vor allem die technische Seite ein, Antonio den kreativen Blick auf Bild, Story und Schnitt. Jedes Projekt entwickeln wir gemeinsam weiter.
+            </p>
+          </div>
+          {showImages ? (
+            <Link
               href="/about"
-              title="Mehr über uns erfahren"
-              className="mt-8 bg-transparent text-accent font-semibold tracking-wide transition-colors text-lg"
+              className="mt-8 inline-flex items-center gap-2 border-b border-accent/40 pb-1 font-medium text-accent transition-colors hover:border-accent"
             >
-              <HiArrowRight className="transition-transform duration-300 group-hover:translate-x-1" />
-            </AnimatedIconLink>
-          </motion.div>
-
-          <motion.div 
-            className="grid grid-cols-2 gap-4"
-            variants={containerVariants}
-          >
-            <motion.div 
-              className="group relative aspect-square rounded-2xl overflow-hidden cursor-none"
-              variants={imageVariants}
-            >
-              <Image
-                src="https://bz2wjzy3qokef9e7.public.blob.vercel-storage.com/Fabian.jpeg"
-                alt="Foto von Fabian"
-                fill
-                sizes={SIZES}
-                className="object-cover grayscale hover:grayscale-0 transition-all duration-700 ease-out group-hover:scale-105"
-              />
-              <motion.div 
-                className="absolute bottom-3 left-3 md:bottom-4 md:left-4"
-                initial={{ opacity: 0, y: 20, scale: 0.8 }}
-                whileInView={{ opacity: 1, y: 0, scale: 1 }}
-                viewport={{ once: true }}
-                transition={{ type: "spring", stiffness: 300, damping: 20, delay: 0.5 }}
-              >
-                <div className="flex items-center gap-2 bg-[var(--color-page-bg)] rounded-full pl-3 pr-4 py-2 shadow-lg group-hover:scale-105 transition-transform duration-300">
-                  <span className="w-2.5 h-2.5 rounded-full bg-accent flex-shrink-0" />
-                  <div className="flex flex-col leading-tight">
-                    <span className="font-heading text-sm md:text-base text-[var(--color-heading)] tracking-tight">Fabian</span>
-                  </div>
-                </div>
-              </motion.div>
-            </motion.div>
-            
-            <motion.div 
-              className="group relative aspect-square rounded-2xl overflow-hidden mt-12 cursor-none"
-              variants={imageVariants}
-            >
-              <Image
-                src="https://bz2wjzy3qokef9e7.public.blob.vercel-storage.com/ANTONIO.png"
-                alt="Foto von Antonio"
-                fill
-                sizes={SIZES}
-                className="object-cover grayscale hover:grayscale-0 transition-all duration-700 ease-out group-hover:scale-105"
-              />
-              <motion.div 
-                className="absolute bottom-3 left-3 md:bottom-4 md:left-4"
-                initial={{ opacity: 0, y: 20, scale: 0.8 }}
-                whileInView={{ opacity: 1, y: 0, scale: 1 }}
-                viewport={{ once: true }}
-                transition={{ type: "spring", stiffness: 300, damping: 20, delay: 0.7 }}
-              >
-                <div className="flex items-center gap-2 bg-[var(--color-page-bg)] rounded-full pl-3 pr-4 py-2 shadow-lg group-hover:scale-105 transition-transform duration-300">
-                  <span className="w-2.5 h-2.5 rounded-full bg-accent flex-shrink-0" />
-                  <div className="flex flex-col leading-tight">
-                    <span className="font-heading text-sm md:text-base text-[var(--color-heading)] tracking-tight">Antonio</span>
-                  </div>
-                </div>
-              </motion.div>
-            </motion.div>
-          </motion.div>
-
+              Mehr über uns erfahren <HiArrowUpRight aria-hidden="true" className="h-5 w-5" />
+            </Link>
+          ) : null}
         </motion.div>
+
+        {showImages ? (
+          <div className="grid grid-cols-2 gap-4 sm:gap-6 lg:col-span-7">
+            {team.map((person, index) => (
+              <motion.figure
+                key={person.name}
+                className={index === 1 ? "pt-12 sm:pt-20" : ""}
+                initial={reduceMotion ? false : { opacity: 0, y: index === 0 ? 26 : 54 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, amount: 0.2 }}
+                transition={{ duration: 0.7, delay: reduceMotion ? 0 : index * 0.08, ease: [0.16, 1, 0.3, 1] }}
+              >
+                <div className="relative aspect-[4/5] overflow-hidden rounded-[var(--radius-card)] bg-[var(--color-surface)]">
+                  <Image
+                    src={person.image}
+                    alt={`Foto von ${person.name}`}
+                    fill
+                    sizes="(max-width: 767px) 50vw, 30vw"
+                    className="object-cover grayscale transition-[filter,transform] duration-700 hover:scale-[1.025] hover:grayscale-0"
+                  />
+                </div>
+                <figcaption className="pt-4">
+                  <p className="font-heading text-xl text-[var(--color-heading)] md:text-2xl">{person.name}</p>
+                  <p className="mt-1 text-sm leading-relaxed text-[var(--color-text-muted)]">{person.role}</p>
+                </figcaption>
+              </motion.figure>
+            ))}
+          </div>
+        ) : null}
       </div>
     </section>
   );

@@ -1,104 +1,66 @@
-'use client';
+"use client";
 
 import gsap from "gsap";
 import { useEffect, useRef, useState } from "react";
 
-const CSS_VAR_CURSOR_BORDER = '--cursor-border-color';
-const CSS_VAR_CURSOR_BG = '--cursor-bg-color';
+const CURSOR_QUERY = "(min-width: 1024px) and (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference)";
 
 export function CustomCursor() {
-    const [isMounted, setIsMounted] = useState(false);
-    const [isDesktop, setIsDesktop] = useState(false);
+  const cursorRef = useRef<HTMLDivElement>(null);
+  const [enabled, setEnabled] = useState(false);
 
-    useEffect(() => {
-        const timer = setTimeout(() => {
-            setIsMounted(true);
-            setIsDesktop(window.innerWidth >= 1024);
-        }, 0);
+  useEffect(() => {
+    const media = window.matchMedia(CURSOR_QUERY);
+    const update = () => setEnabled(media.matches);
+    update();
+    media.addEventListener("change", update);
+    return () => media.removeEventListener("change", update);
+  }, []);
 
-        const checkDesktop = () => setIsDesktop(window.innerWidth >= 1024);
-        window.addEventListener('resize', checkDesktop);
-        return () => {
-            clearTimeout(timer);
-            window.removeEventListener('resize', checkDesktop);
-        };
-    }, []);
+  useEffect(() => {
+    const cursor = cursorRef.current;
+    if (!enabled || !cursor) return;
 
-    const cursorRef = useRef<HTMLDivElement>(null);
-    const isHoveringRef = useRef(false);
+    gsap.set(cursor, { xPercent: -50, yPercent: -50, opacity: 0 });
+    const setX = gsap.quickTo(cursor, "x", { duration: 0.12, ease: "power3.out" });
+    const setY = gsap.quickTo(cursor, "y", { duration: 0.12, ease: "power3.out" });
 
-    useEffect(() => {
-        const cursorEl = cursorRef.current;
-        if (!isDesktop || !cursorEl) return;
+    const handlePointerMove = (event: PointerEvent) => {
+      const target = event.target instanceof Element ? event.target : null;
+      const formControl = target?.closest("input, textarea, select, [contenteditable='true']");
+      const interactive = target?.closest("a, button, summary, [role='button'], [data-cursor='interactive']");
 
-        const styles = getComputedStyle(document.body);
-        const getAccentColor = () => styles.getPropertyValue(CSS_VAR_CURSOR_BORDER).trim() || '#FF4D00';
-        const getBgColor = () => styles.getPropertyValue(CSS_VAR_CURSOR_BG).trim() || '#FF4D00';
+      setX(event.clientX);
+      setY(event.clientY);
+      gsap.to(cursor, {
+        opacity: formControl ? 0 : 1,
+        scale: interactive ? 1.7 : 1,
+        backgroundColor: interactive ? "#ff4d00" : "transparent",
+        borderColor: interactive ? "transparent" : "#ff4d00",
+        duration: 0.22,
+        overwrite: "auto",
+      });
+    };
 
-        gsap.set(cursorRef.current, { 
-            xPercent: -50, 
-            yPercent: -50,
-            opacity: 1,
-            borderColor: getAccentColor()
-        });
+    const handlePointerLeave = () => gsap.to(cursor, { opacity: 0, duration: 0.15 });
 
-        const quickSetX = gsap.quickTo(cursorRef.current, "x", { duration: 0.1, ease: "power3" });
-        const quickSetY = gsap.quickTo(cursorRef.current, "y", { duration: 0.1, ease: "power3" });
+    window.addEventListener("pointermove", handlePointerMove, { passive: true });
+    document.documentElement.addEventListener("mouseleave", handlePointerLeave);
 
-        const onMouseMove = (event: PointerEvent) => {
-            const { clientX, clientY, target } = event;
-            quickSetX(clientX);
-            quickSetY(clientY);
+    return () => {
+      window.removeEventListener("pointermove", handlePointerMove);
+      document.documentElement.removeEventListener("mouseleave", handlePointerLeave);
+      gsap.killTweensOf(cursor);
+    };
+  }, [enabled]);
 
-            const targetEl = target as HTMLElement;
-            const clickable = targetEl.closest('a, button, input, textarea, select, [role="button"], .cursor-pointer, .group');
-            
-            if (clickable && !isHoveringRef.current) {
-                isHoveringRef.current = true;
-                gsap.to(cursorRef.current, { 
-                    scale: 1.5, 
-                    backgroundColor: getBgColor(),
-                    borderColor: 'transparent',
-                    mixBlendMode: 'normal', 
-                    duration: 0.3, 
-                    ease: 'power3.out' 
-                });
-            } else if (!clickable && isHoveringRef.current) {
-                isHoveringRef.current = false;
-                gsap.to(cursorRef.current, { 
-                    scale: 1, 
-                    backgroundColor: 'transparent',
-                    borderColor: getAccentColor(),
-                    mixBlendMode: 'normal',
-                    duration: 0.3, 
-                    ease: 'power3.out' 
-                });
-            }
-        };
+  if (!enabled) return null;
 
-        window.addEventListener('pointermove', onMouseMove);
-        document.body.style.cursor = 'none';
-
-        return () => {
-            window.removeEventListener('pointermove', onMouseMove);
-            document.body.style.cursor = 'auto';
-            if (cursorEl) {
-                gsap.killTweensOf(cursorEl);
-            }
-        };
-    }, [isDesktop]);
-
-    if (!isMounted || !isDesktop) {
-        return null;
-    }
-
-    return (
-        <div
-            ref={cursorRef}
-            className="custom-cursor-ring fixed top-0 left-0 w-6 h-6 rounded-full border-2 pointer-events-none z-[9999]"
-            style={{
-                opacity: 0, 
-            }}
-        />
-    )
+  return (
+    <div
+      ref={cursorRef}
+      aria-hidden="true"
+      className="pointer-events-none fixed left-0 top-0 z-[9999] h-5 w-5 rounded-full border-2 border-accent"
+    />
+  );
 }

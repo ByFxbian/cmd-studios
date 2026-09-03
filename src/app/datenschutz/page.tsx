@@ -1,11 +1,18 @@
-import { ServiceHeroSection } from "@/components/sections/ServiceHeroSection";
+import type { Metadata } from "next";
+import { LegalHero } from "@/components/sections/LegalHero";
+
+export const metadata: Metadata = {
+  title: "Datenschutzerklärung",
+  description: "Datenschutzerklärung von CMD Studios.",
+  alternates: { canonical: "/datenschutz" },
+};
 
 export default function DatenschutzPage() {
   return (
     <>
-      <ServiceHeroSection title="Datenschutzerklärung" />
+      <LegalHero title="Datenschutzerklärung" />
       
-      <section className="w-full py-16 md:py-24 bg-white">
+      <section className="w-full bg-[var(--color-page-bg)] py-16 md:py-24">
         <div className="container mx-auto max-w-3xl px-6">
           <div className="prose prose-lg prose-zinc max-w-none text-[var(--color-text)] prose-headings:text-[var(--color-heading)] prose-strong:text-[var(--color-heading)]">
 

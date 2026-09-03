@@ -11,21 +11,7 @@ export const testimonials: Testimonial[] = [
         id: 1,
         name: "ALKOS",
         company: 'CEO, Alkosbarber',
-        quote: 'Die Zusammenarbeit mit CMD Studios war eine der Besten Entscheidungen die ich für Alkosbarber getroffen habe. Ihre Fähigkeit, komplexe Ideen in eine so elegante Webseite und Social-Media Content zu übersetzen, ist unübertroffen.',
+        quote: 'Die Zusammenarbeit mit CMD Studios war eine der besten Entscheidungen, die ich für Alkosbarber getroffen habe. Ihre Fähigkeit, komplexe Ideen in eine so elegante Website und Social-Media-Content zu übersetzen, ist unübertroffen.',
         imageUrl: 'https://srtkhlfsd31dcfzp.public.blob.vercel-storage.com/ALKOS.png',
-    },
-    {
-        id: 2,
-        name: 'Erika Mustermann',
-        company: 'Marketing, FutureBrand',
-        quote: 'Das Team hat unsere Vision nicht nur verstanden, sondern übertroffen. Die Videoproduktion war erstklassig und hat unsere Kampagne auf ein neues Level gehoben.',
-        imageUrl: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?q=80&w=300&auto=format&fit=crop',
-    },
-    {
-        id: 3,
-        name: 'Jonas Schmidt',
-        company: 'Gründer, Kreativ-Hub',
-        quote: 'Von der ersten GSAP-Animation bis zum finalen R3F-Modell – die technische Expertise und das Auge für Design sind beeindruckend. Absolute Empfehlung.',
-        imageUrl: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?q=80&w=300&auto=format&fit=crop',
     },
 ]

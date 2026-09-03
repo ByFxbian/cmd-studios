@@ -1,139 +1,84 @@
-'use client';
+"use client";
 
-import { useState } from 'react';
-import { packages, type PackageCategory } from '@/lib/package-data';
-import { PackageCard } from '../ui/PackageCard';
-import { MagneticLink } from '../ui/MagneticLink';
-import { motion, type Variants, AnimatePresence } from 'framer-motion';
-
-const gridVariants: Variants = {
-  hidden: { opacity: 0 },
-  visible: {
-    opacity: 1,
-    transition: {
-      staggerChildren: 0.2,
-    },
-  },
-};
-
-const cardVariants: Variants = {
-  hidden: { opacity: 0, y: 50 },
-  visible: {
-    opacity: 1,
-    y: 0,
-    transition: {
-      duration: 0.6,
-      ease: 'easeOut',
-    },
-  },
-};
+import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
+import { useState } from "react";
+import { packages, type PackageCategory } from "@/lib/package-data";
+import { PackageCard } from "../ui/PackageCard";
+import { MagneticLink } from "../ui/MagneticLink";
 
 export function PackageSection() {
-  const [activeCategory, setActiveCategory] = useState<PackageCategory>('web');
-  
-  const filteredPackages = packages.filter(pkg => pkg.category === activeCategory);
+  const [activeCategory, setActiveCategory] = useState<PackageCategory>("web");
+  const reduceMotion = useReducedMotion();
+  const filteredPackages = packages.filter((pkg) => pkg.category === activeCategory);
 
   return (
-    <section className="w-full py-20 md:py-32 bg-zinc-50 overflow-hidden">
-      <div className="container mx-auto max-w-7xl px-6">
-        <motion.div
-          className="text-center mb-12"
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.5 }}
-          transition={{ duration: 0.6, ease: "easeOut" }}
-        >
-          <h2 className="text-4xl md:text-5xl font-bold tracking-tight text-[var(--color-heading)]">
-            Das passende Paket für Sie
-          </h2>
-          <p className="mt-4 max-w-2xl mx-auto text-2xl text-[var(--color-text)] tracking-wide">
-            Klare Pakete, transparente Leistungen und ein umfang, der zu Ihrem Vorhaben passt. Ohne versteckte Kosten und ohne laufende Stundenabrechnung.
+    <section className="section-space overflow-hidden bg-[var(--color-page-bg)]">
+      <div className="site-container">
+        <div className="max-w-3xl">
+          <h2 className="text-balance text-[clamp(2.8rem,6vw,5.6rem)] leading-[0.95] text-[var(--color-heading)]">Ein klarer Rahmen für Ihr Projekt.</h2>
+          <p className="mt-6 max-w-[58ch] text-base leading-relaxed text-[var(--color-text)] md:text-xl">
+            Transparente Pakete als Ausgangspunkt. Umfang und Prioritäten stimmen wir gemeinsam auf Ihr Vorhaben ab.
           </p>
-        </motion.div>
+        </div>
 
-        <motion.div
-          className="flex justify-center mb-16"
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.5 }}
-          transition={{ duration: 0.6, ease: "easeOut", delay: 0.1 }}
-        >
-          <div className="inline-flex items-center p-1.5 bg-zinc-200/60 rounded-full">
-            <button
-              onClick={() => setActiveCategory('web')}
-              className={`relative px-6 py-2.5 md:px-10 md:py-3 rounded-full text-sm md:text-lg font-bold transition-colors duration-300 outline-none ${
-                activeCategory === 'web' ? 'text-black' : 'text-zinc-500 hover:text-zinc-800'
-              }`}
-            >
-              Web Pakete
-              {activeCategory === 'web' && (
-                <motion.div
-                  layoutId="activeTab"
-                  className="absolute inset-0 bg-white rounded-full shadow-[0_2px_8px_rgba(0,0,0,0.08)]"
-                  style={{ zIndex: -1 }}
-                  transition={{ type: "spring", stiffness: 400, damping: 30 }}
-                />
-              )}
-            </button>
-            <button
-              onClick={() => setActiveCategory('content')}
-              className={`relative px-6 py-2.5 md:px-10 md:py-3 rounded-full text-sm md:text-lg font-bold transition-colors duration-300 outline-none ${
-                activeCategory === 'content' ? 'text-black' : 'text-zinc-500 hover:text-zinc-800'
-              }`}
-            >
-              Content Pakete
-              {activeCategory === 'content' && (
-                <motion.div
-                  layoutId="activeTab"
-                  className="absolute inset-0 bg-white rounded-full shadow-[0_2px_8px_rgba(0,0,0,0.08)]"
-                  style={{ zIndex: -1 }}
-                  transition={{ type: "spring", stiffness: 400, damping: 30 }}
-                />
-              )}
-            </button>
-          </div>
-        </motion.div>
+        <div className="mt-10 inline-flex max-w-full rounded-full bg-[var(--color-surface)] p-1.5" role="group" aria-label="Paketkategorie">
+          {([
+            { value: "web" as const, label: "Web Pakete" },
+            { value: "content" as const, label: "Content Pakete" },
+          ]).map((category) => {
+            const active = activeCategory === category.value;
+            return (
+              <button
+                key={category.value}
+                type="button"
+                onClick={() => setActiveCategory(category.value)}
+                aria-pressed={active}
+                className={`relative rounded-full px-5 py-2.5 text-sm font-medium transition-colors sm:px-7 sm:text-base ${active ? "text-[var(--color-page-bg)]" : "text-[var(--color-text)] hover:text-[var(--color-heading)]"}`}
+              >
+                <span className="relative z-10">{category.label}</span>
+                {active ? (
+                  <motion.span
+                    layoutId="package-tab"
+                    className="absolute inset-0 rounded-full bg-[var(--color-heading)]"
+                    transition={{ type: "spring", stiffness: 360, damping: 32 }}
+                  />
+                ) : null}
+              </button>
+            );
+          })}
+        </div>
 
         <AnimatePresence mode="wait">
-          <motion.div 
+          <motion.div
             key={activeCategory}
-            className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-stretch"
-            variants={gridVariants}
-            initial="hidden"
-            whileInView="visible"
-            exit={{ opacity: 0, y: -20, transition: { duration: 0.3 } }}
-            viewport={{ once: true, amount: 0.1 }}
+            className="mt-10 grid grid-cols-1 gap-5 lg:grid-cols-12"
+            initial={reduceMotion ? false : { opacity: 0, y: 18 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={reduceMotion ? undefined : { opacity: 0, y: -12 }}
+            transition={{ duration: 0.32 }}
           >
             {filteredPackages.map((pkg) => (
-              <motion.div key={pkg.id} variants={cardVariants} className="h-full">
+              <div key={pkg.id} className={pkg.isPopular ? "lg:col-span-12" : "lg:col-span-6"}>
                 <PackageCard pkg={pkg} />
-              </motion.div>
+              </div>
             ))}
           </motion.div>
         </AnimatePresence>
 
-        <motion.div
-          className="mt-20 md:mt-32 max-w-4xl mx-auto text-center"
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.5 }}
-          transition={{ duration: 0.6, ease: "easeOut" }}
-        >
-          <h3 className="text-3xl md:text-4xl font-bold tracking-tight text-[var(--color-heading)] mb-6">
-            Kein passendes Paket dabei?
-          </h3>
-          <p className="text-xl md:text-2xl text-[var(--color-text)] tracking-wide mb-10 leading-relaxed max-w-3xl mx-auto">
-            Jedes Unternehmen ist einzigartig. Wenn Sie sich unsicher sind, welches Setup das richtige für Sie ist, oder sie spezielle Anforderungen haben oder einen kreativen Partner für ein Musikvideo, ein Event oder ein privates Projekt suchen: Lassen Sie uns in einem kurzen, kostenlosen Gespräch gemeinsam herausfinden, wie wir Ihre Vision visuell umsetzen können.
-          </p>
-          <div className="flex justify-center">
-            <MagneticLink
-              href="/contact"
-              className="inline-block px-8 py-5 bg-zinc-900 text-white rounded-xl font-bold text-lg hover:bg-black transition-all hover:scale-[1.02] shadow-xl hover:shadow-2xl"
-            >
-              Gespräch vereinbaren
-            </MagneticLink>
+        <div className="mt-16 border-t border-[var(--color-navbar-border)] pt-10 md:mt-24 md:flex md:items-end md:justify-between md:gap-8">
+          <div>
+            <h3 className="text-3xl text-[var(--color-heading)] md:text-4xl">Kein passendes Paket dabei?</h3>
+            <p className="mt-3 max-w-[56ch] leading-relaxed text-[var(--color-text)]">
+              Für besondere Anforderungen, Musikvideos, Events oder individuelle digitale Produkte entwickeln wir ein passendes Setup.
+            </p>
           </div>
-        </motion.div>
+          <MagneticLink
+            href="/contact"
+            className="mt-7 inline-flex h-14 items-center justify-center rounded-full bg-accent px-8 font-accent text-lg text-white transition-colors hover:bg-accent-dark md:mt-0"
+          >
+            Kontakt
+          </MagneticLink>
+        </div>
       </div>
     </section>
   );

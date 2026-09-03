@@ -1,8 +1,7 @@
 'use client';
 
-import { useEffect, useRef, type JSX } from 'react';
+import { useRef, type JSX } from 'react';
 import { useFrame, type ThreeElements } from '@react-three/fiber';
-import { useGLTF } from '@react-three/drei';
 import * as THREE from 'three';
 import { pointerRef } from '@/lib/three-store';
 

@@ -32,7 +32,7 @@ const desktopLetterVariants: Variants = {
 const mobileContainerVariants:Variants = {
   animate: {
     transition: {
-      staggerChildren: 0.08,
+      staggerChildren: 0.045,
       repeat: Infinity,
       repeatDelay: 1.0, 
     },

@@ -1,116 +1,89 @@
-'use client';
+"use client";
 
-import Image from 'next/image';
-import Link from 'next/link';
-import { motion, useMotionValue, useSpring, useTransform, type Variants } from 'framer-motion';
-import { useRef } from 'react';
+import Image from "next/image";
+import Link from "next/link";
+import { motion, useMotionValue, useReducedMotion, useSpring, useTransform } from "framer-motion";
+import { useRef } from "react";
+import { HiArrowUpRight } from "react-icons/hi2";
 
 type PortfolioCardProps = {
   title: string;
   category: "Web-Entwicklung" | "Video-Produktion";
   imageUrl: string;
   href: string;
+  className?: string;
+  imageClassName?: string;
+  sizes?: string;
+  priority?: boolean;
 };
 
-const cardVariant: Variants = {
-  hidden: { opacity: 0, scale: 0.9 },
-  visible: {
-    opacity: 1,
-    scale: 1,
-    transition: {
-      duration: 0.5,
-      ease: "easeOut",
-    },
-  },
-};
-
-export function PortfolioCard({ title, category, imageUrl, href }: PortfolioCardProps) {  
-  const isVideo = category === "Video-Produktion";
-
+export function PortfolioCard({
+  title,
+  category,
+  imageUrl,
+  href,
+  className = "",
+  imageClassName = "aspect-[4/3]",
+  sizes = "(max-width: 767px) 100vw, 50vw",
+  priority = false,
+}: PortfolioCardProps) {
   const ref = useRef<HTMLAnchorElement>(null);
+  const reduceMotion = useReducedMotion();
+  const pointerX = useMotionValue(0);
+  const pointerY = useMotionValue(0);
+  const springX = useSpring(pointerX, { stiffness: 115, damping: 18 });
+  const springY = useSpring(pointerY, { stiffness: 115, damping: 18 });
+  const imageX = useTransform(springX, [-1, 1], ["-1.6%", "1.6%"]);
+  const imageY = useTransform(springY, [-1, 1], ["-1.6%", "1.6%"]);
 
-  const mouseX = useMotionValue(0);
-  const mouseY = useMotionValue(0);
-
-  const springConfig = { stiffness: 100, damping: 15};
-  const springX = useSpring(mouseX, springConfig);
-  const springY = useSpring(mouseY, springConfig);
-
-  const translateX = useTransform(springX, [-0.5, 0.5], ['-2.5%', '2.5%']);
-  const translateY = useTransform(springY, [-0.5, 0.5], ['-2.5%', '2.5%']);
-
-  const spotlightX = useMotionValue("50%");
-  const spotlightY = useMotionValue("50%");
-
-  const handleMouseMove = (e:React.MouseEvent<HTMLAnchorElement>) => {
-    if(!ref.current) return;
+  const handlePointerMove = (event: React.PointerEvent<HTMLAnchorElement>) => {
+    if (reduceMotion || event.pointerType === "touch" || !ref.current) return;
     const rect = ref.current.getBoundingClientRect();
+    pointerX.set((event.clientX - rect.left - rect.width / 2) / (rect.width / 2));
+    pointerY.set((event.clientY - rect.top - rect.height / 2) / (rect.height / 2));
+  };
 
-    mouseX.set((e.clientX - rect.left - rect.width / 2) / (rect.width / 2));
-    mouseY.set((e.clientY - rect.top - rect.height / 2) / (rect.height / 2));
-  
-    spotlightX.set(`${((e.clientX - rect.left) / rect.width) * 100}%`)
-    spotlightY.set(`${((e.clientY - rect.top) / rect.height) * 100}%`)
-  }
-
-  const handleMouseLeave = () => {
-    mouseX.set(0);
-    mouseY.set(0);
-  }
+  const reset = () => {
+    pointerX.set(0);
+    pointerY.set(0);
+  };
 
   return (
-    <motion.div
-      className="flex flex-col"
-      initial="initial"
-      whileHover="hover"
-    >
-      <Link ref={ref} href={href} className="group relative block rounded-lg overflow-hidden" onMouseMove={handleMouseMove} onMouseLeave={handleMouseLeave}>
-      <div className="relative w-full aspect-[4/3] overflow-hidden">
-        <motion.div 
-            className="absolute inset-0"
-            style={{
-              x: translateX,
-              y: translateY,
-              scale: 1.15,
-            }}
+    <article className={className}>
+      <Link
+        ref={ref}
+        href={href}
+        onPointerMove={handlePointerMove}
+        onPointerLeave={reset}
+        className="group block"
+      >
+        <div className={`relative overflow-hidden rounded-[var(--radius-card)] bg-[var(--color-surface)] ${imageClassName}`}>
+          <motion.div
+            className="absolute -inset-[2%]"
+            style={{ x: reduceMotion ? 0 : imageX, y: reduceMotion ? 0 : imageY }}
           >
             <Image
               src={imageUrl}
               alt={title}
               fill
-              className="object-cover"
-              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+              priority={priority}
+              sizes={sizes}
+              className="object-cover transition-transform duration-700 ease-out group-hover:scale-[1.025]"
             />
           </motion.div>
+          <div className="absolute inset-0 bg-gradient-to-t from-black/32 via-transparent to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
+        </div>
 
-          <motion.div
-            className="absolute inset-0"
-            style={{
-              '--x': spotlightX,
-              '--y': spotlightY,
-              background: 'radial-gradient(circle at var(--x) var(--y), rgba(255,255,255,0.15) 0%, rgba(0,0,0,0.5) 70%)',
-            } as React.CSSProperties}
-            variants={{
-              initial: { opacity: 0 },
-              hover: { opacity: 1 }
-            }}
-            transition={{ duration: 0.3 }}
-          />
-      </div>
+        <div className="flex items-start justify-between gap-5 pt-4">
+          <div>
+            <h3 className="text-xl leading-tight text-[var(--color-heading)] sm:text-2xl">{title}</h3>
+            <p className="mt-1 font-accent text-sm text-accent">{category}</p>
+          </div>
+          <span className="grid h-10 w-10 shrink-0 place-items-center rounded-full border border-[var(--color-navbar-border)] text-[var(--color-heading)] transition-transform group-hover:-translate-y-1 group-hover:translate-x-1">
+            <HiArrowUpRight aria-hidden="true" className="h-5 w-5" />
+          </span>
+        </div>
       </Link>
-
-      <div className="pt-4">
-        <h3 className="text-xl tracking-wide text-[var(--color-heading)]">{title}</h3>
-        <span 
-              className={`inline-block text-sm tracking-wide font-accent px-2 py-0.5 rounded mb-2 ${
-                isVideo 
-                ? 'bg-blue-100 text-blue-800' 
-                : 'bg-accent-light/30 text-accent-dark'
-              }`}
-            >
-              {category}
-            </span>
-      </div>
-    </motion.div>
+    </article>
   );
 }

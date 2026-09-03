@@ -39,7 +39,7 @@ export const allProjects: Project[] = [
     slug: "alkosbarber-content",
     title: "Social Media Content für 'Alkos Barber'",
     category: "Video-Produktion",
-    imageUrl: "https://placehold.co/800x800.png?text=Video+1",
+    imageUrl: "https://bz2wjzy3qokef9e7.public.blob.vercel-storage.com/alkosbarber_img2.png",
     description: "Dynamischer Imagefilm zur Neukundengewinnung.",
     sections: [
       {

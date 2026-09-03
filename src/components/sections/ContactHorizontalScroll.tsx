@@ -1,450 +1,310 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-/* eslint-disable prefer-const */
 "use client";
 
-import { FormEvent, useEffect, useLayoutEffect, useRef, useState } from 'react';
-import gsap from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { ScrollToPlugin } from 'gsap/ScrollToPlugin';
-import { HiArrowLeft, HiArrowRight, HiOutlineArrowRight } from 'react-icons/hi';
-import { usePathname } from 'next/navigation';
-import { AnimatePresence, motion, type Variants } from 'framer-motion';
-import { MagneticButton } from '../ui/MagneticButton';
-import { ContactSuccessAnimation } from '../ui/ContactSuccessAnimation';
-import { useMediaQuery } from '@/hooks/useMediaQuery';
-import { useLoading } from '@/context/LoadingContext';
+import { type FormEvent, useCallback, useEffect, useLayoutEffect, useRef, useState } from "react";
+import gsap from "gsap";
+import { ScrollToPlugin } from "gsap/ScrollToPlugin";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
+import { HiArrowLeft, HiArrowRight, HiOutlineArrowRight } from "react-icons/hi2";
+import { packages } from "@/lib/package-data";
+import { useLoading } from "@/context/LoadingContext";
+import { ContactSuccessAnimation } from "../ui/ContactSuccessAnimation";
+import { MagneticButton } from "../ui/MagneticButton";
 
 gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
 
 const TOTAL_PANELS = 3;
-type Status = 'idle' | 'submitting' | 'success' | 'error';
+type Status = "idle" | "submitting" | "success" | "error";
 
-const panelVariants: Variants = {
-  hidden: { opacity: 0, y: 50 },
-  visible: { 
-    opacity: 1, 
-    y: 0, 
-    transition: { duration: 0.6, ease: 'easeOut' } 
-  }
-};
-
-export function ContactHorizontalScroll({ initialPackage }: { initialPackage?: string}) {
-  const sectionRef = useRef<HTMLDivElement>(null);
-  const panelsRef = useRef<HTMLDivElement>(null);
+export function ContactHorizontalScroll({ initialPackage }: { initialPackage?: string }) {
+  const sectionRef = useRef<HTMLElement>(null);
+  const trackRef = useRef<HTMLDivElement>(null);
+  const darkPanelRef = useRef<HTMLDivElement>(null);
   const errorRef = useRef<HTMLParagraphElement>(null);
+  const scrollTriggerRef = useRef<ScrollTrigger | null>(null);
+  const activePanelRef = useRef(0);
   const [activePanel, setActivePanel] = useState(0);
-
-  const [status, setStatus] = useState<Status>('idle');
-  const [errorMessage, setErrorMessage] = useState('');
-  const pathname = usePathname();
-  const programmatic = useRef(false);
-  const lastDir = useRef<1 | -1>(1);
-  const stRef = useRef<ScrollTrigger | null>(null);
-  const rafId = useRef<number | null>(null);
-  const roRef = useRef<ResizeObserver | null>(null);
-
-  const getScrollTrigger = () => stRef.current ?? (ScrollTrigger.getById("contact-scroll") as ScrollTrigger | null);
-  const getIndexByFloat = (st: ScrollTrigger, total: number) => st.progress * (total - 1);
-
-  const isMobile = useMediaQuery("(max-width: 767px)");
-
+  const [status, setStatus] = useState<Status>("idle");
+  const [errorMessage, setErrorMessage] = useState("");
+  const [horizontal, setHorizontal] = useState(false);
+  const reduceMotion = useReducedMotion();
   const { isLoaded } = useLoading();
 
-  const goToIndex = (index:number) => {
-    const st = getScrollTrigger();
-    if(!st) return;
+  const packageTitles = packages.map((pkg) => pkg.title);
+  const selectedPackage = initialPackage && packageTitles.includes(initialPackage)
+    ? initialPackage
+    : "Kein bestimmtes Paket";
 
-    const total = document.querySelectorAll(".panel").length;
-    const clamped = Math.max(0, Math.min(total - 1, index));
-    const y = st.start + (st.end - st.start) * (clamped / (total - 1));
+  const goToIndex = useCallback((index: number) => {
+    const trigger = scrollTriggerRef.current;
+    if (!trigger) return;
+    const target = Math.max(0, Math.min(TOTAL_PANELS - 1, index));
+    const scrollPosition = trigger.start + (trigger.end - trigger.start) * (target / (TOTAL_PANELS - 1));
 
-    programmatic.current = true;
     gsap.to(window, {
-        scrollTo: { y, autoKill: false},
-        duration: 0.6,
-        ease: 'power2.inOut',
-        overwrite: 'auto',
-        onComplete: () => { programmatic.current = false; }
+      scrollTo: { y: scrollPosition, autoKill: false },
+      duration: 0.55,
+      ease: "power2.inOut",
+      overwrite: "auto",
     });
-  };
-
-  const goNext = () => {
-    const st = getScrollTrigger();
-    if(!st) return;
-    const total = document.querySelectorAll(".panel").length;
-    const idxFloat = getIndexByFloat(st, total);
-    const current = Math.round(idxFloat);
-    goToIndex(current + 1);
-  };
-
-  const goPrev = () => {
-    const st = getScrollTrigger();
-    if(!st) return;
-    const total = document.querySelectorAll(".panel").length;
-    const idxFloat = getIndexByFloat(st, total);
-    const current = Math.round(idxFloat);
-    goToIndex(current - 1);
-  };
-
-  useLayoutEffect(() => {
-    if (!isLoaded) return;
-    if (typeof window === 'undefined') return;
-
-    // Hide global scrollbar to avoid vertical scrollbar confusion on a horizontal scroll page
-    document.documentElement.classList.add('hide-global-scrollbar');
-
-    let mm = gsap.matchMedia();
-
-    mm.add("(min-width: 768px)", () => {
-        const threshold = 0.25;
-        let ctxCleanup: (() => void) | null = null;
-
-        const init = () => {
-            const el = sectionRef.current;
-            if(!el) { rafId.current = requestAnimationFrame(init); return;}
-
-            const panels = Array.from(el.querySelectorAll<HTMLElement>('.panel'));
-            if(el.offsetWidth === 0 || panels.length < 2) {
-                rafId.current = requestAnimationFrame(init);
-                return;
-            }
-
-            const ctx = gsap.context(() => {
-                gsap.to(panels, {
-                    xPercent: -100 * (panels.length - 1),
-                    ease: "none",
-                    scrollTrigger: {
-                        id: "contact-scroll",
-                        trigger: el,
-                        pin: true,
-                        scrub: 1,
-                        end: () => `+=${el.offsetWidth * (panels.length - 1)}`,
-                        onUpdate: (self) => {
-                            const v = (self as any).getVelocity?.() ?? 1;
-                            lastDir.current = v < 0 ? -1 : 1;
-
-                            const idx = Math.round(self.progress * (panels.length - 1));
-                            setActivePanel(idx);
-                            if (idx === 2) {
-                                document.body.classList.add('on-dark-panel');
-                            } else {
-                                document.body.classList.remove('on-dark-panel');
-                            }
-                        },
-                        onRefresh: (self) => { stRef.current = self; },
-                    },
-                });
-
-                const onScrollEnd = () => {
-                    const st = stRef.current;
-                    if (!st || programmatic.current) return;
-                    const total = panels.length;
-                    const idxFloat = st.progress * (total - 1)
-                    const base = Math.floor(idxFloat);
-                    const frac = idxFloat - base;
-
-                    const v = (st as any).getVelocity?.() ?? 0;
-                    const dir = v < 0 ? -1 : 1;
-
-                    let targetIndex: number;
-
-                    if (dir > 0) {
-                        targetIndex = base + (frac >= threshold ? 1 : 0);
-                    } else {
-                        targetIndex = base + (frac > 1 - threshold ? 1 : 0);
-                    }
-
-                    targetIndex = Math.max(0, Math.min(total - 1, targetIndex));
-
-                    const y = st.start + (st.end - st.start) * (targetIndex / (total - 1));
-
-                    programmatic.current = true;
-                    gsap.to(window, {
-                        scrollTo: { y, autoKill: false },
-                        duration: 0.5,
-                        ease: "power2.inOut",
-                        overwrite: "auto",
-                        onComplete: () => { programmatic.current = false; }
-                    });
-                };
-
-                ScrollTrigger.addEventListener("scrollEnd", onScrollEnd);
-
-                ctxCleanup = () => {
-                    ScrollTrigger.removeEventListener("scrollEnd", onScrollEnd);
-                    ctx.revert();
-                };
-
-                ScrollTrigger.refresh();
-            }, sectionRef);
-
-            if ((document as any).fonts?.ready) {
-                (document as any).fonts.ready.then(() => ScrollTrigger.refresh());
-            }
-
-            roRef.current = new ResizeObserver(() => {
-                if (stRef.current && sectionRef.current) {
-                    const elNow = sectionRef.current;
-                    const pNow = Array.from(elNow.querySelectorAll<HTMLElement>('.panel'));
-                    stRef.current.vars.end = () => `+=${elNow.offsetWidth * (pNow.length - 1)}`;
-                    ScrollTrigger.refresh();
-                }
-            });
-            roRef.current.observe(el);
-        };
-
-        rafId.current = requestAnimationFrame(init);
-
-        return () => {
-            if (rafId.current) cancelAnimationFrame(rafId.current);
-            roRef.current?.disconnect();
-            roRef.current = null;
-            ctxCleanup?.();
-        };
-    });
-
-    if(initialPackage) {
-        setTimeout(() => {
-            goToIndex(1);
-        }, 150);
-
-        const selectEl = document.getElementById('package') as HTMLSelectElement;
-        if (selectEl) {
-            const optionExists = Array.from(selectEl.options).some(opt => opt.value === initialPackage);
-            if (optionExists) {
-            selectEl.value = initialPackage;
-            }
-        }
-    }
-
-    return () => {
-        mm.revert();
-        document.documentElement.classList.remove('hide-global-scrollbar');
-    }
-  }, [pathname, isLoaded, initialPackage]); // eslint-disable-line react-hooks/exhaustive-deps
-
-  useEffect(() => {
-    const onLoad = () => ScrollTrigger.refresh();
-    window.addEventListener('load', onLoad);
-    return () => window.removeEventListener('load', onLoad);
   }, []);
 
   useEffect(() => {
-    if (status === 'error') {
-      errorRef.current?.focus();
-    }
+    const media = window.matchMedia("(min-width: 1024px)");
+    const update = () => setHorizontal(media.matches && !reduceMotion);
+    update();
+    media.addEventListener("change", update);
+    return () => media.removeEventListener("change", update);
+  }, [reduceMotion]);
+
+  useLayoutEffect(() => {
+    const section = sectionRef.current;
+    const track = trackRef.current;
+    const darkPanel = darkPanelRef.current;
+    if (!isLoaded || !horizontal || !section || !track || !darkPanel) return;
+
+    document.documentElement.classList.add("hide-global-scrollbar");
+
+    const context = gsap.context(() => {
+      const distance = () => Math.max(0, track.scrollWidth - window.innerWidth);
+      const setDarkOpacity = gsap.quickSetter(darkPanel, "opacity");
+      setDarkOpacity(0.72);
+      const tween = gsap.to(track, {
+        x: () => -distance(),
+        ease: "none",
+        scrollTrigger: {
+          id: "contact-scroll",
+          trigger: section,
+          start: "top top",
+          end: () => `+=${distance()}`,
+          pin: true,
+          scrub: 1,
+          snap: {
+            snapTo: 1 / (TOTAL_PANELS - 1),
+            duration: { min: 0.22, max: 0.5 },
+            delay: 0.08,
+            ease: "power2.inOut",
+            inertia: false,
+          },
+          anticipatePin: 1,
+          invalidateOnRefresh: true,
+          onUpdate: (self) => {
+            const nextPanel = Math.round(self.progress * (TOTAL_PANELS - 1));
+            if (nextPanel !== activePanelRef.current) {
+              activePanelRef.current = nextPanel;
+              setActivePanel(nextPanel);
+            }
+
+            const darkProgress = gsap.utils.clamp(0, 1, (self.progress - 0.5) * 2);
+            setDarkOpacity(0.72 + darkProgress * 0.28);
+          },
+          onRefresh: (self) => {
+            scrollTriggerRef.current = self;
+          },
+        },
+      });
+
+      scrollTriggerRef.current = tween.scrollTrigger ?? null;
+      ScrollTrigger.refresh();
+
+      if (initialPackage) {
+        window.requestAnimationFrame(() => goToIndex(1));
+      }
+    }, sectionRef);
+
+    const resizeObserver = new ResizeObserver(() => ScrollTrigger.refresh());
+    resizeObserver.observe(section);
+
+    return () => {
+      resizeObserver.disconnect();
+      scrollTriggerRef.current = null;
+      context.revert();
+      gsap.set(darkPanel, { clearProps: "opacity" });
+      document.documentElement.classList.remove("hide-global-scrollbar");
+    };
+  }, [goToIndex, horizontal, initialPackage, isLoaded]);
+
+  useEffect(() => {
+    if (status === "error") errorRef.current?.focus();
   }, [status]);
 
-  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    setStatus('submitting');
-    setErrorMessage('');
+  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    setStatus("submitting");
+    setErrorMessage("");
 
-    const formData = new FormData(e.currentTarget);
-    
     try {
-        const response = await fetch('/api/send', {
-            method: 'POST',
-            body: formData,
-        });
-
-        const data = await response.json();
-
-        if (!response.ok) {
-            throw new Error(data.error || 'Etwas ist schiefgelaufen.');
-        }
-
-        setStatus('success');
-    } catch (error: any) {
-        console.error(error);
-        setStatus('error');
-        setErrorMessage(error.message);
+      const response = await fetch("/api/send", { method: "POST", body: new FormData(event.currentTarget) });
+      const data = (await response.json()) as { error?: string };
+      if (!response.ok) throw new Error(data.error || "Etwas ist schiefgelaufen.");
+      setStatus("success");
+    } catch (error: unknown) {
+      const message = error instanceof Error ? error.message : "Etwas ist schiefgelaufen.";
+      setStatus("error");
+      setErrorMessage(message);
     }
   };
 
-  const statusAnnouncement =
-    status === 'submitting'
-      ? 'Anfrage wird gesendet…'
-      : status === 'success'
-      ? 'Anfrage erfolgreich gesendet.'
-      : status === 'error'
-      ? `Fehler beim Senden: ${errorMessage}`
-      : '';
+  const statusAnnouncement = status === "submitting"
+    ? "Anfrage wird gesendet."
+    : status === "success"
+      ? "Anfrage erfolgreich gesendet."
+      : status === "error"
+        ? `Fehler beim Senden: ${errorMessage}`
+        : "";
 
   return (
-    <section ref={sectionRef} className="overflow-hidden">
-        <div 
-            ref={panelsRef}
-            className="flex w-full flex-col md:w-[300vw] md:flex-row"
-        >
-            <motion.div 
-                className="panel flex h-auto min-h-screen w-full items-center justify-center p-8 bg-zinc-100 md:h-screen md:w-screen"
-                variants={isMobile ? panelVariants : {}}
-                initial="hidden"
-                whileInView="visible"
-                viewport={{ once: true, amount: 0.3 }}
-            >
-                <div className="text-center max-w-4xl">
-                    <h1 className="text-7xl md:text-9xl font-bold tracking-tight text-zinc-900 leading-none mb-6">
-                    Bereit, etwas
-                    <br />
-                    <span className="text-transparent bg-clip-text bg-gradient-to-r from-accent to-blue-500">
-                        Neues zu starten?
-                    </span>
-                    </h1>
-                    <p className="text-xl md:text-2xl text-zinc-700 mt-8 tracking-wide">
-                    Scrollen Sie weiter, um mit uns in Kontakt zu treten.
-                    </p>
-                </div>
-            </motion.div>
+    <section ref={sectionRef} className="contact-experience overflow-hidden bg-[var(--color-page-bg)]">
+      <div ref={trackRef} className="contact-track flex w-full flex-col lg:w-[300vw] lg:flex-row">
+        <section className="contact-panel flex min-h-[100dvh] w-full items-end bg-[var(--color-surface)] px-4 pb-12 pt-28 sm:px-6 md:pb-16 lg:h-[100dvh] lg:w-screen lg:items-center lg:py-24">
+          <div className="site-container">
+            <h1 className="max-w-[12ch] text-balance text-[clamp(3.4rem,9vw,8.5rem)] leading-[0.86] text-[var(--color-heading)]">
+              Bereit, etwas Neues zu starten?
+            </h1>
+            <p className="mt-7 max-w-[48ch] text-lg leading-relaxed text-[var(--color-text)] md:text-2xl">
+              Erzählen Sie uns von Ihrem Projekt. Wir melden uns mit einer klaren Einschätzung zurück.
+            </p>
+          </div>
+        </section>
 
-            <motion.div 
-                className="panel flex h-auto min-h-screen w-full items-center justify-center p-8 bg-white md:h-screen md:w-screen"
-                variants={isMobile ? panelVariants : {}}
-                initial="hidden"
-                whileInView="visible"
-                viewport={{ once: true, amount: 0.3 }}
-            >
-                <div className="w-full max-w-lg no-hscroll-on-form">
-                    <p className="sr-only" aria-live="polite">
-                        {statusAnnouncement}
-                    </p>
-                    <AnimatePresence mode="wait">
-                        {status !== 'success' && (
-                            <motion.div
-                                key="form"
-                                exit={{ opacity: 0, y: -20 }}
-                                transition={{ duration: 0.2 }}
-                            >
-                                <h2 className="text-4xl md:text-5xl font-bold tracking-normal text-[var(--color-heading)] mb-6">
-                                    Schreiben Sie uns.
-                                </h2>
-                                <p className="text-lg md:text-xl text-[var(--color-text)] mb-4">
-                                    Wir freuen uns darauf, von Ihrer Idee zu hören und 
-                                    sie gemeinsam umzusetzen.
-                                </p>
+        <section className="contact-panel flex min-h-[100dvh] w-full items-center bg-[var(--color-page-bg)] px-4 py-24 sm:px-6 lg:h-[100dvh] lg:w-screen lg:overflow-y-auto">
+          <div className="mx-auto w-full max-w-5xl">
+            <p className="sr-only" aria-live="polite">{statusAnnouncement}</p>
+            <AnimatePresence mode="wait">
+              {status !== "success" ? (
+                <motion.div
+                  key="form"
+                  initial={reduceMotion ? false : { opacity: 0, y: 18 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={reduceMotion ? undefined : { opacity: 0, y: -12 }}
+                >
+                  <div className="mb-7 md:mb-9">
+                    <h2 className="text-[clamp(2.6rem,5vw,4.8rem)] leading-[0.95] text-[var(--color-heading)]">Schreiben Sie uns.</h2>
+                    <p className="mt-3 max-w-[52ch] leading-relaxed text-[var(--color-text)]">Ein paar Eckdaten reichen für den Anfang.</p>
+                  </div>
 
-                                <form className="space-y-6" onSubmit={handleSubmit}>
-                                    <div>
-                                        <label htmlFor="name" className="block text-lg font-medium text-[var(--color-text)] mb-2">Name</label>
-                                        <input type="text" id="name" name="name" autoComplete="name" required 
-                                            className="w-full px-6 py-4 bg-zinc-50 border border-zinc-200 rounded-xl text-base md:text-lg
-                                                    text-[var(--color-heading)] focus:ring-2 focus:ring-accent focus:outline-none transition-shadow"/>
-                                    </div>
-                                    <div>
-                                        <label htmlFor="email" className="block text-lg font-medium text-[var(--color-text)] mb-2">E-Mail</label>
-                                        <input type="email" id="email" name="email" autoComplete="email" inputMode="email" spellCheck={false} required 
-                                            className="w-full px-6 py-4 bg-zinc-50 border border-zinc-200 rounded-xl text-base md:text-lg
-                                                        text-[var(--color-heading)] focus:ring-2 focus:ring-accent focus:outline-none transition-shadow"/>
-                                    </div>
-                                    <div>
-                                        <label htmlFor="package" className="block text-lg font-medium text-[var(--color-text)] mb-2">
-                                            Interessiert an
-                                        </label>
-                                        <select
-                                            id="package"
-                                            name="package"
-                                            autoComplete="off"
-                                            required
-                                            className="w-full px-6 py-4 bg-zinc-50 border border-zinc-200 rounded-xl text-base md:text-lg
-                                                    text-[var(--color-heading)] focus:ring-2 focus:ring-accent focus:outline-none
-                                                    appearance-none transition-shadow"
-                                        >
-                                            <option value="Kein bestimmtes Paket">Bitte auswählen…</option>
-                                            <option value="Launchpad">Launchpad-Paket</option>
-                                            <option value="Accelerator">Accelerator-Paket</option>
-                                            <option value="Partner">Partner-Paket</option>
-                                            <option value="Kein bestimmtes Paket">Kein bestimmtes Paket</option>
-                                        </select>
-                                    </div>
-                                    <div>
-                                        <label htmlFor="message" className="block text-lg font-medium text-[var(--color-text)] mb-2">Deine Nachricht</label>
-                                        <textarea id="message" name="message" autoComplete="off" rows={5} required 
-                                                placeholder="Worum geht es in Ihrem Projekt…"
-                                                className="w-full px-6 py-4 bg-zinc-50 border border-zinc-200 rounded-xl text-base md:text-lg
-                                                            text-[var(--color-heading)] focus:ring-2 focus:ring-accent focus:outline-none resize-y max-h-[200px] min-h-[128px] transition-shadow"/>
-                                    </div>
-                                    <MagneticButton
-                                        type="submit"
-                                        className="group inline-flex items-center justify-center gap-2 
-                                                    bg-accent text-white font-semibold 
-                                                    px-10 py-4 rounded-full text-lg md:text-xl 
-                                                    mt-4 transition-all hover:bg-accent-dark shadow-xl shadow-accent/20"
-                                        disabled={status === 'submitting'}
-                                        >
-                                        {status === 'submitting' ? 'Sende…' : 'Anfrage senden'}
-                                        <HiOutlineArrowRight aria-hidden="true" className="transition-transform duration-300 group-hover:translate-x-1" />
-                                    </MagneticButton>
-
-                                    {status === 'error' && (
-                                        <p ref={errorRef} tabIndex={-1} role="alert" className="text-red-600 mt-4">
-                                            Fehler: {errorMessage}
-                                        </p>
-                                    )}
-                                </form>
-                            </motion.div>
-                        )}
-
-                        {status === 'success' && (
-                            <motion.div key="success" className="h-[450px]">
-                                <ContactSuccessAnimation />
-                            </motion.div>
-                        )}
-
-                    </AnimatePresence>
-                </div>
-            </motion.div>
-        
-            <motion.div 
-                id="dark-contact-panel"
-                className="panel flex h-auto min-h-screen w-full items-center justify-center p-8 bg-zinc-900 text-white md:h-screen md:w-screen"
-                variants={isMobile ? panelVariants : {}}
-                initial="hidden"
-                whileInView={isMobile ? "visible" : ""}
-                viewport={{ once: true, amount: 0.3 }}
-            >
-                <div className="text-left max-w-lg">
-                    <h2 className="text-5xl md:text-6xl font-bold mb-10">
-                    Oder treffen wir uns.
-                    </h2>
-                    <div className="space-y-6 text-lg md:text-xl tracking-wide">
-                    <p>
-                        <strong className="text-accent block mb-1">E-Mail:</strong>
-                        <a href="mailto:hallo@cmdstudios.at" className="hover:underline">hallo@cmdstudios.at</a>
-                    </p>
-                    <p>
-                        <strong className="text-accent block mb-1">Standort:</strong>
-                        Ein Co-Working Space in Ihrer Nähe
-                    </p>
+                  <form onSubmit={handleSubmit} aria-busy={status === "submitting"} className="grid gap-5 md:grid-cols-2 md:gap-x-6 md:gap-y-5">
+                    <div className="grid gap-2">
+                      <label htmlFor="name" className="font-medium text-[var(--color-heading)]">Name</label>
+                      <input
+                        type="text"
+                        id="name"
+                        name="name"
+                        autoComplete="name"
+                        required
+                        className="min-h-12 w-full rounded-[var(--radius-control)] border border-[var(--color-navbar-border)] bg-[var(--color-surface)] px-4 py-3 text-base text-[var(--color-heading)] placeholder:text-[var(--color-text-muted)]"
+                      />
                     </div>
-                </div>
-            </motion.div>
-        </div>
 
-        <div className="fixed bottom-10 right-10 z-50 gap-3 md:flex hidden">
-            <button
-                type="button"
-                onClick={() => goPrev()}
-                disabled={activePanel === 0}
-                className="bg-[var(--color-scroll-button-bg)] rounded-full p-3 shadow-lg text-[var(--color-scroll-button-text)]
-                            hover:bg-[var(--color-scroll-button-hover-bg)] disabled:opacity-30 disabled:cursor-not-allowed
-                            transition-opacity"
-                aria-label="Vorheriges Panel"
-            >
-            <HiArrowLeft aria-hidden="true" className="w-6 h-6" />
-            </button>
-            <button
-                type="button"
-                onClick={() => goNext()}
-                disabled={activePanel === (TOTAL_PANELS - 1)}
-                className="bg-[var(--color-scroll-button-bg)] text-[var(--color-scroll-button-text)] rounded-full p-3 shadow-lg
-                            hover:bg-[var(--color-scroll-button-hover-bg)] disabled:opacity-30 disabled:cursor-not-allowed
-                            transition-opacity"
-                aria-label="Nächstes Panel"
-            >
-            <HiArrowRight aria-hidden="true" className="w-6 h-6" />
-            </button>
+                    <div className="grid gap-2">
+                      <label htmlFor="email" className="font-medium text-[var(--color-heading)]">E-Mail</label>
+                      <input
+                        type="email"
+                        id="email"
+                        name="email"
+                        autoComplete="email"
+                        inputMode="email"
+                        spellCheck={false}
+                        required
+                        className="min-h-12 w-full rounded-[var(--radius-control)] border border-[var(--color-navbar-border)] bg-[var(--color-surface)] px-4 py-3 text-base text-[var(--color-heading)] placeholder:text-[var(--color-text-muted)]"
+                      />
+                    </div>
+
+                    <div className="grid gap-2 md:self-start">
+                      <label htmlFor="package" className="font-medium text-[var(--color-heading)]">Interessiert an</label>
+                      <select
+                        id="package"
+                        name="package"
+                        autoComplete="off"
+                        defaultValue={selectedPackage}
+                        required
+                        className="min-h-12 w-full rounded-[var(--radius-control)] border border-[var(--color-navbar-border)] bg-[var(--color-surface)] px-4 py-3 text-base text-[var(--color-heading)]"
+                      >
+                        <option value="Kein bestimmtes Paket">Kein bestimmtes Paket</option>
+                        {packageTitles.map((title) => <option key={title} value={title}>{title}</option>)}
+                      </select>
+                    </div>
+
+                    <div className="grid gap-2 md:row-span-2">
+                      <label htmlFor="message" className="font-medium text-[var(--color-heading)]">Ihre Nachricht</label>
+                      <textarea
+                        id="message"
+                        name="message"
+                        autoComplete="off"
+                        rows={5}
+                        required
+                        placeholder="Worum geht es in Ihrem Projekt?"
+                        className="min-h-36 w-full resize-y rounded-[var(--radius-control)] border border-[var(--color-navbar-border)] bg-[var(--color-surface)] px-4 py-3 text-base text-[var(--color-heading)] placeholder:text-[var(--color-text-muted)] md:h-full md:max-h-56"
+                      />
+                    </div>
+
+                    <div className="flex flex-col items-start gap-4 md:col-start-1">
+                      <MagneticButton
+                        type="submit"
+                        disabled={status === "submitting"}
+                        className="inline-flex min-h-14 items-center justify-center gap-2 rounded-full bg-accent px-7 font-accent text-lg text-white transition-colors hover:bg-accent-dark disabled:cursor-wait disabled:opacity-60"
+                      >
+                        {status === "submitting" ? "Senden..." : "Anfrage senden"}
+                        <HiOutlineArrowRight aria-hidden="true" className="h-5 w-5" />
+                      </MagneticButton>
+                      {status === "error" ? (
+                        <p ref={errorRef} tabIndex={-1} role="alert" className="text-sm text-red-700">Fehler: {errorMessage}</p>
+                      ) : null}
+                    </div>
+                  </form>
+                </motion.div>
+              ) : (
+                <motion.div key="success" className="min-h-[26rem]" initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
+                  <ContactSuccessAnimation />
+                </motion.div>
+              )}
+            </AnimatePresence>
+          </div>
+        </section>
+
+        <section
+          ref={darkPanelRef}
+          id="dark-contact-panel"
+          className="contact-panel flex min-h-[100dvh] w-full items-center bg-[#1c1b1a] px-4 py-24 text-[#f9f8f4] sm:px-6 lg:h-[100dvh] lg:w-screen"
+        >
+          <div className="site-container grid gap-12 lg:grid-cols-12 lg:items-end">
+            <h2 className="max-w-[12ch] text-balance text-[clamp(3.2rem,8vw,7.8rem)] leading-[0.88] text-white lg:col-span-8">Oder sprechen wir direkt.</h2>
+            <div className="space-y-7 lg:col-span-4">
+              <div>
+                <p className="font-accent text-sm text-[#ff8552]">E-Mail</p>
+                <a href="mailto:hallo@cmdstudios.at" className="mt-2 block break-all text-xl text-white hover:text-[#ff8552] sm:text-2xl">hallo@cmdstudios.at</a>
+              </div>
+              <div>
+                <p className="font-accent text-sm text-[#ff8552]">Standort</p>
+                <p className="mt-2 text-lg text-white/72">Ein Co-Working Space in Ihrer Nähe</p>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+
+      {horizontal ? (
+        <div className="fixed bottom-6 right-6 z-50 hidden gap-2 lg:flex">
+          <button
+            type="button"
+            onClick={() => goToIndex(activePanel - 1)}
+            disabled={activePanel === 0}
+            className="grid h-12 w-12 place-items-center rounded-full border border-black/10 bg-[#f9f8f4] text-[#1c1b1a] shadow-[0_12px_32px_rgb(28_27_26_/_12%)] transition-transform hover:-translate-y-1 disabled:opacity-30"
+            aria-label="Vorheriges Panel"
+          >
+            <HiArrowLeft aria-hidden="true" className="h-5 w-5" />
+          </button>
+          <button
+            type="button"
+            onClick={() => goToIndex(activePanel + 1)}
+            disabled={activePanel === TOTAL_PANELS - 1}
+            className="grid h-12 w-12 place-items-center rounded-full bg-accent text-white transition-transform hover:-translate-y-1 disabled:opacity-30"
+            aria-label="Nächstes Panel"
+          >
+            <HiArrowRight aria-hidden="true" className="h-5 w-5" />
+          </button>
         </div>
+      ) : null}
     </section>
   );
 }

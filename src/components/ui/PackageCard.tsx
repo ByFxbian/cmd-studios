@@ -1,77 +1,65 @@
-'use client';
+"use client";
 
-import type { PackageData } from '@/lib/package-data';
-import { MagneticLink } from './MagneticLink';
-import { HiCheck, HiMinus } from 'react-icons/hi';
+import type { PackageData } from "@/lib/package-data";
+import { HiCheck } from "react-icons/hi2";
+import { MagneticLink } from "./MagneticLink";
 
-interface PackageCardProps {
-  pkg: PackageData;
-}
-
-export function PackageCard({ pkg }: PackageCardProps) {
-  const isPopular = pkg.isPopular;
+export function PackageCard({ pkg }: { pkg: PackageData }) {
+  const included = pkg.features.filter((feature) => feature.included);
+  const excluded = pkg.features.filter((feature) => !feature.included);
 
   return (
-    <div className={`relative flex flex-col h-full p-6 md:p-8 rounded-2xl transition-all duration-500 group
-      backdrop-blur-md border
-      ${isPopular
-        ? 'bg-zinc-900/90 border-zinc-800 shadow-2xl shadow-accent/10'
-        : 'bg-white/40 border-white/20 hover:bg-white/60 hover:border-zinc-300 shadow-lg'
-      }
-    `}>
-      {isPopular && (
-        <div className='absolute -top-4 left-6 md:left-8'>
-          <span className='px-4 py-1.5 text-xs md:text-sm tracking-widest uppercase font-bold text-zinc-900 bg-accent rounded-full'>
-            Am Beliebtesten
-          </span>
+    <article
+      className={`flex h-full flex-col rounded-[var(--radius-card)] border p-6 sm:p-8 ${
+        pkg.isPopular
+          ? "border-[var(--color-heading)] bg-[var(--color-heading)] text-[var(--color-page-bg)]"
+          : "border-[var(--color-navbar-border)] bg-[var(--color-surface)] text-[var(--color-heading)]"
+      }`}
+    >
+      <div className="flex flex-wrap items-start justify-between gap-4">
+        <div>
+          <h3 className="text-3xl md:text-4xl">{pkg.title}</h3>
+          {pkg.isPopular ? <p className="mt-2 font-accent text-sm text-accent">Beliebte Wahl</p> : null}
         </div>
-      )}
-
-      <div className="mb-6 md:mb-8">
-        <h3 className={`text-3xl md:text-4xl tracking-wider mb-3 ${isPopular ? 'text-white' : 'text-zinc-900'}`}>
-            {pkg.title}
-        </h3>
-        <p className={`text-sm md:text-base uppercase tracking-wide font-semibold ${isPopular ? 'text-zinc-400' : 'text-zinc-500'}`}>
-            {pkg.description}
-        </p>
+        <p className={`font-accent text-2xl md:text-3xl ${pkg.isPopular ? "text-white" : "text-accent"}`}>{pkg.price}</p>
       </div>
 
-      <div className="mb-6 md:mb-8 flex items-baseline gap-1">
-        <span className={`text-4xl font-accent md:text-5xl ${isPopular ? 'text-white' : 'text-zinc-900'}`}>
-          {pkg.price}
-        </span>
-      </div>
+      <p className={`mt-6 max-w-[54ch] leading-relaxed ${pkg.isPopular ? "text-white/72" : "text-[var(--color-text)]"}`}>
+        {pkg.description}
+      </p>
 
-      <div className={`w-full h-px mb-6 md:mb-8 ${isPopular ? 'bg-zinc-800' : 'bg-zinc-200 group-hover:bg-zinc-300'}`} />
-
-      <ul className="space-y-4 md:space-y-6 mb-10 md:mb-12 grow">
-        {pkg.features.map((feature, i) => (
-          <li key={i} className="flex items-start gap-4">
-            <div className={`mt-1.5 p-0.5 rounded-full ${feature.included ? (isPopular ? 'bg-accent text-zinc-900' : 'bg-zinc-900 text-white') : 'bg-transparent'}`}>
-                {feature.included ? <HiCheck className="w-4 h-4" /> : <HiMinus className="w-4 h-4 text-zinc-400" />}
-            </div>
-            <span className={`text-base md:text-lg leading-snug ${
-                !feature.included 
-                ? 'text-zinc-400 line-through decoration-zinc-400/50' 
-                : (isPopular ? 'text-zinc-300' : 'text-zinc-700')
-            }`}>
-              {feature.text}
+      <ul className="mt-8 grid gap-3 sm:grid-cols-2">
+        {included.map((feature) => (
+          <li key={feature.text} className="flex items-start gap-3 text-sm leading-relaxed md:text-base">
+            <span className={`mt-0.5 grid h-5 w-5 shrink-0 place-items-center rounded-full ${pkg.isPopular ? "bg-accent text-white" : "bg-[var(--color-heading)] text-[var(--color-page-bg)]"}`}>
+              <HiCheck aria-hidden="true" className="h-3.5 w-3.5" />
             </span>
+            <span className={pkg.isPopular ? "text-white/82" : "text-[var(--color-text)]"}>{feature.text}</span>
           </li>
         ))}
       </ul>
 
-      <MagneticLink
-        href={`/contact?package=${pkg.title}`}
-        className={`w-full py-4 md:py-5 rounded-xl font-bold text-lg text-center transition-all duration-300
-          ${isPopular
-            ? 'bg-white text-black hover:bg-accent hover:scale-[1.02]'
-            : 'bg-zinc-900 text-white hover:bg-black hover:scale-[1.02]'
-          }
-        `}
-      >
-        Paket anfragen
-      </MagneticLink>
-    </div>
+      {excluded.length ? (
+        <details className={`mt-7 border-t pt-5 text-sm ${pkg.isPopular ? "border-white/14 text-white/62" : "border-[var(--color-navbar-border)] text-[var(--color-text-muted)]"}`}>
+          <summary className="w-fit">Nicht enthalten</summary>
+          <ul className="mt-3 space-y-2">
+            {excluded.map((feature) => <li key={feature.text}>{feature.text}</li>)}
+          </ul>
+        </details>
+      ) : null}
+
+      <div className="mt-auto pt-8">
+        <MagneticLink
+          href={`/contact?package=${pkg.title}`}
+          className={`inline-flex h-13 w-full items-center justify-center rounded-full px-6 font-accent text-lg transition-colors active:scale-[0.98] ${
+            pkg.isPopular
+              ? "bg-white text-[#1c1b1a] hover:bg-accent hover:text-white"
+              : "bg-[var(--color-heading)] text-[var(--color-page-bg)] hover:bg-accent hover:text-white"
+          }`}
+        >
+          Kontakt
+        </MagneticLink>
+      </div>
+    </article>
   );
 }

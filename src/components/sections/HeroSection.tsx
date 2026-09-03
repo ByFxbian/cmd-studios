@@ -1,87 +1,92 @@
-'use client';
+"use client";
 
-import { RefObject, useRef, useState, useEffect } from 'react';
-import { motion } from "framer-motion";
-import dynamic from 'next/dynamic';
+import Image from "next/image";
+import Link from "next/link";
+import { motion, useReducedMotion } from "framer-motion";
+import { featuredProjects } from "@/lib/portfolio-data";
+import { MagneticLink } from "../ui/MagneticLink";
+import { ExpandableButton } from "../ui/ExpandableButton";
 
-const HeroCanvas = dynamic(() => import('../ui/HeroCanvas').then(mod => mod.HeroCanvas), { ssr: false });
-
-import { ImageTrail } from '../ui/ImageTrail';
-import { MagneticLink } from '../ui/MagneticLink';
-import { ExpandableButton } from '../ui/ExpandableButton';
+const heroProject = featuredProjects[0];
 
 export function HeroSection() {
-    const sectionRef = useRef<HTMLElement>(null);
-    const [isTransitioning, setIsTransitioning] = useState(true);
+  const reduceMotion = useReducedMotion();
+  const rise = reduceMotion ? false : { opacity: 0, y: 52 };
 
-    useEffect(() => {
-        console.log("[HeroSection Debug] Component mounted, waiting 800ms before rendering HeroCanvas...");
-        const timer = setTimeout(() => {
-            console.log("[HeroSection Debug] 800ms passed, rendering HeroCanvas now!");
-            setIsTransitioning(false);
-        }, 800);
-        return () => clearTimeout(timer);
-    }, []);
+  return (
+    <section className="relative min-h-[100dvh] overflow-hidden bg-[var(--color-page-bg)] pt-24">
+      <div aria-hidden="true" className="surface-grid absolute inset-0 opacity-55 [mask-image:linear-gradient(to_bottom,black,transparent_82%)]" />
+      <div aria-hidden="true" className="absolute -right-[14vw] top-[12vh] h-[42vw] min-h-80 w-[42vw] min-w-80 rounded-full bg-accent/10 blur-3xl" />
 
-    return (
-        <section ref={sectionRef} className='relative h-[100dvh] w-full overflow-hidden bg-[var(--color-page-bg)] bg-[var(--color-page-bg)]'>
-            <div className="absolute inset-0 z-0 select-none pointer-events-none">
-                {!isTransitioning && <HeroCanvas />}
-                <ImageTrail containerRef={sectionRef as RefObject<HTMLElement>} />
+      <div className="site-container relative z-10 grid min-h-[calc(100dvh-6rem)] grid-cols-1 content-between gap-10 pb-8 md:pb-10 lg:grid-cols-12 lg:items-center lg:gap-8">
+        <div className="flex flex-col justify-center lg:col-span-9 lg:py-12">
+          <h1 className="text-balance text-[clamp(3.25rem,15vw,6.5rem)] leading-[0.84] text-[var(--color-heading)] sm:text-[clamp(4.5rem,12vw,8rem)] lg:text-[clamp(6rem,9.2vw,9.2rem)]">
+            <motion.span
+              className="block"
+              initial={rise}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.85, ease: [0.16, 1, 0.3, 1] }}
+            >
+              DIGITAL MIT
+            </motion.span>
+            <motion.span
+              className="block text-accent lg:pl-[10vw]"
+              initial={rise}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.85, delay: reduceMotion ? 0 : 0.08, ease: [0.16, 1, 0.3, 1] }}
+            >
+              CHARAKTER
+            </motion.span>
+          </h1>
+
+          <motion.div
+            className="mt-8 flex max-w-xl flex-col gap-6 sm:mt-10"
+            initial={reduceMotion ? false : { opacity: 0, y: 24 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.7, delay: reduceMotion ? 0 : 0.22, ease: [0.16, 1, 0.3, 1] }}
+          >
+            <p className="max-w-[48ch] text-base leading-relaxed text-[var(--color-text)] sm:text-lg md:text-xl">
+              Websites, Apps und Content für Unternehmen, die digital nicht austauschbar wirken wollen.
+            </p>
+            <div className="flex flex-wrap items-center gap-3 sm:gap-4">
+              <ExpandableButton />
+              <MagneticLink
+                href="/contact"
+                className="inline-flex h-14 items-center justify-center rounded-full border border-[var(--color-navbar-border)] bg-[var(--color-page-bg)] px-7 font-accent text-lg text-[var(--color-heading)] transition-colors hover:bg-[var(--color-heading)] hover:text-[var(--color-page-bg)] active:scale-[0.98]"
+              >
+                Kontakt
+              </MagneticLink>
             </div>
-            
-            <div className="absolute bottom-0 left-0 w-full h-[30vh] bg-gradient-to-t from-[var(--color-page-bg)] to-transparent z-[1] pointer-events-none" />
+          </motion.div>
+        </div>
 
-            <div className="relative z-10 h-full w-full container mx-auto px-6 flex flex-col justify-center pointer-events-none">
-                 
-                <div className="flex flex-col relative z-20 -mt-20 md:-mt-0">
-                    <h1 className="sr-only">Digital mit Charakter</h1>
-                    <motion.div 
-                        className="flex items-end overflow-hidden"
-                        initial={{ opacity: 0, y: 100 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
-                    >
-                        <h1 aria-hidden="true" className="block text-[13vw] md:text-[10vw] leading-[0.8] tracking-tighter text-[var(--color-heading)] pointer-events-auto">
-                            DIGITAL MIT
-                        </h1>
-                    </motion.div>
-                    
-                    <motion.div 
-                        className="flex items-start justify-end overflow-hidden"
-                        initial={{ opacity: 0, y: 100 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 1, ease: [0.16, 1, 0.3, 1], delay: 0.1 }}
-                    >
-                        <h1 aria-hidden="true" className="block text-[13vw] md:text-[11vw] leading-[0.8] tracking-tighter text-transparent bg-clip-text bg-gradient-to-br from-accent-light via-accent to-accent-dark pointer-events-auto text-right pr-2 pr-2">
-                            CHARAKTER
-                        </h1>
-                    </motion.div>
-                </div>
-
-                <motion.div 
-                    className="absolute bottom-12 left-6 pr-12 md:left-6 md:pr-0 max-w-xl w-full"
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    transition={{ duration: 1, delay: 0.4 }}
-                >
-                    <p className="text-lg md:text-xl text-[var(--color-text)] mb-8 leading-relaxed tracking-wide pointer-events-auto text-left drop-shadow-sm">
-                        Wir gestalten Websites und Inhalte, die nicht austauschbar wirken, <br className="xs:block sm:hidden" /> sondern hängen bleiben. 
-                        <span className="block mt-2 text-[var(--color-heading)] font-accent text-2xl md:text-3xl italic">Webentwicklung & <br className="xs:block sm:hidden" /> Videoproduktion für Unternehmen mit Wiedererkennungswert.</span>
-                    </p>
-                    
-                    <div className="flex flex-nowrap gap-4 justify-start pointer-events-auto items-center">
-                        <ExpandableButton />
-                        <MagneticLink 
-                            href="/contact"
-                            className="px-8 py-4 border border-[var(--color-text-muted)] rounded-full hover:bg-[var(--color-heading)] hover:text-[var(--color-page-bg)] transition-all duration-300 font-bold h-14 flex items-center font-accent text-xl"
-                        >
-                            Kontakt
-                        </MagneticLink>
-                    </div>
-                </motion.div>
+        <motion.div
+          className="absolute right-[-8%] top-[20%] -z-10 hidden w-[34%] rotate-3 lg:block lg:z-0"
+          initial={reduceMotion ? false : { opacity: 0, x: 70, rotate: 7 }}
+          animate={{ opacity: 1, x: 0, rotate: 3 }}
+          transition={{ duration: 1, delay: reduceMotion ? 0 : 0.18, ease: [0.16, 1, 0.3, 1] }}
+        >
+          <Link
+            href={`/portfolio/${heroProject.slug}`}
+            aria-label={`${heroProject.title} im Portfolio öffnen`}
+            className="group block"
+          >
+            <div className="relative aspect-[4/5] overflow-hidden rounded-[var(--radius-card)] bg-[var(--color-surface)] shadow-[0_36px_90px_rgb(28_27_26_/_18%)]">
+              <Image
+                src={heroProject.imageUrl}
+                alt={heroProject.title}
+                fill
+                priority
+                sizes="(max-width: 1023px) 1px, 34vw"
+                className="object-cover transition-transform duration-700 ease-out group-hover:scale-[1.035]"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/45 via-transparent to-transparent" />
             </div>
-        </section>
-        
-    )
+            <p className="mt-3 max-w-xs text-sm text-[var(--color-text)]">{heroProject.title}</p>
+          </Link>
+        </motion.div>
+
+      </div>
+    </section>
+  );
 }

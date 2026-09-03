@@ -1,87 +1,47 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-'use client';
+"use client";
 
-import { motion } from 'framer-motion';
-import { type FC } from 'react';
+import { motion } from "framer-motion";
 
-const Path = (props: any) => (
-  <motion.path
-    fill="transparent"
-    strokeWidth="3"
-    strokeLinecap="round"
-    {...props}
-  />
-);
+export function MenuToggle({ toggle, isOpen }: { toggle: () => void; isOpen: boolean }) {
+  const stroke = isOpen ? "#f9f8f4" : "#1c1b1a";
 
-const CLOSED = '#18181b';
-const OPEN = '#ffffff';
-
-export const MenuToggle: FC<{ toggle: () => void; isOpen: boolean }> = ({ toggle, isOpen }) => (
-  <button
-    type="button"
-    onClick={toggle}
-    className="md:hidden w-12 h-12 relative flex items-center justify-center"
-    aria-label={isOpen ? 'Menu schliessen' : 'Menu oeffnen'}
-  >
-    <svg aria-hidden="true" viewBox="0 0 23 23" width="23" height="23">
-      <Path
-        variants={{
-          closed: {
-            d: 'M 2 2.5 L 20 2.5',
-            stroke: CLOSED,
-            transition: { delay: 0.1 },
-          },
-          open: {
-            d: 'M 3 16.5 L 17 2.5',
-            stroke: OPEN,
-          },
-        }}
-        transition={{
-          d: { duration: 0.4, ease: 'easeInOut' },
-          stroke: { duration: 0.25, ease: 'linear' },
-        }}
-        animate={isOpen ? 'open' : 'closed'}
-        initial={false}
-      />
-      <Path
-        d="M 2 9.423 L 20 9.423"
-        variants={{
-          closed: {
-            opacity: 1,
-            stroke: CLOSED,
-            transition: { delay: 0.1 },
-          },
-          open: {
-            opacity: 0,
-            stroke: OPEN,
-          },
-        }}
-        transition={{
-          opacity: { duration: 0.12, ease: 'linear' },
-          stroke: { duration: 0.25, ease: 'linear' },
-        }}
-        animate={isOpen ? 'open' : 'closed'}
-        initial={false}
-      />
-      <Path
-        variants={{
-          closed: {
-            d: 'M 2 16.346 L 20 16.346',
-            stroke: CLOSED,
-            transition: { delay: 0.1 },
-          },
-          open: {
-            d: 'M 3 2.5 L 17 16.346',
-            stroke: OPEN,
-          },
-        }}
-        transition={{
-          d: { duration: 0.4, ease: 'easeInOut' },
-          stroke: { duration: 0.25, ease: 'linear' },
-        }}
-        animate={isOpen ? 'open' : 'closed'}
-        initial={false}
-      />
-    </svg>
-  </button>
-);
+  return (
+    <button
+      type="button"
+      onClick={toggle}
+      className="glass-panel flex h-12 w-12 items-center justify-center rounded-full"
+      aria-label={isOpen ? "Menü schließen" : "Menü öffnen"}
+      aria-expanded={isOpen}
+    >
+      <svg aria-hidden="true" viewBox="0 0 24 24" width="22" height="22">
+        <motion.path
+          fill="none"
+          stroke={stroke}
+          strokeWidth="2"
+          strokeLinecap="round"
+          initial={false}
+          animate={isOpen ? { d: "M 5 5 L 19 19" } : { d: "M 4 7 L 20 7" }}
+          transition={{ duration: 0.28, ease: [0.16, 1, 0.3, 1] }}
+        />
+        <motion.path
+          fill="none"
+          stroke={stroke}
+          strokeWidth="2"
+          strokeLinecap="round"
+          initial={false}
+          animate={isOpen ? { opacity: 0 } : { opacity: 1, d: "M 4 12 L 20 12" }}
+          transition={{ duration: 0.18 }}
+        />
+        <motion.path
+          fill="none"
+          stroke={stroke}
+          strokeWidth="2"
+          strokeLinecap="round"
+          initial={false}
+          animate={isOpen ? { d: "M 19 5 L 5 19" } : { d: "M 4 17 L 20 17" }}
+          transition={{ duration: 0.28, ease: [0.16, 1, 0.3, 1] }}
+        />
+      </svg>
+    </button>
+  );
+}

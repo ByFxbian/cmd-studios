@@ -1,8 +1,8 @@
 'use client';
 
-import { useMemo, useState } from 'react';
+import { useState } from 'react';
 import Link, { type LinkProps } from 'next/link';
-import { motion, useAnimationControls, type Transition, animationControls } from 'framer-motion';
+import { motion } from 'framer-motion';
 import { AnimatedStaggeredText } from './AnimatedStaggeredText';
 
 interface HoverStaggeredLinkProps extends LinkProps {

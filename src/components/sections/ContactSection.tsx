@@ -1,48 +1,39 @@
-'use client';
+"use client";
 
-import { motion, type Variants } from 'framer-motion';
-import { HiArrowRight } from 'react-icons/hi';
-import Link from 'next/link';
-import { MagneticLink } from '../ui/MagneticLink';
-
-const variants: Variants = {
-  hidden: { opacity: 0, y: 40 },
-  visible: {
-    opacity: 1,
-    y: 0,
-    transition: {
-      duration: 0.7,
-      ease: "easeOut",
-    },
-  },
-};
+import { motion, useReducedMotion } from "framer-motion";
+import { HiArrowRight } from "react-icons/hi2";
+import { MagneticLink } from "../ui/MagneticLink";
 
 export function ContactSection() {
+  const reduceMotion = useReducedMotion();
+
   return (
-    <section className="w-full py-20 md:py-32 bg-zinc-100 border-y border-zinc-200">
-      <motion.div 
-        className="container mx-auto max-w-4xl px-6 text-center"
-        variants={variants}
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ once: true, amount: 0.5 }}
+    <section className="section-space border-y border-[var(--color-navbar-border)] bg-[var(--color-surface)]">
+      <motion.div
+        className="site-container"
+        initial={reduceMotion ? false : { opacity: 0, y: 32 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, amount: 0.35 }}
+        transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
       >
-        <h2 className="text-4xl md:text-5xl font-bold tracking-normal text-[var(--color-heading)]">
-          Bereit, loszulegen?
-        </h2>
-        <p className="mt-4 max-w-xl mx-auto text-3xl tracking-wide text-[var(--color-text)]">
-          Sie brauchen eine neue Website, starken Content oder beides? Wir bringen Idee, Gestaltung und Umsetzung zusammen.
-        </p>
-        
-        <MagneticLink
-          href="/contact" 
-          className="group inline-flex items-center justify-center gap-2 
-                     bg-accent text-white 
-                     px-8 py-4 rounded-full text-2xl
-                     mt-10 transition-all hover:bg-accent-dark shadow-xl shadow-accent/20"
-        >
-          Projekt anfragen <HiArrowRight className="transition-transform duration-300 group-hover:translate-x-1" />
-        </MagneticLink>
+        <div className="grid items-end gap-8 lg:grid-cols-12">
+          <div className="lg:col-span-9">
+            <h2 className="text-balance text-[clamp(3rem,7.5vw,7.5rem)] leading-[0.9] text-[var(--color-heading)]">
+              Bereit für einen Auftritt mit Charakter?
+            </h2>
+            <p className="mt-6 max-w-[55ch] text-base leading-relaxed text-[var(--color-text)] md:text-xl">
+              Website, App, Content oder alles zusammen. Erzählen Sie uns, was Sie vorhaben.
+            </p>
+          </div>
+          <div className="lg:col-span-3 lg:flex lg:justify-end">
+            <MagneticLink
+              href="/contact"
+              className="inline-flex h-16 items-center justify-center gap-3 rounded-full bg-accent px-8 font-accent text-xl text-white transition-colors hover:bg-accent-dark active:scale-[0.98]"
+            >
+              Kontakt <HiArrowRight aria-hidden="true" className="h-5 w-5" />
+            </MagneticLink>
+          </div>
+        </div>
       </motion.div>
     </section>
   );

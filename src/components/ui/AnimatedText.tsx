@@ -6,17 +6,6 @@ type AnimatedTextProps = {
   text: string;
 };
 
-const containerVariants: Variants = {
-  hidden: { opacity: 0 },
-  visible: (delay: number = 0) => ({
-    opacity: 1,
-    transition: {
-      staggerChildren: 0.08,
-      delayChildren: delay,
-    },
-  }),
-};
-
 export const wordVariants: Variants = {
   hidden: {
     opacity: 0,
